@@ -1,0 +1,17 @@
+{
+  "name": "zume",
+  "version": "0.1.0",
+  "description": "Static site generator with gulp",
+  "main": "index.js",
+  "author": "Oscar Otero <oom@oscarotero.com>",
+  "license": "MIT",
+  "dependencies": {
+    "front-matter": "^2.1.2",
+    "handlebars": "^4.0.6",
+    "markdown-it": "^8.3.1",
+    "through2": "^2.0.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
