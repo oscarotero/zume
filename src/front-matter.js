@@ -1,21 +1,16 @@
 const through = require('through2');
 const matter = require('front-matter');
 
-module.exports = function (commonData) {
-    commonData = commonData || {};
+module.exports = function (config) {
+    function run (file, done) {
+        const data = matter(file.contents.toString());
+
+        file.contents = new Buffer(data.body);
+        file.data = config.get('metadata', data.attributes);
+        done(file);
+    }
 
     return through.obj(function (file, encoding, callback) {
-        callback(null, run(file, commonData));
+        run(file, (file) => callback(null, file));
     });
-}
-
-function run (file, commonData) {
-    const data = matter(String(file.contents));
-
-    Object.keys(commonData).forEach((key) => data.attributes[key] = data.attributes[key] || commonData[key]);
-
-    file.contents = new Buffer(data.body);
-    file.data = data.attributes;
-
-    return file;
 }

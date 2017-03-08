@@ -6,8 +6,10 @@
   "author": "Oscar Otero <oom@oscarotero.com>",
   "license": "MIT",
   "dependencies": {
+    "ejs": "^2.5.6",
     "front-matter": "^2.1.2",
-    "handlebars": "^4.0.6",
+    "html-minifier": "^3.4.0",
+    "inline-source": "^5.2.0",
     "markdown-it": "^8.3.1",
     "through2": "^2.0.3"
   },

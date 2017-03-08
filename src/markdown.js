@@ -1,15 +1,19 @@
 const through = require('through2');
 const MarkdownIt = require('markdown-it');
 
-module.exports = function (md) {
-    md = md || new MarkdownIt();
+module.exports = function (config) {
+    const md = new MarkdownIt(config.get('markdown', {
+        html: true,
+        linkify: true,
+        typographer: true
+    }));
+
+    function run (file, done) {
+        file.contents = new Buffer(md.render(file.contents.toString()));
+        done(file);
+    }
 
     return through.obj(function (file, encoding, callback) {
-        callback(null, run(file, md));
+        run(file, (file) => callback(null, file));
     });
-}
-
-function run (file, md) {
-    file.contents = new Buffer(md.render(String(file.contents)));
-    return file;
 }
