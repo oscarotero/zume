@@ -19,7 +19,11 @@ gulp.task('html', function () {
         .pipe(gulp.dest(zume.dest()));
 });
 
-gulp.task('default', ['html']);
+gulp.task('js', function () {
+    zume.webpack();
+});
+
+gulp.task('default', ['html', 'js']);
 ```
 
 ## API
@@ -144,4 +148,19 @@ Build the html files using [ejs](https://github.com/mde/ejs). In addition to the
     <a href="<?= zume.url('about') ?>">About us</a>
 </body>
 </html>
+```
+
+### webpack
+
+Runs [webpack](https://webpack.js.org/) generate the javascript files. This is not a gulp plugin, so can be executed directly in a task. Example with the default configuration:
+
+```js
+zume.webpack({
+    entry: {
+        main: './main.js'
+    },
+    output: {
+        filename: '[name].js'
+    }
+})
 ```

@@ -1,6 +1,7 @@
+'use strict';
+
 const path = require('path');
 const url = require('url');
-
 const defaults = {
     dev: true,
     paths: {
@@ -24,14 +25,15 @@ class Zume {
 
     constructor (config) {
         config = config || {};
-        config.paths = Object.assign({}, defaults.paths, config.paths || {});
 
-        this.config = config;
+        this.config = Object.assign({}, defaults);
+        this.config.paths = Object.assign({}, defaults.paths, config.paths || {});
+
         this.paths = {
             cwd: config.paths.cwd,
-            src: path.join(config.paths.cwd, config.paths.src),
-            dest: path.join(config.paths.cwd, config.paths.dest),
-            url: url.parse(config.url || '/').pathname
+            src: path.join(this.config.paths.cwd, this.config.paths.src),
+            dest: path.join(this.config.paths.cwd, this.config.paths.dest),
+            url: url.parse(this.config.url || '/').pathname
         }
     }
 
@@ -113,12 +115,16 @@ class Zume {
     templates(options) {
         return require('./templates')(this, this.get('templates', options));
     }
+
+    webpack(options) {
+        return require('./webpack')(this, this.get('webpack', options));
+    }
 }
 
 module.exports = Zume;
 
 function getPath(absolute, args, paths, dir) {
-    if (!args.length) {
+    if (!args.length && !dir) {
         return absolute;
     }
 
@@ -129,6 +135,7 @@ function getPath(absolute, args, paths, dir) {
 
         args.unshift(paths[dir]);
     }
+
 
     args.unshift(absolute);
 

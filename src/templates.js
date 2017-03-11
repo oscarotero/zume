@@ -1,3 +1,5 @@
+'use strict';
+
 const through = require('through2');
 const ejs = require('ejs');
 const defaults = {
@@ -6,7 +8,7 @@ const defaults = {
 
 module.exports = function (zume, options) {
     options = Object.assign({}, defaults, options || {});
-    options.root = options.root || zume.src('templates');
+    options.root = zume.src('templates');
 
     function run (file, done) {
         const locals = Object.assign({}, file.data || {});

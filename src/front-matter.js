@@ -1,3 +1,5 @@
+'use strict';
+
 const through = require('through2');
 const matter = require('front-matter');
 

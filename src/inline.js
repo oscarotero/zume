@@ -1,9 +1,11 @@
+'use strict';
+
 const through = require('through2');
 const inline = require('inline-source');
 
 module.exports = function (zume, options) {
     options = options || {};
-    options.rootpath = options.rootpath || zume.src();
+    options.rootpath = zume.src();
 
     function run (file, done) {
         inline(file.contents.toString(), options, function (err, html) {
