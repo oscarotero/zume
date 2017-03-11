@@ -12,6 +12,7 @@ const defaults = {
         css: 'css',
         js: 'js',
         img: 'img',
+        static: 'static',
     }
 };
 

@@ -48,6 +48,7 @@ Name | Default | Description
 `paths.css` | `"css"` | The subdirectory in the src directory in which are the css files
 `paths.js` | `"js"` | The subdirectory in the src directory in which are the js files
 `paths.img` | `"img"` | The subdirectory in the src directory in which are the img files
+`paths.static` | `"static"` | The subdirectory in the src directory in which are static files
 
 The `zume` instance provide the following functions:
 
