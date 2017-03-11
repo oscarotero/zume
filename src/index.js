@@ -116,8 +116,12 @@ class Zume {
         return require('./templates')(this, this.get('templates', options));
     }
 
-    webpack(options) {
-        return require('./webpack')(this, this.get('webpack', options));
+    js(options) {
+        return require('./js')(this, this.get('js', options));
+    }
+
+    css(options) {
+        return require('./css')(this, this.get('css', options));
     }
 }
 

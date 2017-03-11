@@ -23,7 +23,13 @@ gulp.task('js', function () {
     zume.webpack();
 });
 
-gulp.task('default', ['html', 'js']);
+gulp.task('css', function () {
+    gulp.src(zume.src('css', '/*.css'))
+        .pipe(zume.css())
+        .pipe(gulp.dest(zume.dest('css')));
+});
+
+gulp.task('default', ['html', 'js', 'css']);
 ```
 
 ## API
@@ -66,7 +72,7 @@ Name | Description
 `zume.set()` | Save config data or any other value that you want to retrieve later.
 `zume.get()` | Get the data saved with `set`.
 
-## Plugins
+## HTML Generation
 
 ### frontMatter
 
@@ -150,12 +156,14 @@ Build the html files using [ejs](https://github.com/mde/ejs). In addition to the
 </html>
 ```
 
-### webpack
+## Assets generation
 
-Runs [webpack](https://webpack.js.org/) generate the javascript files. This is not a gulp plugin, so can be executed directly in a task. Example with the default configuration:
+### js (webpack)
+
+Runs [webpack](https://webpack.js.org/) to generate the javascript files. This is not a gulp plugin, so can be executed directly in a task. Example with the default configuration:
 
 ```js
-zume.webpack({
+zume.js({
     entry: {
         main: './main.js'
     },
@@ -163,4 +171,51 @@ zume.webpack({
         filename: '[name].js'
     }
 })
+```
+
+### css (stylecow)
+
+Runs [stylecow](http://stylecow.github.io/) to generate the css files. Example with the default configuration:
+
+```js
+gulp.task('css', function () {
+    gulp.src(zume.src('css', '/*.css'))
+        .pipe(zume.css({
+                "support": {
+                "explorer": 10,
+                "edge": false,
+                "firefox": 39,
+                "chrome": 43,
+                "safari": 8,
+                "opera": false,
+                "android": 4.1,
+                "ios": 8.1
+            },
+            "plugins": [
+                "base64",
+                "bower-loader",
+                "calc",
+                "color",
+                "custom-media",
+                "custom-selector",
+                "extend",
+                "fixes",
+                "flex",
+                "import",
+                "matches",
+                "msfilter-background-alpha",
+                "msfilter-linear-gradient",
+                "msfilter-transform",
+                "nested-rules",
+                "npm-loader",
+                "prefixes",
+                "rem",
+                "variables",
+                "webkit-gradient"
+            ],
+            "code": "normal",
+            "map": "auto"
+        }))
+        .pipe(gulp.dest(zume.dest('css')));
+});
 ```

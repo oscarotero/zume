@@ -11,6 +11,8 @@
     "html-minifier": "^3.4.0",
     "inline-source": "^5.2.0",
     "markdown-it": "^8.3.1",
+    "stylecow-core": "^2.4.2",
+    "stylecow-plugins": "^1.5.2",
     "through2": "^2.0.3",
     "webpack": "^2.2.1"
   },
