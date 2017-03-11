@@ -2,6 +2,7 @@ const path = require('path');
 const url = require('url');
 
 const defaults = {
+    dev: true,
     paths: {
         url: 'http://localhost',
         cwd: process.cwd(),

@@ -39,6 +39,7 @@ The full list of available settings:
 
 Name | Default | Description
 -----|---------|------------
+`dev` | `true` | If it's in dev environment or not
 `paths.url` | `"http://localhost"` | The full url of the site
 `paths.cwd` | `process.cwd()` | The working directory
 `paths.src` | `"src"` | The directory with the source files
