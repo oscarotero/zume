@@ -1,10 +1,9 @@
 const through = require('through2');
 const inline = require('inline-source');
 
-module.exports = function (config) {
-    const options = config.get('inline', {
-        rootpath: config.src()
-    });
+module.exports = function (zume, options) {
+    options = options || {};
+    options.rootpath = options.rootpath || zume.src();
 
     function run (file, done) {
         inline(file.contents.toString(), options, function (err, html) {

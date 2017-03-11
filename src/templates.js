@@ -1,28 +1,24 @@
 const through = require('through2');
 const ejs = require('ejs');
+const defaults = {
+    delimiter: '?'
+};
 
-module.exports = function (config) {
-    const options = config.get('templates', {
-        delimiter: '?',
-        root: config.src('templates')
-    });
-
-    options.locals = Object.assign({}, {
-        url: function () {
-            return config.url.apply(config, arguments);
-        }
-    }, options.locales || {});
+module.exports = function (zume, options) {
+    options = Object.assign({}, defaults, options || {});
+    options.root = options.root || zume.src('templates');
 
     function run (file, done) {
-        const locals = Object.assign({}, file.data || {}, options.locals);
+        const locals = Object.assign({}, file.data || {});
 
         if (!locals.template) {
             return done(file);
         }
 
         locals.content = file.contents.toString();
+        locals.zume = zume;
 
-        ejs.renderFile(config.src('templates', locals.template), locals, options, function (err, result) {
+        ejs.renderFile(zume.src('templates', locals.template), locals, options, function (err, result) {
             if (err) {
                 console.error(err);
             }

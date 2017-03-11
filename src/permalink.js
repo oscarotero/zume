@@ -1,7 +1,7 @@
 const through = require('through2');
 const path = require('path');
 
-module.exports = function (config) {
+module.exports = function () {
     function run (file, done) {
         let newPath = file.path.replace(/\.md$/, '');
 

@@ -15,9 +15,9 @@ const defaults = {
     }
 };
 
-class Config {
+class Zume {
     static create(config) {
-        return new Config(config);
+        return new Zume(config);
     }
 
     constructor (config) {
@@ -69,12 +69,12 @@ class Config {
         ).replace(/\\/g, '/');
     }
 
-    load(name, file) {
-        this.config[name] = require(path.join(this.config.paths.cwd, file));
-    }
-
     set(name, value) {
-        this.config[name] = value;
+        if (typeof name === 'object') {
+            Object.assign(this.config, name);
+        } else {
+            this.config[name] = value;
+        }
     }
 
     get(name, assign) {
@@ -84,9 +84,36 @@ class Config {
 
         return this.config[name];
     }
+
+    /*
+     * Plugins
+     */
+    frontMatter(options) {
+        return require('./front-matter')(this, this.get('frontMatter', options));
+    }
+
+    minify(options) {
+        return require('./minify')(this, this.get('minify', options));
+    }
+
+    inline(options) {
+        return require('./inline')(this, this.get('inline', options));
+    }
+
+    markdown(options) {
+        return require('./markdown')(this, this.get('markdown', options));
+    }
+
+    permalink() {
+        return require('./permalink')();
+    }
+
+    templates(options) {
+        return require('./templates')(this, this.get('templates', options));
+    }
 }
 
-module.exports = Config;
+module.exports = Zume;
 
 function getPath(absolute, args, paths, dir) {
     if (!args.length) {

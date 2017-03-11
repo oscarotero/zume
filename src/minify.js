@@ -1,15 +1,16 @@
 const through = require('through2');
 const minify = require('html-minifier').minify;
+const defaults = {
+    collapseBooleanAttributes: true,
+    collapseWhitespace: true,
+    removeAttributeQuotes: true,
+    removeComments: true,
+    removeEmptyAttributes: true,
+    removeRedundantAttributes: true,
+};
 
-module.exports = function (config) {
-    const options = config.get('html-minify', {
-        collapseBooleanAttributes: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true,
-        removeComments: true,
-        removeEmptyAttributes: true,
-        removeRedundantAttributes: true,
-    });
+module.exports = function (zume, options) {
+    options = Object.assign({}, defaults, options || {});
 
     function run (file, done) {
         file.contents = new Buffer(minify(file.contents.toString(), options));
