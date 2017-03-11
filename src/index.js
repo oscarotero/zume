@@ -30,7 +30,7 @@ class Zume {
         this.config.paths = Object.assign({}, defaults.paths, config.paths || {});
 
         this.paths = {
-            cwd: config.paths.cwd,
+            cwd: this.config.paths.cwd,
             src: path.join(this.config.paths.cwd, this.config.paths.src),
             dest: path.join(this.config.paths.cwd, this.config.paths.dest),
             url: url.parse(this.config.url || '/').pathname
