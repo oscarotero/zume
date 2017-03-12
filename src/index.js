@@ -1,7 +1,9 @@
 'use strict';
 
+const BrowserSync = require('browser-sync');
 const path = require('path');
 const url = require('url');
+const gulp = require('gulp');
 const defaults = {
     dev: true,
     paths: {
@@ -15,6 +17,14 @@ const defaults = {
         js: 'js',
         img: 'img',
         static: 'static',
+    },
+    server: {
+        open: false,
+        reloadOnRestart: true,
+        watchOptions: {
+            ignoreInitial: true,
+            ignored: '.DS_Store'
+        }
     }
 };
 
@@ -28,6 +38,7 @@ class Zume {
 
         this.config = Object.assign({}, defaults);
         this.config.paths = Object.assign({}, defaults.paths, config.paths || {});
+        this.config.server = Object.assign({}, defaults.server, config.server || {});
 
         this.paths = {
             cwd: this.config.paths.cwd,
@@ -35,6 +46,11 @@ class Zume {
             dest: path.join(this.config.paths.cwd, this.config.paths.dest),
             url: url.parse(this.config.url || '/').pathname
         }
+
+        this.config.server.watchOptions.cwd = this.paths.cwd;
+        this.config.server.server = this.paths.dest;
+
+        this.sync = BrowserSync.create();
     }
 
     path () {
@@ -87,6 +103,23 @@ class Zume {
         }
 
         return this.config[name];
+    }
+
+    serve() {
+        this.sync.init(this.config.server);
+    }
+
+    refresh() {
+        return this.sync.stream();
+    }
+
+    watch(dir, pattern, task) {
+        this.sync.watch(
+            this.src(dir, pattern),
+            this.config.server.watchOptions,
+            (event, file) => {
+                gulp.start(task);
+            });
     }
 
     /*

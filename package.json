@@ -6,6 +6,7 @@
   "author": "Oscar Otero <oom@oscarotero.com>",
   "license": "MIT",
   "dependencies": {
+    "browser-sync": "^2.18.8",
     "ejs": "^2.5.6",
     "front-matter": "^2.1.2",
     "html-minifier": "^3.4.0",
