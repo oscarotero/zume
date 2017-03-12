@@ -16,19 +16,29 @@ gulp.task('html', function () {
         .pipe(zume.templates())
         .pipe(zume.inline())
         .pipe(zume.minify())
-        .pipe(gulp.dest(zume.dest()));
+        .pipe(gulp.dest(zume.dest()))
+        .pipe(zume.refresh());
 });
 
 gulp.task('js', function () {
     gulp.src(zume.src('js', '/*.js'))
         .pipe(zume.js())
-        .pipe(gulp.dest(zume.dest('js')));
+        .pipe(gulp.dest(zume.dest('js')))
+        .pipe(zume.refresh());
 });
 
 gulp.task('css', function () {
     gulp.src(zume.src('css', '/*.css'))
         .pipe(zume.css())
-        .pipe(gulp.dest(zume.dest('css')));
+        .pipe(gulp.dest(zume.dest('css')))
+        .pipe(zume.refresh());
+});
+
+gulp.task('server', function () {
+    zume.watch('data', '/**/*.md', 'html');
+    zume.watch('js', '/**/*.js', 'js');
+    zume.watch('css', '/**/*.css', 'css');
+    zume.serve();
 });
 
 gulp.task('default', ['html', 'js', 'css']);
@@ -73,6 +83,9 @@ Name | Description
 `zume.url()` | Returns a public url path. For example: `zume.url('about')` returns `"/about"`.
 `zume.set()` | Save config data or any other value that you want to retrieve later.
 `zume.get()` | Get the data saved with `set`.
+`zume.serve()` | Init a new http server using [browsersync](http://browsersync.io/).
+`zume.refresh()` | Used to reload [browsersync](http://browsersync.io/) with the latest changes.
+`zume.watch()` | Start watching the file changes.
 
 ## HTML Generation
 
