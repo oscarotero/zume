@@ -4,8 +4,10 @@ const BrowserSync = require('browser-sync');
 const path = require('path');
 const url = require('url');
 const gulp = require('gulp');
+const Html = require('./html');
+const Css = require('./css');
+const Js = require('./js');
 const defaults = {
-    dev: true,
     paths: {
         url: 'http://localhost',
         cwd: process.cwd(),
@@ -34,6 +36,8 @@ class Zume {
     }
 
     constructor (config) {
+        this.dev = true;
+        
         config = config || {};
 
         this.config = Object.assign({}, defaults);
@@ -54,32 +58,15 @@ class Zume {
     }
 
     path () {
-        if (!arguments.length) {
-            return this.paths.cwd;
-        }
-
-        let dirs = Array.prototype.slice.call(arguments);
-        dirs.unshift(this.paths.cwd);
-
-        return path.join.apply(dirs);
+        return getPath(this.paths.cwd, Array.prototype.slice.call(arguments));
     }
 
-    src (dir) {
-        return getPath(
-            this.paths.src,
-            Array.prototype.slice.call(arguments, 1),
-            this.config.paths,
-            dir
-        );
+    src () {
+        return getPath(this.paths.src, Array.prototype.slice.call(arguments));
     }
 
     dest (dir) {
-        return getPath(
-            this.paths.dest,
-            Array.prototype.slice.call(arguments, 1),
-            this.config.paths,
-            dir
-        );
+        return getPath(this.paths.dest, Array.prototype.slice.call(arguments));
     }
 
     url () {
@@ -113,66 +100,34 @@ class Zume {
         return this.sync.stream();
     }
 
-    watch(dir, pattern, task) {
-        this.sync.watch(
-            this.src(dir, pattern),
-            this.config.server.watchOptions,
-            (event, file) => {
-                gulp.start(task);
-            });
+    watch(paths, task) {
+        this.sync.watch(paths, this.config.server.watchOptions, (event, file) => {
+            gulp.start(task);
+        });
     }
 
-    /*
-     * Plugins
+    /**
+     * Tasks
      */
-    frontMatter(options) {
-        return require('./front-matter')(this, this.get('frontMatter', options));
+    html() {
+        return new Html(this);
     }
 
-    minify(options) {
-        return require('./minify')(this, this.get('minify', options));
+    js() {
+        return new Js(this);
     }
 
-    inline(options) {
-        return require('./inline')(this, this.get('inline', options));
-    }
-
-    markdown(options) {
-        return require('./markdown')(this, this.get('markdown', options));
-    }
-
-    permalink() {
-        return require('./permalink')();
-    }
-
-    templates(options) {
-        return require('./templates')(this, this.get('templates', options));
-    }
-
-    js(options) {
-        return require('./js')(this, this.get('js', options));
-    }
-
-    css(options) {
-        return require('./css')(this, this.get('css', options));
+    css() {
+        return new Css(this);
     }
 }
 
 module.exports = Zume;
 
-function getPath(absolute, args, paths, dir) {
-    if (!args.length && !dir) {
+function getPath(absolute, args) {
+    if (!args.length) {
         return absolute;
     }
-
-    if (dir) {
-        if (!paths[dir]) {
-            throw new Error(`The path ${dir} is not configured`);
-        }
-
-        args.unshift(paths[dir]);
-    }
-
 
     args.unshift(absolute);
 

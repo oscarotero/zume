@@ -1,62 +1,34 @@
 'use strict';
 
-const through = require('through2');
-const webpack = require('webpack');
-const File = require('vinyl');
-const path = require('path');
-const MemoryFS = require('memory-fs');
-const defaults = {
-    output: {
-        filename: '[name].js'
-    }
-};
+const gulp = require('gulp');
+const Task = require('./task');
 
-module.exports = function (zume, options) {
-    options = Object.assign({}, defaults, options || {});
-
-    if (!zume.get('dev')) {
-        options.plugins = options.plugins || [];
-        options.plugins.push(new webpack.optimize.DedupePlugin());
-        options.plugins.push(new webpack.optimize.UglifyJsPlugin());
+class Js extends Task {
+    src() {
+        this.watchPaths.push(this.zume.src('js/*.js'));
+        return this.zume.src('js/**/*.js');
     }
 
-    options.context = zume.src('js');
-    options.output.publicPath = zume.url('js');
-    options.output.path = zume.dest('js');
-    options.entry = options.entry || {};
-
-    function run (file, done) {
-        const name = path.basename(file.path, '.js');
-        options.entry[name] = './' + file.relative;
-        done();
+    dest() {
+        return gulp.dest(this.zume.dest('css'));
     }
 
-    function execute (done) {
-        const compiler = webpack(options);
-        const fs = new MemoryFS();
+    webpack(options) {
+        options = options || {};
 
-        compiler.outputFileSystem = fs;
+        if (!this.zume.dev) {
+            options.plugins = options.plugins || [];
+            options.plugins.push(new webpack.optimize.DedupePlugin());
+            options.plugins.push(new webpack.optimize.UglifyJsPlugin());
+        }
 
-        compiler.run((err, stats) => {
-            if (err) {
-                console.error(err);
-            }
+        options.context = this.zume.src('js');
+        options.output = options.output || {};
+        options.output.publicPath = this.zume.url('js');
+        options.output.path = this.zume.dest('js');
 
-            Object.keys(stats.compilation.assets).forEach((f) => {
-                const dest = stats.compilation.assets[f].existsAt;
-
-                this.push(new File({
-                    base: compiler.outputPath,
-                    contents: fs.readFileSync(dest),
-                    path: dest
-                }));
-            });
-
-            done();
-        });
+        return require('./plugins/webpack')(options);
     }
-
-    return through.obj(function (file, encoding, callback) {
-        run(file, (file) => callback(null, file));
-    }, execute);
 }
+
+module.exports = Js;

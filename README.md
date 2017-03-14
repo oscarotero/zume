@@ -8,36 +8,40 @@ Example of the `gulpfile.js`:
 const gulp = require('gulp');
 const zume = require('zume').create();
 
+const html = zume.html();
+const css = zume.css();
+const js = zume.js();
+
 gulp.task('html', function () {
-    gulp.src(zume.src('data', '/**/*.md'))
-        .pipe(zume.frontMatter())
-        .pipe(zume.markdown())
-        .pipe(zume.permalink())
-        .pipe(zume.templates())
-        .pipe(zume.inline())
-        .pipe(zume.minify())
-        .pipe(gulp.dest(zume.dest()))
+    gulp.src(html.src())
+        .pipe(html.frontMatter())
+        .pipe(html.markdown())
+        .pipe(html.permalink())
+        .pipe(html.templates())
+        .pipe(html.inline())
+        .pipe(html.minify())
+        .pipe(html.dest())
         .pipe(zume.refresh());
 });
 
 gulp.task('js', function () {
-    gulp.src(zume.src('js', '/*.js'))
-        .pipe(zume.js())
-        .pipe(gulp.dest(zume.dest('js')))
+    gulp.src(js.src())
+        .pipe(js.webpack())
+        .pipe(js.dest())
         .pipe(zume.refresh());
 });
 
 gulp.task('css', function () {
-    gulp.src(zume.src('css', '/*.css'))
-        .pipe(zume.css())
-        .pipe(gulp.dest(zume.dest('css')))
+    gulp.src(css.src())
+        .pipe(css.stylecow())
+        .pipe(css.dest())
         .pipe(zume.refresh());
 });
 
 gulp.task('server', function () {
-    zume.watch('data', '/**/*.md', 'html');
-    zume.watch('js', '/**/*.js', 'js');
-    zume.watch('css', '/**/*.css', 'css');
+    html.watch('html');
+    js.watch('js');
+    css.watch('css');
     zume.serve();
 });
 
@@ -49,12 +53,7 @@ gulp.task('default', ['html', 'js', 'css']);
 First, you have to create a `zume` instance passing the config data. Use the method `create` for this purpose:
 
 ```js
-const zume = require('zume').create({
-    paths: {
-        src: 'in',
-        dest: 'out'
-    }
-})
+const zume = require('zume').create()
 ```
 
 The full list of available settings:
@@ -66,12 +65,6 @@ Name | Default | Description
 `paths.cwd` | `process.cwd()` | The working directory
 `paths.src` | `"src"` | The directory with the source files
 `paths.dest` | `"build"` | The directory in which generate the static site
-`paths.data` | `"data"` | The subdirectory in the src directory in which are the markdown files
-`paths.templates` | `"templates"` | The subdirectory in the src directory in which are the templates files
-`paths.css` | `"css"` | The subdirectory in the src directory in which are the css files
-`paths.js` | `"js"` | The subdirectory in the src directory in which are the js files
-`paths.img` | `"img"` | The subdirectory in the src directory in which are the img files
-`paths.static` | `"static"` | The subdirectory in the src directory in which are static files
 
 The `zume` instance provide the following functions:
 
@@ -85,7 +78,7 @@ Name | Description
 `zume.get()` | Get the data saved with `set`.
 `zume.serve()` | Init a new http server using [browsersync](http://browsersync.io/).
 `zume.refresh()` | Used to reload [browsersync](http://browsersync.io/) with the latest changes.
-`zume.watch()` | Start watching the file changes.
+`zume.watch()` | Start watching file changes.
 
 ## HTML Generation
 
@@ -94,7 +87,7 @@ Name | Description
 Handle the front matter of `.md` files using [front-matter](https://github.com/jxson/front-matter). In addition to the front matter, you can pass an object with common data to all files. Example:
 
 ```js
-.pipe(zume.frontMatter({
+.pipe(html.frontMatter({
     siteName: 'My awesome site'
 }))
 ```
@@ -104,7 +97,7 @@ Handle the front matter of `.md` files using [front-matter](https://github.com/j
 Inline the img, css, js, etc using [inline-source](https://github.com/popeindustries/inline-source). You can [configure the options](https://github.com/popeindustries/inline-source#usage) like the following example:
 
 ```js
-.pipe(zume.inline({
+.pipe(html.inline({
     attribute: 'inline',
     compress: false
 }))
@@ -116,7 +109,7 @@ Parse the content of the files as markdown using [markdown-it](https://github.co
 
 ```js
 //Using an object of options
-.pipe(zume.markdown({
+.pipe(html.markdown({
     html: true,
     linkify: true,
     typographer: true
@@ -126,7 +119,7 @@ Parse the content of the files as markdown using [markdown-it](https://github.co
 const MarkdownIt = require('markdown-it');
 const md = new MarkdownIt();
 
-.pipe(zume.markdown(md))
+.pipe(html.markdown(md))
 ```
 
 ### minify
@@ -134,7 +127,7 @@ const md = new MarkdownIt();
 Minifies the output html using [html-minifier](https://github.com/kangax/html-minifier). You can [configure the options](https://github.com/kangax/html-minifier#options-quick-reference) in the first argument. Example with the default options:
 
 ```js
-.pipe(zume.minify({
+.pipe(html.minify({
     collapseBooleanAttributes: true,
     collapseWhitespace: true,
     removeAttributeQuotes: true,
@@ -153,7 +146,7 @@ Renames the `*.md` files to `*/index.html` in order to generate pretty urls. For
 Build the html files using [ejs](https://github.com/mde/ejs). In addition to the front matter values, the templates have two more variables: `content` to return the file content and `zume` containing the instance of zume, that you can use to generate, for example, new urs. You can [configure the options](https://github.com/mde/ejs#options) in the first argument. Example with the default options:
 
 ```js
-.pipe(zume.templates({
+.pipe(html.templates({
     delimiter: '?'
 }))
 ```
@@ -178,7 +171,7 @@ Build the html files using [ejs](https://github.com/mde/ejs). In addition to the
 Runs [webpack](https://webpack.js.org/) to generate the javascript files. Example with the default configuration:
 
 ```js
-.pipe(zume.js({
+.pipe(js.webpack({
     output: {
         filename: '[name].js'
     }
@@ -190,7 +183,7 @@ Runs [webpack](https://webpack.js.org/) to generate the javascript files. Exampl
 Runs [stylecow](http://stylecow.github.io/) to generate the css files. Example with the default configuration:
 
 ```js
-.pipe(zume.css({
+.pipe(css.stylecow({
         "support": {
         "explorer": 10,
         "edge": false,

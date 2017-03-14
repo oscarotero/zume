@@ -11,7 +11,7 @@ const defaults = {
     removeRedundantAttributes: true,
 };
 
-module.exports = function (zume, options) {
+module.exports = function (options) {
     options = Object.assign({}, defaults, options || {});
 
     function run (file, done) {

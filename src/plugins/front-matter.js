@@ -3,7 +3,7 @@
 const through = require('through2');
 const matter = require('front-matter');
 
-module.exports = function (zume, options) {
+module.exports = function (options) {
     options = options || {};
 
     function run (file, done) {

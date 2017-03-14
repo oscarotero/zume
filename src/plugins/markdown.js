@@ -8,7 +8,7 @@ const defaults = {
     typographer: true
 };
 
-module.exports = function (zume, options) {
+module.exports = function (options) {
     let md;
 
     if (options instanceof MarkdownIt) {

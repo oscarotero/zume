@@ -2,16 +2,16 @@
 
 const through = require('through2');
 const ejs = require('ejs');
+const path = require('path');
 const defaults = {
     delimiter: '?'
 };
 
-module.exports = function (zume, options) {
+module.exports = function (options) {
     options = Object.assign({}, defaults, options || {});
-    options.root = zume.src('templates');
 
     function run (file, done) {
-        const locals = Object.assign({}, file.data || {});
+        const locals = Object.assign({}, options.locals || {}, file.data || {});
 
         if (!locals.template) {
             return done(file);
@@ -20,7 +20,7 @@ module.exports = function (zume, options) {
         locals.content = file.contents.toString();
         locals.zume = zume;
 
-        ejs.renderFile(zume.src('templates', locals.template), locals, options, function (err, result) {
+        ejs.renderFile(path.join(options.root, locals.template), locals, options, function (err, result) {
             if (err) {
                 console.error(err);
             }

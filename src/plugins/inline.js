@@ -3,9 +3,8 @@
 const through = require('through2');
 const inline = require('inline-source');
 
-module.exports = function (zume, options) {
+module.exports = function (options) {
     options = options || {};
-    options.rootpath = zume.src();
 
     function run (file, done) {
         inline(file.contents.toString(), options, function (err, html) {
