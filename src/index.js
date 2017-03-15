@@ -9,20 +9,16 @@ const Css = require('./css');
 const Js = require('./js');
 const defaults = {
     paths: {
-        url: 'http://localhost',
         cwd: process.cwd(),
+        url: 'http://localhost',
         src: 'src',
         dest: 'build',
-        data: 'data',
-        templates: 'templates',
-        css: 'css',
-        js: 'js',
-        img: 'img',
-        static: 'static',
     },
     server: {
         open: false,
         reloadOnRestart: true,
+        reloadThrottle: 1000,
+        notify: false,
         watchOptions: {
             ignoreInitial: true,
             ignored: '.DS_Store'
@@ -36,6 +32,7 @@ class Zume {
     }
 
     constructor (config) {
+        this.tasks = {};
         this.dev = true;
         
         config = config || {};
@@ -46,10 +43,10 @@ class Zume {
 
         this.paths = {
             cwd: this.config.paths.cwd,
+            url: url.parse(this.config.url || '/').pathname,
             src: path.join(this.config.paths.cwd, this.config.paths.src),
-            dest: path.join(this.config.paths.cwd, this.config.paths.dest),
-            url: url.parse(this.config.url || '/').pathname
-        }
+            dest: path.join(this.config.paths.cwd, this.config.paths.dest)
+        };
 
         this.config.server.watchOptions.cwd = this.paths.cwd;
         this.config.server.server = this.paths.dest;
@@ -76,24 +73,13 @@ class Zume {
         ).replace(/\\/g, '/');
     }
 
-    set(name, value) {
-        if (typeof name === 'object') {
-            Object.assign(this.config, name);
-        } else {
-            this.config[name] = value;
-        }
-    }
-
-    get(name, assign) {
-        if (assign) {
-            return Object.assign({}, assign, this.config[name] || {});
-        }
-
-        return this.config[name];
-    }
-
     serve() {
         this.sync.init(this.config.server);
+
+        Object.keys(this.tasks).forEach((name) => {
+            this.watch(this.tasks[name].watch, name);
+        });
+
     }
 
     refresh() {
@@ -109,16 +95,22 @@ class Zume {
     /**
      * Tasks
      */
-    html() {
-        return new Html(this);
+    html(name) {
+        name = name || 'html';
+        this.tasks[name] = new Html(this);
+        return this.tasks[name];
     }
 
-    js() {
-        return new Js(this);
+    js(name) {
+        name = name || 'js';
+        this.tasks[name] = new Js(this);
+        return this.tasks[name];
     }
 
-    css() {
-        return new Css(this);
+    css(name) {
+        name = name || 'css';
+        this.tasks[name] = new Css(this);
+        return this.tasks[name];
     }
 }
 

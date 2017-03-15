@@ -4,13 +4,14 @@ const gulp = require('gulp');
 const Task = require('./task');
 
 class Js extends Task {
-    src() {
-        this.watchPaths.push(this.zume.src('js/*.js'));
-        return this.zume.src('js/**/*.js');
+    constructor (zume, dir) {
+        super(zume, dir || 'js');
     }
 
-    dest() {
-        return gulp.dest(this.zume.dest('css'));
+    src(pattern) {
+        this.watch.push(super.src('**/*.js'));
+
+        return super.src(pattern || '*.js');
     }
 
     webpack(options) {
@@ -22,10 +23,10 @@ class Js extends Task {
             options.plugins.push(new webpack.optimize.UglifyJsPlugin());
         }
 
-        options.context = this.zume.src('js');
+        options.context = this.zume.src(this.dir);
         options.output = options.output || {};
-        options.output.publicPath = this.zume.url('js');
-        options.output.path = this.zume.dest('js');
+        options.output.publicPath = this.zume.url(this.dir);
+        options.output.path = this.zume.dest(this.dir);
 
         return require('./plugins/webpack')(options);
     }

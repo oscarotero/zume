@@ -3,13 +3,22 @@
 const gulp = require('gulp');
 
 class Task {
-    constructor (zume) {
+    constructor (zume, dir) {
         this.zume = zume;
-        this.watchPaths = [];
+        this.dir = dir || '';
+        this.watch = [];
     }
 
-    watch(task) {
-        return this.zume.watch(this.watchPaths, task);
+    src(pattern) {
+        if (Array.isArray(pattern)) {
+            return pattern.map((pattern) => this.zume.src(this.dir, pattern));
+        }
+
+        return this.zume.src(this.dir, pattern);
+    }
+
+    dest() {
+        return gulp.dest(this.zume.dest(this.dir));
     }
 }
 

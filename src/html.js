@@ -4,14 +4,10 @@ const gulp = require('gulp');
 const Task = require('./task');
 
 class Html extends Task {
-    src() {
-        const path = this.zume.src('data/**/*.md');
-        this.watchPaths.push(path);
-        return path;
-    }
-
-    dest() {
-        return gulp.dest(this.zume.dest());
+    src(pattern) {
+        const src = super.src(pattern || 'data/**/*.md');
+        this.watch.push(src);
+        return src;
     }
 
     frontMatter(options) {
@@ -43,7 +39,7 @@ class Html extends Task {
         options.locals = options.locals || {};
         options.locals.zume = this.zume;
 
-        this.watchPaths.push(this.zume.src('templates/**/*.ejs'));
+        this.watch.push(this.zume.src('templates/**/*.ejs'));
 
         return require('./plugins/templates')(options);
     }

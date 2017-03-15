@@ -1,6 +1,6 @@
 # ZUME [wip]
 
-A static-site generator with gulp.
+An opinionated static-site generator with gulp.
 
 Example of the `gulpfile.js`:
 
@@ -8,11 +8,9 @@ Example of the `gulpfile.js`:
 const gulp = require('gulp');
 const zume = require('zume').create();
 
-const html = zume.html();
-const css = zume.css();
-const js = zume.js();
-
 gulp.task('html', function () {
+    const html = zume.html();
+
     gulp.src(html.src())
         .pipe(html.frontMatter())
         .pipe(html.markdown())
@@ -25,6 +23,8 @@ gulp.task('html', function () {
 });
 
 gulp.task('js', function () {
+    const js = zume.js();
+    
     gulp.src(js.src())
         .pipe(js.webpack())
         .pipe(js.dest())
@@ -32,16 +32,15 @@ gulp.task('js', function () {
 });
 
 gulp.task('css', function () {
+    const css = zume.css();
+
     gulp.src(css.src())
         .pipe(css.stylecow())
         .pipe(css.dest())
         .pipe(zume.refresh());
 });
 
-gulp.task('server', function () {
-    html.watch('html');
-    js.watch('js');
-    css.watch('css');
+gulp.task('server', ['default'], function () {
     zume.serve();
 });
 
@@ -71,14 +70,11 @@ The `zume` instance provide the following functions:
 Name | Description
 -----|------------
 `zume.path()` | Returns any path of the project. For example: `zume.path('foo')` returns `"/path/to/project/foo"`.
-`zume.src()` | Returns any path of the src folder. For example: `zume.src('templates')` returns `"/path/to/project/src/templates"`.
+`zume.src()` | Returns any path of the src folder. For example: `zume.src('foo')` returns `"/path/to/project/src/foo"`.
 `zume.dest()` | Returns any path of the dist folder. For example: `zume.src('img')` returns `"/path/to/project/build/img"`.
-`zume.url()` | Returns a public url path. For example: `zume.url('about')` returns `"/about"`.
-`zume.set()` | Save config data or any other value that you want to retrieve later.
-`zume.get()` | Get the data saved with `set`.
+`zume.url()` | Returns a public url path. For example: `zume.url('foo')` returns `"/foo"`.
 `zume.serve()` | Init a new http server using [browsersync](http://browsersync.io/).
-`zume.refresh()` | Used to reload [browsersync](http://browsersync.io/) with the latest changes.
-`zume.watch()` | Start watching file changes.
+`zume.refresh()` | Used to refresh the server with the file changes.
 
 ## HTML Generation
 

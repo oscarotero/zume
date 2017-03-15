@@ -4,13 +4,14 @@ const gulp = require('gulp');
 const Task = require('./task');
 
 class Css extends Task {
-    src() {
-        this.watchPaths.push(this.zume.src('css/*.css'));
-        return this.zume.src('css/**/*.css');
+    constructor (zume, dir) {
+        super(zume, dir || 'css');
     }
 
-    dest() {
-        return gulp.dest(this.zume.dest('css'));
+    src(pattern) {
+        this.watch.push(super.src('**/*.css'));
+
+        return super.src(pattern || '*.css');
     }
 
     stylecow(options) {

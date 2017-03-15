@@ -18,7 +18,6 @@ module.exports = function (options) {
         }
 
         locals.content = file.contents.toString();
-        locals.zume = zume;
 
         ejs.renderFile(path.join(options.root, locals.template), locals, options, function (err, result) {
             if (err) {
