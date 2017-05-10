@@ -4,6 +4,7 @@ const BrowserSync = require('browser-sync');
 const path = require('path');
 const url = require('url');
 const gulp = require('gulp');
+const del = require('del');
 const Html = require('./html');
 const Css = require('./css');
 const Js = require('./js');
@@ -90,6 +91,10 @@ class Zume {
         this.sync.watch(paths, this.config.server.watchOptions, (event, file) => {
             gulp.start(task);
         });
+    }
+
+    clear() {
+        del.sync(this.dest());
     }
 
     /**

@@ -8,33 +8,38 @@ Example of the `gulpfile.js`:
 const gulp = require('gulp');
 const zume = require('zume').create();
 
-gulp.task('html', function () {
+gulp.task('clear', function () {
+    zume.clear();
+});
+
+gulp.task('html', function (done) {
     const html = zume.html();
 
     gulp.src(html.src())
+        .on('end', () => done())
         .pipe(html.frontMatter())
         .pipe(html.markdown())
         .pipe(html.permalink())
         .pipe(html.templates())
-        .pipe(html.inline())
-        .pipe(html.minify())
         .pipe(html.dest())
         .pipe(zume.refresh());
 });
 
-gulp.task('js', function () {
+gulp.task('js', function (done) {
     const js = zume.js();
     
     gulp.src(js.src())
+        .on('end', () => done())
         .pipe(js.webpack())
         .pipe(js.dest())
         .pipe(zume.refresh());
 });
 
-gulp.task('css', function () {
+gulp.task('css', function (done) {
     const css = zume.css();
 
     gulp.src(css.src())
+        .on('end', () => done())
         .pipe(css.stylecow())
         .pipe(css.dest())
         .pipe(zume.refresh());
@@ -44,7 +49,7 @@ gulp.task('server', ['default'], function () {
     zume.serve();
 });
 
-gulp.task('default', ['html', 'js', 'css']);
+gulp.task('default', ['clear', 'html', 'js', 'css']);
 ```
 
 ## API
@@ -75,6 +80,7 @@ Name | Description
 `zume.url()` | Returns a public url path. For example: `zume.url('foo')` returns `"/foo"`.
 `zume.serve()` | Init a new http server using [browsersync](http://browsersync.io/).
 `zume.refresh()` | Used to refresh the server with the file changes.
+`zume.clear()` | Removes de dist folder and all its content.
 
 ## HTML Generation
 
@@ -85,17 +91,6 @@ Handle the front matter of `.md` files using [front-matter](https://github.com/j
 ```js
 .pipe(html.frontMatter({
     siteName: 'My awesome site'
-}))
-```
-
-### inline
-
-Inline the img, css, js, etc using [inline-source](https://github.com/popeindustries/inline-source). You can [configure the options](https://github.com/popeindustries/inline-source#usage) like the following example:
-
-```js
-.pipe(html.inline({
-    attribute: 'inline',
-    compress: false
 }))
 ```
 
@@ -118,26 +113,11 @@ const md = new MarkdownIt();
 .pipe(html.markdown(md))
 ```
 
-### minify
-
-Minifies the output html using [html-minifier](https://github.com/kangax/html-minifier). You can [configure the options](https://github.com/kangax/html-minifier#options-quick-reference) in the first argument. Example with the default options:
-
-```js
-.pipe(html.minify({
-    collapseBooleanAttributes: true,
-    collapseWhitespace: true,
-    removeAttributeQuotes: true,
-    removeComments: true,
-    removeEmptyAttributes: true,
-    removeRedundantAttributes: true,
-}))
-```
-
 ### permalink
 
 Renames the `*.md` files to `*/index.html` in order to generate pretty urls. For example: the file `about.md` is renamed to `about/index.html`.
 
-### templates
+### templates (ejs)
 
 Build the html files using [ejs](https://github.com/mde/ejs). In addition to the front matter values, the templates have two more variables: `content` to return the file content and `zume` containing the instance of zume, that you can use to generate, for example, new urs. You can [configure the options](https://github.com/mde/ejs#options) in the first argument. Example with the default options:
 

@@ -14,17 +14,6 @@ class Html extends Task {
         return require('./plugins/front-matter')(options);
     }
 
-    minify(options) {
-        return require('./plugins/minify')(options);
-    }
-
-    inline(options) {
-        options = options || {};
-        options.rootpath = this.zume.src();
-
-        return require('./plugins/inline')(options);
-    }
-
     markdown(options) {
         return require('./plugins/markdown')(options);
     }
@@ -33,7 +22,7 @@ class Html extends Task {
         return require('./plugins/permalink')(options);
     }
 
-    templates(options) {
+    ejs(options) {
         options = options || {};
         options.root = this.zume.src('templates');
         options.locals = options.locals || {};
@@ -41,7 +30,7 @@ class Html extends Task {
 
         this.watch.push(this.zume.src('templates/**/*.ejs'));
 
-        return require('./plugins/templates')(options);
+        return require('./plugins/ejs')(options);
     }
 }
 
