@@ -8,8 +8,8 @@ class Css extends Task {
         super(zume, dir || 'css');
     }
 
-    src(pattern) {
-        this.watch.push(super.src('**/*.css'));
+    src(pattern, watchPattern) {
+        this.watchSrc(watchPattern || '**/*.css');
 
         return super.src(pattern || '*.css');
     }

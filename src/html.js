@@ -4,10 +4,10 @@ const gulp = require('gulp');
 const Task = require('./task');
 
 class Html extends Task {
-    src(pattern) {
-        const src = super.src(pattern || 'data/**/*.md');
-        this.watch.push(src);
-        return src;
+    src(pattern, watchPattern) {
+        this.watchSrc(watchPattern || 'data/**/*.md');
+
+        return super.src(pattern || 'data/**/*.md');
     }
 
     frontMatter(options) {

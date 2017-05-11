@@ -20,6 +20,17 @@ class Task {
     dest() {
         return gulp.dest(this.zume.dest(this.dir));
     }
+
+    watchSrc(pattern) {
+        if (Array.isArray(pattern)) {
+            this.watch = this.watch.concat(
+                pattern.map((pattern) => this.zume.src(this.dir, pattern))
+            );
+            return;
+        }
+
+        return this.watch.push(this.zume.src(this.dir, pattern));
+    }
 }
 
 module.exports = Task;

@@ -8,6 +8,7 @@ const del = require('del');
 const Html = require('./html');
 const Css = require('./css');
 const Js = require('./js');
+const Files = require('./files');
 const defaults = {
     paths: {
         cwd: process.cwd(),
@@ -115,6 +116,12 @@ class Zume {
     css(name) {
         name = name || 'css';
         this.tasks[name] = new Css(this);
+        return this.tasks[name];
+    }
+
+    files(name) {
+        name = name || 'files';
+        this.tasks[name] = new Files(this);
         return this.tasks[name];
     }
 }
