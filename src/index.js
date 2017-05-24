@@ -101,27 +101,27 @@ class Zume {
     /**
      * Tasks
      */
-    html(name) {
+    html(name, dir) {
         name = name || 'html';
-        this.tasks[name] = new Html(this);
+        this.tasks[name] = new Html(this, dir);
         return this.tasks[name];
     }
 
-    js(name) {
+    js(name, dir) {
         name = name || 'js';
-        this.tasks[name] = new Js(this);
+        this.tasks[name] = new Js(this, dir);
         return this.tasks[name];
     }
 
-    css(name) {
+    css(name, dir) {
         name = name || 'css';
-        this.tasks[name] = new Css(this);
+        this.tasks[name] = new Css(this, dir);
         return this.tasks[name];
     }
 
-    files(name) {
+    files(name, dir) {
         name = name || 'files';
-        this.tasks[name] = new Files(this);
+        this.tasks[name] = new Files(this, dir);
         return this.tasks[name];
     }
 }
