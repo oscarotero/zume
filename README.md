@@ -20,7 +20,7 @@ gulp.task('html', function (done) {
         .pipe(html.frontMatter())
         .pipe(html.markdown())
         .pipe(html.permalink())
-        .pipe(html.templates())
+        .pipe(html.ejs())
         .pipe(html.dest())
         .pipe(zume.refresh());
 });
@@ -80,6 +80,7 @@ Name | Description
 `zume.url()` | Returns a public url path. For example: `zume.url('foo')` returns `"/foo"`.
 `zume.serve()` | Init a new http server using [browsersync](http://browsersync.io/).
 `zume.refresh()` | Used to refresh the server with the file changes.
+`zume.each()` | Used to execute a function for each file.
 `zume.clear()` | Removes de dist folder and all its content.
 
 ## HTML Generation
@@ -117,12 +118,12 @@ const md = new MarkdownIt();
 
 Renames the `*.md` files to `*/index.html` in order to generate pretty urls. For example: the file `about.md` is renamed to `about/index.html`.
 
-### templates (ejs)
+### ejs
 
 Build the html files using [ejs](https://github.com/mde/ejs). In addition to the front matter values, the templates have two more variables: `content` to return the file content and `zume` containing the instance of zume, that you can use to generate, for example, new urs. You can [configure the options](https://github.com/mde/ejs#options) in the first argument. Example with the default options:
 
 ```js
-.pipe(html.templates({
+.pipe(html.ejs({
     delimiter: '?'
 }))
 ```
@@ -142,7 +143,7 @@ Build the html files using [ejs](https://github.com/mde/ejs). In addition to the
 
 ## Assets generation
 
-### js (webpack)
+### webpack
 
 Runs [webpack](https://webpack.js.org/) to generate the javascript files. Example with the default configuration:
 
@@ -154,7 +155,7 @@ Runs [webpack](https://webpack.js.org/) to generate the javascript files. Exampl
 })
 ```
 
-### css (stylecow)
+### stylecow
 
 Runs [stylecow](http://stylecow.github.io/) to generate the css files. Example with the default configuration:
 
