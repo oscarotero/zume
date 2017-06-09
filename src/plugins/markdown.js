@@ -11,7 +11,7 @@ const defaults = {
 module.exports = function (options) {
     let md;
 
-    if (options instanceof MarkdownIt) {
+    if (options && options.constructor.name === MarkdownIt.name) {
         md = options;
     } else {
         options = Object.assign({}, defaults, options || {});

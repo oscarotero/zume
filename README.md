@@ -141,6 +141,14 @@ Build the html files using [ejs](https://github.com/mde/ejs). In addition to the
 </html>
 ```
 
+### relativeUrls
+
+Converts all urls to relative (images, links, etc). This allows to execute the web directly from the file system (`file:` protocol). The configuration value `index` insert automatically a `index.html` at the end of the urls.
+
+```js
+.pipe(html.relativeUrls({ index: true }))
+```
+
 ## Assets generation
 
 ### webpack

@@ -32,6 +32,13 @@ class Html extends Task {
 
         return require('./plugins/ejs')(options);
     }
+
+    relativeUrls(options) {
+        options = options || {};
+        options.url = this.zume.url();
+
+        return require('./plugins/relative-urls')(options);
+    }
 }
 
 module.exports = Html;
