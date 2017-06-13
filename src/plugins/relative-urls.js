@@ -18,14 +18,14 @@ module.exports = function (options) {
 }
 
 function resolve($, file, options) {
-    const base = path.dirname(path.join('/', file.relative));
+    const base = path.dirname(path.join(options.url, file.relative)) + '/';
 
     $('audio,embed,iframe,img,input,script,source,track,video')
         .each(function () {
             const element = $(this);
             const src = element.attr('src');
 
-            if (src && isRelative(src)) {
+            if (src) {
                 element.attr('src', url(src));
             }
         });
@@ -35,30 +35,34 @@ function resolve($, file, options) {
             const element = $(this);
             const href = element.attr('href');
 
-            if (href && isRelative(href)) {
+            if (href) {
                 element.attr('href', url(href));
             }
         });
 
     function url (url) {
-        let final = path.relative(base, path.join('/', url));
-
-        if (!path.extname(final)) {
-            if (options.index) {
-                final = path.join(final, 'index.html');
-            } else {
-                final = path.join(final, '/');
-            }
+        if (url.startsWith('#') || url.startsWith('.') || url.indexOf('//') !== -1) {
+            return url;
         }
 
-        if (final.startsWith('/')) {
+        if (!url.startsWith(options.url)) {
+            url = path.join(options.url, url);
+        }
+
+        if (!path.extname(url) && options.index) {
+            url = path.join(url, 'index.html');
+        }
+
+        let final = path.relative(base, url);
+
+        if (!final || final.startsWith('/')) {
             return '.' + final;
         }
 
-        return final;
-    }
+        if (!path.extname(final) && !final.endsWith('/')) {
+            return final + '/';
+        }
 
-    function isRelative(url) {
-        return url.indexOf('//') === -1;
+        return final;
     }
 }
