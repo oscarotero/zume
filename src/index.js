@@ -46,14 +46,14 @@ class Zume {
 
         this.paths = {
             cwd: this.config.paths.cwd,
-            url: url.parse(this.config.url || '/').pathname,
+            url: url.parse(this.config.paths.url || '/').pathname,
             src: path.join(this.config.paths.cwd, this.config.paths.src),
             dest: path.join(this.config.paths.cwd, this.config.paths.dest)
         };
 
         this.config.server.watchOptions.cwd = this.paths.cwd;
         this.config.server.server = this.paths.dest;
-
+        this.paths.dest = path.join(this.paths.dest, this.paths.url);
         this.sync = BrowserSync.create();
     }
 
