@@ -31,6 +31,10 @@ class Task {
 
         return this.watch.push(this.zume.src(this.dir, pattern));
     }
+
+    refresh() {
+        return this.zume.refresh();
+    }
 }
 
 module.exports = Task;

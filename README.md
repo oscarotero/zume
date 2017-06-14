@@ -1,4 +1,4 @@
-# ZUME [wip]
+# ZUME
 
 An opinionated static-site generator with gulp.
 
@@ -21,8 +21,9 @@ gulp.task('html', function (done) {
         .pipe(html.markdown())
         .pipe(html.permalink())
         .pipe(html.ejs())
+        .pipe(html.relativeUrls())
         .pipe(html.dest())
-        .pipe(zume.refresh());
+        .pipe(html.refresh());
 });
 
 gulp.task('js', function (done) {
@@ -32,7 +33,7 @@ gulp.task('js', function (done) {
         .on('end', () => done())
         .pipe(js.webpack())
         .pipe(js.dest())
-        .pipe(zume.refresh());
+        .pipe(js.refresh());
 });
 
 gulp.task('css', function (done) {
@@ -42,7 +43,7 @@ gulp.task('css', function (done) {
         .on('end', () => done())
         .pipe(css.stylecow())
         .pipe(css.dest())
-        .pipe(zume.refresh());
+        .pipe(css.refresh());
 });
 
 gulp.task('server', ['default'], function () {
@@ -113,6 +114,8 @@ const md = new MarkdownIt();
 
 .pipe(html.markdown(md))
 ```
+
+In addition to that, it also creates two variables: `markdown` and `markdownInline` that can be used in the templates to render markdown.
 
 ### permalink
 

@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.6.0] - 2017-06-14
+
+### Added
+
+* Markdown task insert the functions `markdown` and `markdownInline` in all file data, to be used in the templates.
+* Added the method `refresh()` to each task.
+
 ## [0.5.2] - 2017-06-13
 
 ### Fixed
@@ -55,6 +62,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[0.6.0]: https://github.com/oscarotero/zume/compare/v0.5.2...v0.6.0
 [0.5.2]: https://github.com/oscarotero/zume/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/oscarotero/zume/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/oscarotero/zume/compare/v0.4.0...v0.5.0

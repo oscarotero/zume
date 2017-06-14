@@ -18,8 +18,13 @@ module.exports = function (options) {
         md = new MarkdownIt(options);
     }
 
+    const markdown = (text) => md.render(text);
+    const markdownInline = (text) => md.renderInline(text);
+
     function run (file, done) {
         file.contents = new Buffer(md.render(file.contents.toString()));
+        file.data.markdown = markdown;
+        file.data.markdownInline = markdownInline;
         done(file);
     }
 
