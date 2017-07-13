@@ -14,7 +14,7 @@ module.exports = function (options) {
         const locals = Object.assign({}, options.locals || {}, file.data || {});
 
         if (!locals.template) {
-            return done(file);
+            return done();
         }
 
         locals.content = file.contents.toString();
