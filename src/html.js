@@ -33,11 +33,15 @@ class Html extends Task {
         return require('./plugins/ejs')(options);
     }
 
-    relativeUrls(options) {
+    urls(options) {
         options = options || {};
-        options.url = this.zume.url();
+        options.zume = this.zume;
 
-        return require('./plugins/relative-urls')(options);
+        return require('./plugins/urls')(options);
+    }
+
+    cheerio(options) {
+        return require('./plugins/cheerio')(options);
     }
 }
 

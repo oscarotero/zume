@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.7.0] - 2017-07-18
+
+### Added
+
+* `html.permalink()` can be configured in the frontmatter using the variable `permalink`. Example: `permalink: feed.xml`.
+* New method `zume.fullUrl()` to return the url with the host.
+* New task `html.cheerio()` to manipulate the html content
+
+### Changed
+
+* Renamed `html.relativeUrls()` to `html.urls()`.
+* Added the option `relative` to `html.urls()` to make all urls relative each other or not.
+
+### Fixed
+
+* Fixed xml manipulation
+
 ## [0.6.1] - 2017-07-13
 
 ### Changed

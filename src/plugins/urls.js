@@ -5,10 +5,16 @@ const cheerio = require('cheerio');
 const path = require('path');
 
 module.exports = function (options) {
+    options.url = options.zume.url();
+
     function run (file, done) {
-        const $ = cheerio.load(file.contents.toString(), options.parser);
-        resolve($, file, options);
-        file.contents = new Buffer($.html());
+        if (path.extname(file.path) === '.html') {
+            const $ = cheerio.load(file.contents.toString(), options.parser);
+            resolve($, file, options);
+
+            file.contents = new Buffer($.html());
+        }
+
         done(file);
     }
 
@@ -51,6 +57,10 @@ function resolve($, file, options) {
 
         if (!path.extname(url) && options.index) {
             url = path.join(url, 'index.html');
+        }
+
+        if (!options.relative) {
+            return url;
         }
 
         let final = path.relative(base, url);

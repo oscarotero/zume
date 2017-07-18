@@ -5,13 +5,18 @@ const path = require('path');
 
 module.exports = function () {
     function run (file, done) {
-        let newPath = file.path.replace(/\.md$/, '');
+        if (file.data && file.data.permalink) {
+            file.path = path.join(path.dirname(file.path), file.data.permalink);
+        } else {
+            let newPath = file.path.replace(/\.md$/, '');
 
-        if (path.basename(newPath) !== 'index') {
-            newPath = path.join(newPath, 'index');
+            if (path.basename(newPath) !== 'index') {
+                newPath = path.join(newPath, 'index');
+            }
+
+            file.path = `${newPath}.html`;
         }
 
-        file.path = newPath + '.html';
         done(file);
     }
 

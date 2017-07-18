@@ -44,16 +44,19 @@ class Zume {
         this.config.paths = Object.assign({}, defaults.paths, config.paths || {});
         this.config.server = Object.assign({}, defaults.server, config.server || {});
 
+        const parsedUrl = url.parse(this.config.paths.url);
+
         this.paths = {
             cwd: this.config.paths.cwd,
-            url: url.parse(this.config.paths.url || '/').pathname,
+            baseUrl: parsedUrl.protocol + '//' + parsedUrl.host,
+            path: parsedUrl.pathname || '/',
             src: path.join(this.config.paths.cwd, this.config.paths.src),
             dest: path.join(this.config.paths.cwd, this.config.paths.dest)
         };
 
         this.config.server.watchOptions.cwd = this.paths.cwd;
         this.config.server.server = this.paths.dest;
-        this.paths.dest = path.join(this.paths.dest, this.paths.url);
+        this.paths.dest = path.join(this.paths.dest, this.paths.path);
         this.sync = BrowserSync.create();
     }
 
@@ -71,9 +74,13 @@ class Zume {
 
     url () {
         return getPath(
-            this.paths.url,
+            this.paths.path,
             Array.prototype.slice.call(arguments)
         ).replace(/\\/g, '/');
+    }
+
+    fullUrl () {
+        return this.paths.baseUrl + this.url.apply(this, arguments);
     }
 
     serve() {

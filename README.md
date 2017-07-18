@@ -21,7 +21,7 @@ gulp.task('html', function (done) {
         .pipe(html.markdown())
         .pipe(html.permalink())
         .pipe(html.ejs())
-        .pipe(html.relativeUrls())
+        .pipe(html.urls())
         .pipe(html.dest())
         .pipe(html.refresh());
 });
@@ -144,12 +144,24 @@ Build the html files using [ejs](https://github.com/mde/ejs). In addition to the
 </html>
 ```
 
-### relativeUrls
+### urls
 
-Converts all urls to relative (images, links, etc). This allows to execute the web directly from the file system (`file:` protocol). The configuration value `index` insert automatically a `index.html` at the end of the urls.
+Search and fix all relative urls in the html (`a`, `img`, `link`, `script`, `source`, etc...), to use the site url as base. Optionally, can makes all urls relative each other, allowing to execute the web directly from the file system (`file:` protocol). The configuration value `index` insert automatically a `index.html` at the end of the urls.
 
 ```js
-.pipe(html.relativeUrls({ index: true }))
+.pipe(html.urls({
+    index: true, //add "/index.html" to all links
+    relative: true //makes the urls relatives to the current page
+}))
+
+### cheerio
+
+Run [cheerio](https://github.com/cheeriojs/cheerio) in all html pages. Useful to make changes in the html using the jQuery sintax.
+
+```js
+.pipe(html.cheerio(function ($) {
+    $('h1').addClass('text-title');
+}))
 ```
 
 ## Assets generation
