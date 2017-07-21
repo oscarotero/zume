@@ -170,6 +170,7 @@ html.urls({
     index: true, //add "/index.html" to all links
     relative: true //makes the urls relatives to the current page
 })
+```
 
 ### cheerio
 
