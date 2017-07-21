@@ -1,6 +1,7 @@
 'use strict';
 
 const gulp = require('gulp');
+const through = require('through2');
 
 class Task {
     constructor (zume, dir) {
@@ -27,6 +28,20 @@ class Task {
         this.stream.pipe(plugin);
 
         return this;
+    }
+
+    each(fn, data) {
+        data = data || {};
+        const files = [];
+
+        return this.pipe(through.obj(function (file, encoding, callback) {
+            fn(file, data);
+            files.push(file);
+            callback();
+        }, function (done) {
+            files.forEach(file => this.push(file));
+            done();
+        }));
     }
 
     dest(done) {
