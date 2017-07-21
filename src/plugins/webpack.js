@@ -8,6 +8,18 @@ const MemoryFS = require('memory-fs');
 const defaults = {
     output: {
         filename: '[name].js'
+    },
+    node: false,
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader'
+                }
+            }
+        ]
     }
 };
 

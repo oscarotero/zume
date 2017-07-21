@@ -145,7 +145,7 @@ module.exports = Zume;
 function initTask(zume, name, Task, options) {
     options = options || {};
 
-    const task = new Task(zume, options.dir);
+    const task = new Task(zume, options.base);
     
     zume.tasks[options.task || name] = task;
 

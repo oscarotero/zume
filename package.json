@@ -6,6 +6,9 @@
   "author": "Oscar Otero <oom@oscarotero.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-es2016": "^6.24.1",
     "browser-sync": "^2.18.8",
     "cheerio": "^0.22",
     "del": "^3.0.0",
