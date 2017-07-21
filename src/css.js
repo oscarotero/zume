@@ -1,6 +1,5 @@
 'use strict';
 
-const gulp = require('gulp');
 const Task = require('./task');
 
 class Css extends Task {
@@ -21,7 +20,7 @@ class Css extends Task {
             options.code = 'minify';
         }
 
-        return require('./plugins/stylecow')(options);
+        return this.pipe(require('./plugins/stylecow')(options));
     }
 }
 

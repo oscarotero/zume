@@ -1,6 +1,5 @@
 'use strict';
 
-const gulp = require('gulp');
 const Task = require('./task');
 
 class Js extends Task {
@@ -28,7 +27,7 @@ class Js extends Task {
         options.output.publicPath = this.zume.url(this.dir);
         options.output.path = this.zume.dest(this.dir);
 
-        return require('./plugins/webpack')(options);
+        return this.pipe(require('./plugins/webpack')(options));
     }
 }
 

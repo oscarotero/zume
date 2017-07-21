@@ -1,6 +1,5 @@
 'use strict';
 
-const gulp = require('gulp');
 const Task = require('./task');
 
 class Html extends Task {
@@ -11,15 +10,15 @@ class Html extends Task {
     }
 
     frontMatter(options) {
-        return require('./plugins/front-matter')(options);
+        return this.pipe(require('./plugins/front-matter')(options));
     }
 
     markdown(options) {
-        return require('./plugins/markdown')(options);
+        return this.pipe(require('./plugins/markdown')(options));
     }
 
     permalink(options) {
-        return require('./plugins/permalink')(options);
+        return this.pipe(require('./plugins/permalink')(options));
     }
 
     ejs(options) {
@@ -30,18 +29,18 @@ class Html extends Task {
 
         this.watch.push(this.zume.src('templates/**/*.ejs'));
 
-        return require('./plugins/ejs')(options);
+        return this.pipe(require('./plugins/ejs')(options));
     }
 
     urls(options) {
         options = options || {};
         options.zume = this.zume;
 
-        return require('./plugins/urls')(options);
+        return this.pipe(require('./plugins/urls')(options));
     }
 
     cheerio(options) {
-        return require('./plugins/cheerio')(options);
+        return this.pipe(require('./plugins/cheerio')(options));
     }
 }
 

@@ -1,6 +1,5 @@
 'use strict';
 
-const gulp = require('gulp');
 const Task = require('./task');
 
 class Files extends Task {

@@ -13,37 +13,25 @@ gulp.task('clear', function () {
 });
 
 gulp.task('html', function (done) {
-    const html = zume.html();
-
-    gulp.src(html.src())
-        .on('end', () => done())
-        .pipe(html.frontMatter())
-        .pipe(html.markdown())
-        .pipe(html.permalink())
-        .pipe(html.ejs())
-        .pipe(html.urls())
-        .pipe(html.dest())
-        .pipe(html.refresh());
+    zume.html()
+        .frontMatter()
+        .markdown()
+        .permalink()
+        .ejs()
+        .urls()
+        .dest(done);
 });
 
 gulp.task('js', function (done) {
-    const js = zume.js();
-    
-    gulp.src(js.src())
-        .on('end', () => done())
-        .pipe(js.webpack())
-        .pipe(js.dest())
-        .pipe(js.refresh());
+    zume.js()
+        .webpack()
+        .dest(done);
 });
 
 gulp.task('css', function (done) {
-    const css = zume.css();
-
-    gulp.src(css.src())
-        .on('end', () => done())
-        .pipe(css.stylecow())
-        .pipe(css.dest())
-        .pipe(css.refresh());
+    zume.css()
+        .stylecow()
+        .dest(done);
 });
 
 gulp.task('server', ['default'], function () {
@@ -85,22 +73,34 @@ Name | Description
 `zume.each()` | Used to execute a function for each file.
 `zume.clear()` | Removes de dist folder and all its content.
 
+## Task
+
+Zume contains the tasks `html`, `css`, `js` and `files`. To create a task, just need to do the following:
+
+```js
+const html = zume.html(options);
+```
+
+Available options:
+
+Name | Description
+-----|-------------
+`task` | The gulp task name used to relaunch by the watcher. The default value in html is `html`, css is `css`, and so on.
+`base` | The base directory used to search for files. 
+`pattern` | The pattern used to search files. The default value in html is `data/**/*.md`, in css is `*.css`, etc.
+`watchPattern` | Additional patterns added to the watcher.
+
 ## HTML Generation
 
 To generate html pages, you need to create a html task and use some of its functions:
 
 ```js
-//Create a html task
-const html = zume.html();
-
-//Use the methods in the gulp task
-gulp.src(html.src())
-    .pipe(html.frontMatter())
-    .pipe(html.markdown())
-    .pipe(html.permalink())
-    .pipe(html.ejs())
-    .pipe(html.dest())
-    .pipe(html.refresh());
+zume.html()
+    .frontMatter()
+    .markdown()
+    .permalink()
+    .ejs()
+    .dest()
 ```
 
 ### frontMatter
@@ -108,9 +108,9 @@ gulp.src(html.src())
 Handle the front matter of `.md` files using [front-matter](https://github.com/jxson/front-matter). In addition to the front matter, you can pass an object with common data to all files. Example:
 
 ```js
-.pipe(html.frontMatter({
+html.frontMatter({
     siteName: 'My awesome site'
-}))
+})
 ```
 
 ### markdown
@@ -119,17 +119,17 @@ Parse the content of the files as markdown using [markdown-it](https://github.co
 
 ```js
 //Using an object of options
-.pipe(html.markdown({
+html.markdown({
     html: true,
     linkify: true,
     typographer: true
-}))
+})
 
 //Or an instance of markdownit
 const MarkdownIt = require('markdown-it');
 const md = new MarkdownIt();
 
-.pipe(html.markdown(md))
+html.markdown(md)
 ```
 
 In addition to that, it also creates two variables: `markdown` and `markdownInline` that can be used in the templates to render markdown.
@@ -143,9 +143,9 @@ Renames the `*.md` files to `*/index.html` in order to generate pretty urls. For
 Build the html files using [ejs](https://github.com/mde/ejs). In addition to the front matter values, the templates have two more variables: `content` to return the file content and `zume` containing the instance of zume, that you can use to generate, for example, new urls. You can [configure the options](https://github.com/mde/ejs#options) in the first argument. Example with the default options:
 
 ```js
-.pipe(html.ejs({
+html.ejs({
     delimiter: '?'
-}))
+})
 ```
 
 ```html
@@ -166,29 +166,29 @@ Build the html files using [ejs](https://github.com/mde/ejs). In addition to the
 Search and fix all relative urls in the html (`a`, `img`, `link`, `script`, `source`, etc...), to use the site url as base. Optionally, can makes all urls relative each other, allowing to execute the web directly from the file system (`file:` protocol). The configuration value `index` insert automatically a `index.html` at the end of the urls.
 
 ```js
-.pipe(html.urls({
+html.urls({
     index: true, //add "/index.html" to all links
     relative: true //makes the urls relatives to the current page
-}))
+})
 
 ### cheerio
 
 Run [cheerio](https://github.com/cheeriojs/cheerio) in all html pages. Useful to make changes in the html using the jQuery sintax.
 
 ```js
-.pipe(html.cheerio(function ($) {
+html.cheerio(function ($) {
     $('h1').addClass('text-title');
-}));
+});
 
 //object with options
-.pipe(html.cheerio({
+html.cheerio({
     parser: {
         normalizeWhitespace: true,
     },
     fn: function ($) {
         $('h1').addClass('text-title');
     }
-}))
+})
 ```
 
 ## JS generation
@@ -196,11 +196,9 @@ Run [cheerio](https://github.com/cheeriojs/cheerio) in all html pages. Useful to
 Task used to generate js content.
 
 ```js
-const js = zume.js();
-gulp.src(js.src())
-    .pipe(js.webpack(options))
-    .pipe(js.dest())
-    .pipe(js.refresh());
+zume.js()
+    .webpack(options)
+    .dest();
 ```
 
 ### webpack
@@ -208,7 +206,7 @@ gulp.src(js.src())
 Runs [webpack](https://webpack.js.org/) to generate the javascript files. Example with the default configuration:
 
 ```js
-.pipe(js.webpack({
+js.webpack({
     output: {
         filename: '[name].js'
     }
@@ -220,11 +218,9 @@ Runs [webpack](https://webpack.js.org/) to generate the javascript files. Exampl
 Task used to generate css content.
 
 ```js
-const css = zume.css();
-gulp.src(css.src())
-    .pipe(css.stylecow(options))
-    .pipe(css.dest())
-    .pipe(css.refresh());
+zume.css()
+    .stylecow(options)
+    .dest();
 ```
 
 ### stylecow
@@ -232,7 +228,7 @@ gulp.src(css.src())
 Runs [stylecow](http://stylecow.github.io/) to generate the css files. Example with the default configuration:
 
 ```js
-.pipe(css.stylecow({
+css.stylecow({
         "support": {
         "explorer": 10,
         "edge": false,
@@ -275,8 +271,5 @@ Runs [stylecow](http://stylecow.github.io/) to generate the css files. Example w
 Simple task used just to copy files:
 
 ```js
-const files = zume.files('dir/to/files');
-gulp.src(files.src())
-    .pipe(files.dest())
-    .pipe(files.refresh());
+zume.files({base: 'dir/to/files'}).dest();
 ```

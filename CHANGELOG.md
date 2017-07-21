@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.0 - UNRELEASED
+
+### Changed
+
+* Simplified the API. The gulp stream is included into the task, so instead `.pipe(html.permalink())`, now is simply `.permalink()`.
+* The `.dest()` function includes automatically `.on('end', cb)` and `.pipe(zume.refresh())`.
+* On create a new task, the `.src()` is executed automatically
+
 ## [0.7.0] - 2017-07-18
 
 ### Added

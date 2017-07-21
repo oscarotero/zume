@@ -123,32 +123,34 @@ class Zume {
     /**
      * Tasks
      */
-    html(name, dir) {
-        name = name || 'html';
-        this.tasks[name] = new Html(this, dir);
-        return this.tasks[name];
+    html(options) {
+        return initTask(this, 'html', Html, options);
     }
 
-    js(name, dir) {
-        name = name || 'js';
-        this.tasks[name] = new Js(this, dir);
-        return this.tasks[name];
+    js(options) {
+        return initTask(this, 'js', Js, options);
     }
 
-    css(name, dir) {
-        name = name || 'css';
-        this.tasks[name] = new Css(this, dir);
-        return this.tasks[name];
+    css(options) {
+        return initTask(this, 'css', Css, options);
     }
 
-    files(name, dir) {
-        name = name || 'files';
-        this.tasks[name] = new Files(this, dir);
-        return this.tasks[name];
+    files(options) {
+        return initTask(this, 'files', Files, options);
     }
 }
 
 module.exports = Zume;
+
+function initTask(zume, name, Task, options) {
+    options = options || {};
+
+    const task = new Task(zume, options.dir);
+    
+    zume.tasks[options.task || name] = task;
+
+    return task.src(options.pattern, options.watchPattern);
+}
 
 function getPath(absolute, args) {
     if (!args.length) {

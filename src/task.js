@@ -10,15 +10,34 @@ class Task {
     }
 
     src(pattern) {
+        let src;
+
         if (Array.isArray(pattern)) {
-            return pattern.map((pattern) => this.zume.src(this.dir, pattern));
+            src = pattern.map((pattern) => this.zume.src(this.dir, pattern));
+        } else {
+            src = this.zume.src(this.dir, pattern);
         }
 
-        return this.zume.src(this.dir, pattern);
+        this.stream = gulp.src(src);
+
+        return this;
     }
 
-    dest() {
-        return gulp.dest(this.zume.dest(this.dir));
+    pipe(plugin) {
+        this.stream.pipe(plugin);
+
+        return this;
+    }
+
+    dest(done) {
+        if (done) {
+            this.stream.on('end', function () { done(); });
+        }
+
+        this.pipe(gulp.dest(this.zume.dest(this.dir)));
+        this.pipe(this.zume.refresh());
+
+        return this;
     }
 
     watchSrc(pattern) {
@@ -30,10 +49,6 @@ class Task {
         }
 
         return this.watch.push(this.zume.src(this.dir, pattern));
-    }
-
-    refresh() {
-        return this.zume.refresh();
     }
 }
 
