@@ -1,7 +1,6 @@
 'use strict';
 
 const BrowserSync = require('browser-sync');
-const through = require('through2');
 const path = require('path');
 const url = require('url');
 const gulp = require('gulp');
@@ -37,7 +36,7 @@ class Zume {
     constructor (config) {
         this.tasks = {};
         this.dev = true;
-        
+
         config = config || {};
 
         this.config = Object.assign({}, defaults);
@@ -96,20 +95,6 @@ class Zume {
         return this.sync.stream();
     }
 
-    each(fn, data) {
-        data = data || {};
-        const files = [];
-
-        return through.obj(function (file, encoding, callback) {
-            fn(file, data);
-            files.push(file);
-            callback();
-        }, function (done) {
-            files.forEach(file => this.push(file));
-            done();
-        });
-    }
-
     watch(paths, task) {
         this.sync.watch(paths, this.config.server.watchOptions, (event, file) => {
             gulp.start(task);
@@ -146,7 +131,7 @@ function initTask(zume, name, Task, options) {
     options = options || {};
 
     const task = new Task(zume, options.base);
-    
+
     zume.tasks[options.task || name] = task;
 
     return task.src(options.pattern, options.watchPattern);

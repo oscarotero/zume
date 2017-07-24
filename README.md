@@ -70,7 +70,6 @@ Name | Description
 `zume.fullUrl()` | Returns a public full url path. For example: `zume.fullUrl('foo')` returns `"http://example.com/foo"`.
 `zume.serve()` | Init a new http server using [browsersync](http://browsersync.io/).
 `zume.refresh()` | Used to refresh the server with the file changes.
-`zume.each()` | Used to execute a function for each file.
 `zume.clear()` | Removes de dist folder and all its content.
 
 ## Task
