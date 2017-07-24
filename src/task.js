@@ -24,7 +24,7 @@ class Task {
     }
 
     pipe(plugin) {
-        this.stream.pipe(plugin);
+        this.stream = this.stream.pipe(plugin);
 
         return this;
     }
