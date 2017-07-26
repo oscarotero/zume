@@ -21,6 +21,8 @@ class Js extends Task {
             options.plugins = options.plugins || [];
             options.plugins.push(new webpack.optimize.DedupePlugin());
             options.plugins.push(new webpack.optimize.UglifyJsPlugin());
+        } else {
+            options.devtool = 'source-map';
         }
 
         options.context = this.zume.src(this.dir);
