@@ -34,11 +34,16 @@ gulp.task('css', function (done) {
         .dest(done);
 });
 
+gulp.task('img', function (done) {
+    zume.img()
+        .dest(done);
+});
+
 gulp.task('server', ['default'], function () {
     zume.serve();
 });
 
-gulp.task('default', ['clear', 'html', 'js', 'css']);
+gulp.task('default', ['clear', 'html', 'js', 'css', 'img']);
 ```
 
 ## API
@@ -69,7 +74,6 @@ Name | Description
 `zume.url()` | Returns a public url path. For example: `zume.url('foo')` returns `"/foo"`.
 `zume.fullUrl()` | Returns a public full url path. For example: `zume.fullUrl('foo')` returns `"http://example.com/foo"`.
 `zume.serve()` | Init a new http server using [browsersync](http://browsersync.io/).
-`zume.refresh()` | Used to refresh the server with the file changes.
 `zume.clear()` | Removes de dist folder and all its content.
 
 ## Task
@@ -191,7 +195,7 @@ html.cheerio({
 })
 ```
 
-## JS generation
+## JS
 
 Task used to generate js content.
 
@@ -213,7 +217,7 @@ js.webpack({
 })
 ```
 
-## CSS generation
+## CSS
 
 Task used to generate css content.
 
@@ -264,6 +268,14 @@ css.stylecow({
     "code": "normal",
     "map": "auto"
 })
+```
+
+## Img
+
+Simple task used to handle img files:
+
+```js
+zume.img().dest();
 ```
 
 ## Files

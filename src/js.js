@@ -3,8 +3,9 @@
 const Task = require('./task');
 
 class Js extends Task {
-    constructor (zume, dir) {
+    constructor(zume, dir) {
         super(zume, dir || 'js');
+        this.reload = '*.js';
     }
 
     src(pattern, watchPattern) {

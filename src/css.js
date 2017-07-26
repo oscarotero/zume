@@ -3,8 +3,9 @@
 const Task = require('./task');
 
 class Css extends Task {
-    constructor (zume, dir) {
+    constructor(zume, dir) {
         super(zume, dir || 'css');
+        this.reload = '*.css';
     }
 
     src(pattern, watchPattern) {

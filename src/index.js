@@ -7,6 +7,7 @@ const gulp = require('gulp');
 const del = require('del');
 const Html = require('./html');
 const Css = require('./css');
+const Img = require('./img');
 const Js = require('./js');
 const Files = require('./files');
 const defaults = {
@@ -14,7 +15,7 @@ const defaults = {
         cwd: process.cwd(),
         url: 'http://localhost',
         src: 'src',
-        dest: 'build',
+        dest: 'build'
     },
     server: {
         open: false,
@@ -33,15 +34,23 @@ class Zume {
         return new Zume(config);
     }
 
-    constructor (config) {
+    constructor(config) {
         this.tasks = {};
         this.dev = true;
 
         config = config || {};
 
         this.config = Object.assign({}, defaults);
-        this.config.paths = Object.assign({}, defaults.paths, config.paths || {});
-        this.config.server = Object.assign({}, defaults.server, config.server || {});
+        this.config.paths = Object.assign(
+            {},
+            defaults.paths,
+            config.paths || {}
+        );
+        this.config.server = Object.assign(
+            {},
+            defaults.server,
+            config.server || {}
+        );
 
         const parsedUrl = url.parse(this.config.paths.url);
 
@@ -59,46 +68,45 @@ class Zume {
         this.sync = BrowserSync.create();
     }
 
-    path () {
+    path() {
         return getPath(this.paths.cwd, Array.prototype.slice.call(arguments));
     }
 
-    src () {
+    src() {
         return getPath(this.paths.src, Array.prototype.slice.call(arguments));
     }
 
-    dest (dir) {
+    dest(dir) {
         return getPath(this.paths.dest, Array.prototype.slice.call(arguments));
     }
 
-    url () {
+    url() {
         return getPath(
             this.paths.path,
             Array.prototype.slice.call(arguments)
         ).replace(/\\/g, '/');
     }
 
-    fullUrl () {
+    fullUrl() {
         return this.paths.baseUrl + this.url.apply(this, arguments);
     }
 
     serve() {
         this.sync.init(this.config.server);
 
-        Object.keys(this.tasks).forEach((name) => {
+        Object.keys(this.tasks).forEach(name => {
             this.watch(this.tasks[name].watch, name);
         });
-
-    }
-
-    refresh() {
-        return this.sync.stream();
     }
 
     watch(paths, task) {
-        this.sync.watch(paths, this.config.server.watchOptions, (event, file) => {
-            gulp.start(task);
-        });
+        this.sync.watch(
+            paths,
+            this.config.server.watchOptions,
+            (event, file) => {
+                gulp.start(task);
+            }
+        );
     }
 
     clear() {
@@ -118,6 +126,10 @@ class Zume {
 
     css(options) {
         return initTask(this, 'css', Css, options);
+    }
+
+    img(options) {
+        return initTask(this, 'img', Img, options);
     }
 
     files(options) {

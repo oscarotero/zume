@@ -4,9 +4,11 @@ const Task = require('./task');
 
 class Files extends Task {
     src(pattern, watchPattern) {
-        this.watchSrc(watchPattern || pattern || '**');
+        pattern = pattern || '**';
 
-        return super.src(pattern || '**');
+        this.watchSrc(watchPattern || pattern);
+
+        return super.src(pattern);
     }
 }
 
