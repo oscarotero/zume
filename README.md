@@ -2,6 +2,21 @@
 
 An opinionated static-site generator with gulp.
 
+Directory structure:
+
+```
+root/
+    |_ gulpfile.js
+    |_ package.json
+    |_ src/
+        |_ css
+        |_ js
+        |_ img
+        |_ data
+        |_ templates
+    |_ build/
+```
+
 Example of the `gulpfile.js`:
 
 ```js
