@@ -19,6 +19,7 @@ const defaults = {
     "plugins": [
         "base64",
         "bower-loader",
+        "npm-loader",
         "calc",
         "color",
         "custom-media",
@@ -32,7 +33,6 @@ const defaults = {
         "msfilter-linear-gradient",
         "msfilter-transform",
         "nested-rules",
-        "npm-loader",
         "prefixes",
         "rem",
         "variables",
