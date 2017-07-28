@@ -27,7 +27,7 @@ class Js extends Task {
 
         options.context = this.zume.src(this.dir);
         options.output = options.output || {};
-        options.output.publicPath = this.zume.url(this.dir);
+        options.output.publicPath = this.zume.url(this.dir) + '/';
         options.output.path = this.zume.dest(this.dir);
 
         return this.pipe(require('./plugins/webpack')(options));
