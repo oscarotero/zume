@@ -9,10 +9,17 @@ class Section extends Array {
         this.id = id;
     }
 
-    setData(data) {
-        for (let k in data) {
-            this[k] = data[k];
+    setData(name, value) {
+        if (typeof name === 'object') {
+
+            for (let k in name) {
+                this[k] = name[k];
+            }
+
+            return;
         }
+
+        this[name] = value;
     }
 
     has(id) {
@@ -53,6 +60,10 @@ class Section extends Array {
 };
 
 module.exports = function (options) {
+    options = options || {};
+
+    const override = options.override || {};
+    const data = options.data || [];
     const sections = new Section();
     const files = [];
 
@@ -74,18 +85,22 @@ module.exports = function (options) {
                 
                 const section = tree.getOrCreate(id);
 
-                if (id in options) {
-                    section.setData(options[id]);
-                }
-
                 if (!pieces.length) {
                     section.setData({
                         title: file.data.title,
                         position: file.data.position
                     });
+
+                    if (data.length) {
+                        data.forEach(field => section.setData(field, file.data[field]));
+                    }
                 }
+
+                if (id in override) {
+                    section.setData(override[id]);
+                }
+
                 tree.order();
-                
                 tree = section;
             }
 
