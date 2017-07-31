@@ -39,6 +39,10 @@ class Html extends Task {
         return this.pipe(require('./plugins/urls')(options));
     }
 
+    navigation(options) {
+        return this.pipe(require('./plugins/navigation')(options));
+    }
+
     cheerio(options) {
         return this.pipe(require('./plugins/cheerio')(options));
     }
