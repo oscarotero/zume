@@ -179,6 +179,8 @@ html.navigation()
 </html>
 ```
 
+Use the variable `position` to change the order of the elements.
+
 
 ### ejs
 

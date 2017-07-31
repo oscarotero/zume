@@ -81,13 +81,14 @@ module.exports = function (options) {
             file.data.id = pieces.join('/');
 
             while (pieces.length) {
-                id += (id ? '/' : '') + pieces.shift();
+                const piece = pieces.shift();
+                id += (id ? '/' : '') + piece;
                 
                 const section = tree.getOrCreate(id);
 
                 if (!pieces.length) {
                     section.setData({
-                        title: file.data.title,
+                        title: file.data.title || piece,
                         position: file.data.position
                     });
 
