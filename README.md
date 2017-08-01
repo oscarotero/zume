@@ -32,6 +32,7 @@ gulp.task('html', function (done) {
         .frontMatter()
         .markdown()
         .permalink()
+        .navigation()
         .ejs()
         .urls()
         .dest(done);
@@ -155,6 +156,31 @@ In addition to that, it also creates two variables: `markdown` and `markdownInli
 ### permalink
 
 Renames the `*.md` files to `*/index.html` in order to generate pretty urls. For example: the file `about.md` is renamed to `about/index.html`.
+
+### navigation
+
+Creates a tree structure with all files to build a navigation menu. Example:
+
+```js
+html.navigation()
+```
+
+```html
+<html>
+<body>
+    <ul>
+        <? nav.forEach(section => { ?>
+        <li>
+            <a href="<?= section.id ?>"><?= section.title ?></a>
+        </li>
+        <? }) ?>
+    </ul>
+</body>
+</html>
+```
+
+Use the variable `position` to change the order of the elements.
+
 
 ### ejs
 
