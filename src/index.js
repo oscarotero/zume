@@ -110,7 +110,7 @@ class Zume {
     }
 
     clear() {
-        del.sync(this.dest());
+        del.sync(path.join(this.config.paths.cwd, this.config.paths.dest));
     }
 
     /**
