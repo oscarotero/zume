@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * New `.filter()` method added to all tasks.
 
+### Fixed
+
+* `zume.clear()` removes the entire build directory, even if the dest directory is a subdirectory inside build.
+
 ## [0.10.0] - 2017-07-31
 
 ### Added
@@ -139,6 +143,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[0.11.0]: https://github.com/oscarotero/zume/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/oscarotero/zume/compare/v0.9.2...v0.10.0
 [0.9.2]: https://github.com/oscarotero/zume/compare/v0.9.1...v0.9.2
 [0.9.1]: https://github.com/oscarotero/zume/compare/v0.9.0...v0.9.1
