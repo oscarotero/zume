@@ -109,6 +109,13 @@ Name | Description
 `pattern` | The pattern used to search files. The default value in html is `data/**/*.md`, in css is `*.css`, etc.
 `watchPattern` | Additional patterns added to the watcher.
 
+There are some functions available in all tasks:
+
+* `.pipe(plugin)` Allow to pipe more gulp plugins to the stream 
+* `.each(callback)` To execute a callback for each file
+* `.filter(callback)` To filter some files
+* `.dest(callback)` To save the files in the build folder.
+
 ## HTML Generation
 
 To generate html pages, you need to create a html task and use some of its functions:

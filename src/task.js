@@ -50,6 +50,20 @@ class Task {
         );
     }
 
+    filter(fn) {
+        return this.pipe(
+            through.obj(
+                function(file, encoding, callback) {
+                    if (fn(file)) {
+                        callback(null, file);
+                    } else {
+                        callback();
+                    }
+                }
+            )
+        );
+    }
+
     dest(done) {
         this.pipe(gulp.dest(this.zume.dest(this.dir)));
 
