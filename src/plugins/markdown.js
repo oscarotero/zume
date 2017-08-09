@@ -2,10 +2,18 @@
 
 const through = require('through2');
 const MarkdownIt = require('markdown-it');
+const hljs = require('highlight.js');
 const defaults = {
     html: true,
     linkify: true,
-    typographer: true
+    typographer: true,
+    highlight: function (code, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+            return `<pre><code class="hljs ${lang}">${hljs.highlight(lang, code).value}</code></pre>`;
+        }
+
+        return '';
+    }
 };
 
 module.exports = function (options) {
@@ -14,8 +22,11 @@ module.exports = function (options) {
     if (options && options.constructor.name === MarkdownIt.name) {
         md = options;
     } else {
-        options = Object.assign({}, defaults, options || {});
-        md = new MarkdownIt(options);
+        md = new MarkdownIt(defaults);
+
+        if (typeof options === 'function') {
+            options(md);
+        }
     }
 
     const markdown = (text) => md.render(text);
