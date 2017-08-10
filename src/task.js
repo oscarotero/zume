@@ -52,15 +52,13 @@ class Task {
 
     filter(fn) {
         return this.pipe(
-            through.obj(
-                function(file, encoding, callback) {
-                    if (fn(file)) {
-                        callback(null, file);
-                    } else {
-                        callback();
-                    }
+            through.obj(function(file, encoding, callback) {
+                if (fn(file)) {
+                    callback(null, file);
+                } else {
+                    callback();
                 }
-            )
+            })
         );
     }
 

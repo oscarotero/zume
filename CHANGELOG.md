@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.13.0] - 2017-08-10
+
+### Changed
+
+* `html.markdown()` insert `<br>` in line break by default.
+* `js.webpack()` accepts a function to change the default config
+
 ## [0.12.0] - 2017-08-09
 
 ### Added
@@ -153,6 +160,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[0.13.0]: https://github.com/oscarotero/zume/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/oscarotero/zume/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/oscarotero/zume/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/oscarotero/zume/compare/v0.9.2...v0.10.0

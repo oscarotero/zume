@@ -6,6 +6,7 @@ const File = require('vinyl');
 const path = require('path');
 const MemoryFS = require('memory-fs');
 const defaults = {
+    entry: {},
     output: {
         filename: '[name].js'
     },
@@ -27,17 +28,36 @@ const defaults = {
 };
 
 module.exports = function (options) {
-    options = Object.assign({}, defaults, options || {});
-    options.entry = options.entry || {};
+    const opt = Object.assign(
+        {},
+        defaults,
+        (typeof options.options === 'object') ? options.options : {}
+    );
+
+    if (!options.zume.dev) {
+        opt.plugins = opt.plugins || [];
+        opt.plugins.push(new webpack.optimize.DedupePlugin());
+        opt.plugins.push(new webpack.optimize.UglifyJsPlugin());
+    } else {
+        opt.devtool = 'source-map';
+    }
+
+    opt.context = options.zume.src(options.dir);
+    opt.output.publicPath = options.zume.url(options.dir) + '/';
+    opt.output.path = options.zume.dest(options.dir);
+
+    if (typeof options.options === 'function') {
+        options.options(opt);
+    }
 
     function run (file, done) {
         const name = path.basename(file.path, '.js');
-        options.entry[name] = './' + file.relative;
+        opt.entry[name] = './' + file.relative;
         done();
     }
 
     function execute (done) {
-        const compiler = webpack(options);
+        const compiler = webpack(opt);
         const fs = new MemoryFS();
 
         compiler.outputFileSystem = fs;
