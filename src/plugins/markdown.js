@@ -7,6 +7,7 @@ const defaults = {
     html: true,
     linkify: true,
     typographer: true,
+    breaks: true,
     highlight: function (code, lang) {
         if (lang && hljs.getLanguage(lang)) {
             return `<pre><code class="hljs ${lang}">${hljs.highlight(lang, code).value}</code></pre>`;
