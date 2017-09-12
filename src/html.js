@@ -9,6 +9,10 @@ class Html extends Task {
         return super.src(pattern || 'data/**/*.md');
     }
 
+    yaml(options) {
+        return this.pipe(require('./plugins/yaml')(options));
+    }
+
     frontMatter(options) {
         return this.pipe(require('./plugins/front-matter')(options));
     }

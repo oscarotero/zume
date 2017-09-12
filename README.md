@@ -137,6 +137,15 @@ Handle the front matter of `.md` files using [front-matter](https://github.com/j
 html.frontMatter({
     siteName: 'My awesome site'
 })
+
+### yaml
+
+Handle the content of `.yaml` files. Useful if you don't need md files, just yaml content. You can pass an object with common data to all files. Example:
+
+```js
+html.yaml({
+    siteName: 'My awesome site'
+})
 ```
 
 ### markdown

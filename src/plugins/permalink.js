@@ -8,7 +8,7 @@ module.exports = function () {
         if (file.data && file.data.permalink) {
             file.path = path.join(path.dirname(file.path), file.data.permalink);
         } else {
-            let newPath = file.path.replace(/\.md$/, '');
+            let newPath = file.path.replace(/\.[\w]+$/, '');
 
             if (path.basename(newPath) !== 'index') {
                 newPath = path.join(newPath, 'index');
