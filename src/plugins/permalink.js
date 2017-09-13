@@ -2,15 +2,20 @@
 
 const through = require('through2');
 const path = require('path');
+const defaults = {
+    pretty: true
+};
 
-module.exports = function () {
+module.exports = function (options) {
+    options = Object.assign({}, defaults, options || {});
+
     function run (file, done) {
         if (file.data && file.data.permalink) {
             file.path = path.join(path.dirname(file.path), file.data.permalink);
         } else {
             let newPath = file.path.replace(/\.[\w]+$/, '');
 
-            if (path.basename(newPath) !== 'index') {
+            if (options.pretty && path.basename(newPath) !== 'index') {
                 newPath = path.join(newPath, 'index');
             }
 
