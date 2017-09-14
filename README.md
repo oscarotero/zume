@@ -173,6 +173,12 @@ In addition to that, it also creates two variables: `markdown` and `markdownInli
 
 Renames the `*.md` files to `*/index.html` in order to generate pretty urls. For example: the file `about.md` is renamed to `about/index.html`.
 
+```js
+html.urls({
+    pretty: false, //to rename "/about.md" to "/about.html" instead "/about/index.html"
+})
+```
+
 ### navigation
 
 Creates a tree structure with all files to build a navigation menu. Example:
@@ -227,7 +233,7 @@ Search and fix all relative urls in the html (`a`, `img`, `link`, `script`, `sou
 
 ```js
 html.urls({
-    index: true, //add "/index.html" to all links
+    pretty: false, //add "/index.html" to all links
     relative: true //makes the urls relatives to the current page
 })
 ```

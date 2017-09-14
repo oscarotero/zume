@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.14.1] 2017-09-14
+
+### Changed
+
+* Renamed option `index` to `pretty` in `html.urls()` plugin
+
+### Added
+
+* New option `pretty` to `html.permalink()` to disable pretty urls.
+
 ## [0.14.0] 2017-09-12
 
 ### Added
@@ -172,6 +182,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[0.14.1]: https://github.com/oscarotero/zume/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/oscarotero/zume/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/oscarotero/zume/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/oscarotero/zume/compare/v0.11.0...v0.12.0

@@ -3,8 +3,13 @@
 const through = require('through2');
 const cheerio = require('cheerio');
 const path = require('path');
+const defaults = {
+    pretty: true,
+    relative: false
+};
 
 module.exports = function (options) {
+    options = Object.assign({}, defaults, options || {});
     options.url = options.zume.url();
 
     function run (file, done) {
@@ -55,7 +60,7 @@ function resolve($, file, options) {
             url = path.join(options.url, url);
         }
 
-        if (!path.extname(url) && options.index) {
+        if (!path.extname(url) && !options.pretty) {
             url = path.join(url, 'index.html');
         }
 
