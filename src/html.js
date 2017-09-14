@@ -4,7 +4,7 @@ const Task = require('./task');
 
 class Html extends Task {
     src(pattern, watchPattern) {
-        this.watchSrc(watchPattern || 'data/**/*.md');
+        this.watchSrc(watchPattern || pattern || 'data/**/*.md');
 
         return super.src(pattern || 'data/**/*.md');
     }
