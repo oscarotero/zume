@@ -45,8 +45,8 @@ module.exports = function (options) {
         }
     }
 
-    const markdown = (text) => md.render(text);
-    const markdownInline = (text) => md.renderInline(text);
+    const markdown = (text) => text ? md.render(text) : '';
+    const markdownInline = (text) => text ? md.renderInline(text) : '';
 
     function run (file, done) {
         file.contents = new Buffer(md.render(file.contents.toString()));
