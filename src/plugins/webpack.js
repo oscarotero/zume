@@ -57,6 +57,10 @@ module.exports = function (options) {
     }
 
     function execute (done) {
+        if (!Object.keys(opt.entry).length) {
+            return done();
+        }
+
         const compiler = webpack(opt);
         const fs = new MemoryFS();
 
