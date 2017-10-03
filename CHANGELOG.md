@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## UNRELEASED
+## [0.14.4] 2017-10-03
 
 ### Fixed
 
@@ -201,6 +201,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[0.14.4]: https://github.com/oscarotero/zume/compare/v0.14.3...v0.14.4
 [0.14.3]: https://github.com/oscarotero/zume/compare/v0.14.2...v0.14.3
 [0.14.2]: https://github.com/oscarotero/zume/compare/v0.14.1...v0.14.2
 [0.14.1]: https://github.com/oscarotero/zume/compare/v0.14.0...v0.14.1
