@@ -137,6 +137,7 @@ Handle the front matter of `.md` files using [front-matter](https://github.com/j
 html.frontMatter({
     siteName: 'My awesome site'
 })
+```
 
 ### yaml
 
