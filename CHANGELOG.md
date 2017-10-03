@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.14.3] 2017-09-28
+
+### Fixed
+
+* Fixed bug on execute markdown with non string values
+* Fixed webpack error if there's no javascript files to proccess
+
 ## [0.14.2] 2017-09-14
 
 ### Fixed
@@ -188,6 +195,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[0.14.3]: https://github.com/oscarotero/zume/compare/v0.14.2...v0.14.3
 [0.14.2]: https://github.com/oscarotero/zume/compare/v0.14.1...v0.14.2
 [0.14.1]: https://github.com/oscarotero/zume/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/oscarotero/zume/compare/v0.13.0...v0.14.0
