@@ -65,18 +65,24 @@ module.exports = function (options) {
     }
 
     function run (file, done) {
-        const css = stylecow.parse(file.contents.toString('utf8'), 'Root', null, file.path);
-        tasks.run(css);
+        try {
+            const css = stylecow.parse(file.contents.toString('utf8'), 'Root', null, file.path);
+            tasks.run(css);
 
-        const code = coder.run(css, file.relative);
-        file.contents = new Buffer(code.css);
+            const code = coder.run(css, file.relative);
+            file.contents = new Buffer(code.css);
 
-        if (code.mapFile) {
-            done(file, new File({
-                path: code.mapFile,
-                contents: new Buffer(code.map)
-            }));
-        } else {
+            if (code.mapFile) {
+                done(file, new File({
+                    path: code.mapFile,
+                    contents: new Buffer(code.map)
+                }));
+            } else {
+                done(file);
+            }
+        } catch (error) {
+            file.contents = new Buffer(stylecow.cssError(error).toString());
+            console.error(error.message);
             done(file);
         }
     }
