@@ -2,6 +2,7 @@
 
 const through = require('through2');
 const ejs = require('ejs');
+const ejsLint = require('ejs-lint');
 const path = require('path');
 const defaults = {
     delimiter: '?'
@@ -19,7 +20,25 @@ module.exports = function (options) {
 
         locals.content = file.contents.toString();
 
-        ejs.renderFile(path.join(options.root, locals.template), locals, options, function (err, result) {
+        const template = path.join(options.root, locals.template);
+        const err = ejsLint(ejs.fileLoader(template).toString(), options);
+
+        if (err) {
+            console.error(template, err);
+            file.contents = new Buffer(`
+<html>
+<body>
+<pre>
+${template}
+${err.toString()}
+</pre>
+</body>
+</html>`);
+
+            return done(file);
+        }
+
+        ejs.renderFile(template, locals, options, function (err, result) {
             if (err) {
                 console.error(err);
             }
