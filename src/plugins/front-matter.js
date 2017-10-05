@@ -14,8 +14,8 @@ module.exports = function (options) {
             file.data = Object.assign({}, options, data.attributes);
         } catch (error) {
             console.error(error);
-            file.contents = new Buffer('');
-            file.data = {}
+            file.data = {};
+            file.error = error;
         }
 
         done(file);

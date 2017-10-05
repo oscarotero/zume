@@ -14,6 +14,11 @@ module.exports = function (options) {
     function run (file, done) {
         const locals = Object.assign({}, options.locals || {}, file.data || {});
 
+        if (file.error) {
+            file.contents = renderError(file.error, file.errorExtra);
+            return done(file);
+        }
+
         if (!locals.template) {
             return done();
         }
@@ -25,16 +30,7 @@ module.exports = function (options) {
 
         if (err) {
             console.error(template, err);
-            file.contents = new Buffer(`
-<html>
-<body>
-<pre>
-${template}
-${err.toString()}
-</pre>
-</body>
-</html>`);
-
+            file.contents = renderError(err, template);
             return done(file);
         }
 
@@ -52,4 +48,24 @@ ${err.toString()}
     return through.obj(function (file, encoding, callback) {
         run(file, (file) => callback(null, file));
     });
+}
+
+function renderError(error, extra) {
+    return new Buffer(ejs.render(`
+<html>
+    <head>
+        <title>Zume error</title>
+        <style>
+            body { font-family: sans-serif; }
+            h1 { color: red; }
+            pre { background: #ddd; padding: 8px; }
+            small { color: #999; }
+        </style>
+    </head>
+    <body>
+        <h1>Error</h1>
+        <pre>${error.toString()}</pre>
+        <small>${extra || ''}</small>
+    </body>
+</html>`));
 }

@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## UNRELEASED
+
+### Fixed
+
+* Improved error handling and displaying
+* Added try/catch in yaml/front-matter plugins to keep running the server on errors
+* Added ejs-lint to catch some errors and display more useful info
+
 ## [0.14.4] 2017-10-03
 
 ### Fixed

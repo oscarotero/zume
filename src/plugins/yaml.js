@@ -13,7 +13,8 @@ module.exports = function (options) {
             file.data = Object.assign({}, options, data);
         } catch (error) {
             console.error(error);
-            file.data = {}
+            file.data = {};
+            file.error = error;
         }
 
         file.contents = new Buffer('');
