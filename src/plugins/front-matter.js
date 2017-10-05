@@ -7,10 +7,17 @@ module.exports = function (options) {
     options = options || {};
 
     function run (file, done) {
-        const data = matter(file.contents.toString());
+        try {
+            const data = matter(file.contents.toString());
 
-        file.contents = new Buffer(data.body);
-        file.data = Object.assign({}, options, data.attributes);
+            file.contents = new Buffer(data.body);
+            file.data = Object.assign({}, options, data.attributes);
+        } catch (error) {
+            console.error(error);
+            file.contents = new Buffer('');
+            file.data = {}
+        }
+
         done(file);
     }
 

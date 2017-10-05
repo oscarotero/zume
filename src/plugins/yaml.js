@@ -7,10 +7,16 @@ module.exports = function (options) {
     options = options || {};
 
     function run (file, done) {
-        const data = yaml.load(file.contents.toString());
+        try {
+            const data = yaml.load(file.contents.toString());
+
+            file.data = Object.assign({}, options, data);
+        } catch (error) {
+            console.error(error);
+            file.data = {}
+        }
 
         file.contents = new Buffer('');
-        file.data = Object.assign({}, options, data);
         done(file);
     }
 
