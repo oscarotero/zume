@@ -52,7 +52,7 @@ function resolve($, file, options) {
         });
 
     function url (url) {
-        if (url.startsWith('#') || url.startsWith('.') || url.indexOf('//') !== -1) {
+        if (notHandle(url)) {
             return url;
         }
 
@@ -80,4 +80,11 @@ function resolve($, file, options) {
 
         return final;
     }
+}
+
+function notHandle(url) {
+    return url.startsWith('#')
+        || url.startsWith('.')
+        || url.indexOf('//') !== -1
+        || url.match(/[a-z]\:/);
 }

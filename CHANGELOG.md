@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.14.6] 2017-10-06
+
+### Fixed
+
+* Fixed bug with `html.url()` on handle urls containing schemes, like `mailto:email@example.com`.
+
 ## [0.14.5] 2017-10-05
 
 ### Fixed
@@ -209,6 +215,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[0.14.6]: https://github.com/oscarotero/zume/compare/v0.14.5...v0.14.6
 [0.14.5]: https://github.com/oscarotero/zume/compare/v0.14.4...v0.14.5
 [0.14.4]: https://github.com/oscarotero/zume/compare/v0.14.3...v0.14.4
 [0.14.3]: https://github.com/oscarotero/zume/compare/v0.14.2...v0.14.3
