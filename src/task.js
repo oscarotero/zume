@@ -4,20 +4,25 @@ const gulp = require('gulp');
 const through = require('through2');
 
 class Task {
-    constructor(zume, dir) {
+    constructor(zume, options) {
         this.zume = zume;
-        this.dir = dir || '';
+        this.options = Object.assign({base: ''}, options);
         this.watch = [];
         this.reload = '*';
     }
 
-    src(pattern) {
+    src() {
+        if (this.options.watchPattern) {
+            this.watchSrc(this.options.watchPattern);
+        }
+
+        const base = this.options.src || this.options.base;
         let src;
 
-        if (Array.isArray(pattern)) {
-            src = pattern.map(pattern => this.zume.src(this.dir, pattern));
+        if (Array.isArray(this.options.pattern)) {
+            src = this.options.pattern.map(pattern => this.zume.src(base, pattern));
         } else {
-            src = this.zume.src(this.dir, pattern);
+            src = this.zume.src(base, this.options.pattern);
         }
 
         this.stream = gulp.src(src);
@@ -63,7 +68,7 @@ class Task {
     }
 
     dest(done) {
-        this.pipe(gulp.dest(this.zume.dest(this.dir)));
+        this.pipe(gulp.dest(this.zume.dest(this.options.base)));
 
         if (done) {
             this.stream.on('end', () => {
@@ -79,14 +84,16 @@ class Task {
     }
 
     watchSrc(pattern) {
+        const base = this.options.src || this.options.base;
+
         if (Array.isArray(pattern)) {
             this.watch = this.watch.concat(
-                pattern.map(pattern => this.zume.src(this.dir, pattern))
+                pattern.map(pattern => this.zume.src(base, pattern))
             );
             return;
         }
 
-        return this.watch.push(this.zume.src(this.dir, pattern));
+        return this.watch.push(this.zume.src(base, pattern));
     }
 }
 

@@ -3,12 +3,14 @@
 const Task = require('./task');
 
 class Files extends Task {
-    src(pattern, watchPattern) {
-        pattern = pattern || '**';
+    constructor(zume, options) {
+        options = Object.assign({
+            pattern: '**'
+        }, options);
 
-        this.watchSrc(watchPattern || pattern);
+        options.watchPattern = options.watchPattern || options.pattern;
 
-        return super.src(pattern);
+        super(zume, options);
     }
 }
 

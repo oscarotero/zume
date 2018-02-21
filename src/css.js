@@ -3,15 +3,15 @@
 const Task = require('./task');
 
 class Css extends Task {
-    constructor(zume, dir) {
-        super(zume, dir || 'css');
+    constructor(zume, options) {
+        options = Object.assign({
+            base: 'css',
+            watchPattern: '**/*.css',
+            pattern: '*.css'
+        }, options);
+
+        super(zume, options);
         this.reload = '*.css';
-    }
-
-    src(pattern, watchPattern) {
-        this.watchSrc(watchPattern || '**/*.css');
-
-        return super.src(pattern || '*.css');
     }
 
     stylecow(options) {

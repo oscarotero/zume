@@ -3,17 +3,16 @@
 const Task = require('./task');
 
 class Img extends Task {
-    constructor(zume, dir) {
-        super(zume, dir || 'img');
+    constructor(zume, options) {
+        options = Object.assign({
+            base: 'img',
+            pattern: '**/*.{jpg,jpeg,png,svg,gif}'
+        }, options);
+
+        options.watchPattern = options.watchPattern || options.pattern;
+
+        super(zume, options);
         this.reload = ['*.jpg', '*.jpeg', '*.png', '*.svg', '*.gif'];
-    }
-
-    src(pattern, watchPattern) {
-        pattern = pattern || '**/*.{jpg,jpeg,png,svg,gif}';
-
-        this.watchSrc(watchPattern || pattern);
-
-        return super.src(pattern);
     }
 }
 

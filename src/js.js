@@ -3,15 +3,15 @@
 const Task = require('./task');
 
 class Js extends Task {
-    constructor(zume, dir) {
-        super(zume, dir || 'js');
+    constructor(zume, options) {
+        options = Object.assign({
+            base: 'js',
+            watchPattern: '**/*.js',
+            pattern: '*.js'
+        }, options);
+
+        super(zume, options);
         this.reload = '*.js';
-    }
-
-    src(pattern, watchPattern) {
-        this.watchSrc(watchPattern || '**/*.js');
-
-        return super.src(pattern || '*.js');
     }
 
     webpack(options) {
@@ -19,7 +19,7 @@ class Js extends Task {
             require('./plugins/webpack')({
                 zume: this.zume,
                 options: options,
-                dir: this.dir
+                dir: this.options.base
             })
         );
     }

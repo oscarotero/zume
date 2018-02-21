@@ -142,11 +142,11 @@ module.exports = Zume;
 function initTask(zume, name, Task, options) {
     options = options || {};
 
-    const task = new Task(zume, options.base);
+    const task = new Task(zume, options);
 
     zume.tasks[options.task || name] = task;
 
-    return task.src(options.pattern, options.watchPattern);
+    return task.src();
 }
 
 function getPath(absolute, args) {

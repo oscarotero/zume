@@ -3,10 +3,14 @@
 const Task = require('./task');
 
 class Html extends Task {
-    src(pattern, watchPattern) {
-        this.watchSrc(watchPattern || pattern || 'data/**/*.md');
+    constructor(zume, options) {
+        options = Object.assign({
+            pattern: 'data/**/*.md'
+        }, options);
 
-        return super.src(pattern || 'data/**/*.md');
+        options.watchPattern = options.watchPattern || options.pattern;
+
+        super(zume, options);
     }
 
     yaml(options) {
