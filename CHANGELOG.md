@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.15.1] - 2018-02-27
+
+### Fixed
+
+- The option `override` in `html.navigation()` should not only override but also insert missing sections.
+
 ## [0.15.0] - 2018-02-21
 
 ### Added
@@ -222,6 +228,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[0.15.1]: https://github.com/oscarotero/zume/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/oscarotero/zume/compare/v0.14.6...v0.15.0
 [0.14.6]: https://github.com/oscarotero/zume/compare/v0.14.5...v0.14.6
 [0.14.5]: https://github.com/oscarotero/zume/compare/v0.14.4...v0.14.5

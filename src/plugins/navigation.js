@@ -62,7 +62,6 @@ class Section extends Array {
 module.exports = function (options) {
     options = options || {};
 
-    const override = options.override || {};
     const data = options.data || [];
     const sections = new Section();
     const files = [];
@@ -83,7 +82,7 @@ module.exports = function (options) {
             while (pieces.length) {
                 const piece = pieces.shift();
                 id += (id ? '/' : '') + piece;
-                
+
                 const section = tree.getOrCreate(id);
 
                 if (!pieces.length) {
@@ -97,12 +96,15 @@ module.exports = function (options) {
                     }
                 }
 
-                if (id in override) {
-                    section.setData(override[id]);
-                }
-
                 tree.order();
                 tree = section;
+            }
+
+            if (options.override) {
+                for (let id in options.override) {
+                    sections.getOrCreate(id).setData(options.override[id]);
+                }
+                sections.order();
             }
 
             callback();
