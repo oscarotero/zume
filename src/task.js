@@ -4,7 +4,7 @@ const through = require('through2');
 class Task {
     constructor(zume, options) {
         this.zume = zume;
-        this.options = Object.assign({base: ''}, options);
+        this.options = Object.assign({ base: '' }, options);
         this.watch = [];
         this.reload = '*';
     }
@@ -18,13 +18,17 @@ class Task {
         let src;
 
         if (Array.isArray(this.options.pattern)) {
-            src = this.options.pattern.map(pattern => this.zume.src(base, pattern));
+            src = this.options.pattern.map(pattern =>
+                this.zume.src(base, pattern)
+            );
         } else {
             src = this.zume.src(base, this.options.pattern);
         }
 
         this.stream = gulp.src(src, {
-            since: this.options.incremental ? gulp.lastRun(this.options.task) : undefined
+            since: this.options.incremental
+                ? gulp.lastRun(this.options.task)
+                : undefined
         });
 
         return this;

@@ -92,7 +92,9 @@ class Zume {
     serve() {
         this.sync.init(this.config.server);
 
-        Object.keys(this.tasks).forEach(name => this.watch(this.tasks[name].watch, name));
+        Object.keys(this.tasks).forEach(name =>
+            this.watch(this.tasks[name].watch, name)
+        );
     }
 
     watch(paths, ...task) {

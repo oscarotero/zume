@@ -2,10 +2,13 @@ const Task = require('./task');
 
 class Html extends Task {
     constructor(zume, options) {
-        options = Object.assign({
-            pattern: 'data/**/*.md',
-            incremental: true
-        }, options);
+        options = Object.assign(
+            {
+                pattern: 'data/**/*.md',
+                incremental: true
+            },
+            options
+        );
 
         options.watchPattern = options.watchPattern || options.pattern;
 

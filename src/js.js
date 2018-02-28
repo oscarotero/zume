@@ -2,11 +2,14 @@ const Task = require('./task');
 
 class Js extends Task {
     constructor(zume, options) {
-        options = Object.assign({
-            base: 'js',
-            watchPattern: '**/*.js',
-            pattern: '*.js'
-        }, options);
+        options = Object.assign(
+            {
+                base: 'js',
+                watchPattern: '**/*.js',
+                pattern: '*.js'
+            },
+            options
+        );
 
         super(zume, options);
         this.reload = '*.js';
