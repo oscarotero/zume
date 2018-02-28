@@ -1,11 +1,7 @@
-'use strict';
-
 const through = require('through2');
 const matter = require('front-matter');
 
-module.exports = function (options) {
-    options = options || {};
-
+module.exports = function (options = {}) {
     function run (file, done) {
         try {
             const data = matter(file.contents.toString());

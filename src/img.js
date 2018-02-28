@@ -1,12 +1,11 @@
-'use strict';
-
 const Task = require('./task');
 
 class Img extends Task {
     constructor(zume, options) {
         options = Object.assign({
             base: 'img',
-            pattern: '**/*.{jpg,jpeg,png,svg,gif}'
+            pattern: '**/*.{jpg,jpeg,png,svg,gif}',
+            incremental: true
         }, options);
 
         options.watchPattern = options.watchPattern || options.pattern;

@@ -1,5 +1,3 @@
-'use strict';
-
 const through = require('through2');
 const cheerio = require('cheerio');
 const path = require('path');

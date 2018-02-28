@@ -1,5 +1,3 @@
-'use strict';
-
 const through = require('through2');
 const path = require('path');
 
@@ -59,9 +57,7 @@ class Section extends Array {
     }
 };
 
-module.exports = function (options) {
-    options = options || {};
-
+module.exports = function (options = {}) {
     const data = options.data || [];
     const sections = new Section();
     const files = [];

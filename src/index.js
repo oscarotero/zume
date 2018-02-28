@@ -1,5 +1,3 @@
-'use strict';
-
 const BrowserSync = require('browser-sync');
 const path = require('path');
 const url = require('url');
@@ -94,57 +92,53 @@ class Zume {
     serve() {
         this.sync.init(this.config.server);
 
-        Object.keys(this.tasks).forEach(name => {
-            this.watch(this.tasks[name].watch, name);
-        });
+        Object.keys(this.tasks).forEach(name => this.watch(this.tasks[name].watch, name));
     }
 
-    watch(paths, task) {
-        this.sync.watch(
+    watch(paths, ...task) {
+        gulp.watch(
             paths,
             this.config.server.watchOptions,
-            (event, file) => {
-                gulp.start(task);
-            }
+            gulp.parallel(...task)
         );
     }
 
     clear() {
-        del.sync(path.join(this.config.paths.cwd, this.config.paths.dest));
+        return del(path.join(this.config.paths.cwd, this.config.paths.dest));
     }
 
     /**
      * Tasks
      */
-    html(options) {
+    html(options = {}) {
         return initTask(this, 'html', Html, options);
     }
 
-    js(options) {
+    js(options = {}) {
         return initTask(this, 'js', Js, options);
     }
 
-    css(options) {
+    css(options = {}) {
         return initTask(this, 'css', Css, options);
     }
 
-    img(options) {
+    img(options = {}) {
         return initTask(this, 'img', Img, options);
     }
 
-    files(options) {
+    files(options = {}) {
         return initTask(this, 'files', Files, options);
     }
 }
 
 module.exports = Zume;
 
-function initTask(zume, name, Task, options) {
-    options = options || {};
+function initTask(zume, name, Task, options = {}) {
+    options.task = options.task || name;
 
     const task = new Task(zume, options);
 
-    zume.tasks[options.task || name] = task;
+    zume.tasks[options.task] = task;
 
     return task.src();
 }

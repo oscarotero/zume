@@ -1,13 +1,11 @@
-'use strict';
-
 const through = require('through2');
 const path = require('path');
 const defaults = {
     pretty: true
 };
 
-module.exports = function (options) {
-    options = Object.assign({}, defaults, options || {});
+module.exports = function (options = {}) {
+    options = Object.assign({}, defaults, options);
 
     function run (file, done) {
         if (file.data && file.data.permalink) {

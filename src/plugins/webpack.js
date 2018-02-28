@@ -1,10 +1,7 @@
-'use strict';
-
 const through = require('through2');
 const webpack = require('webpack');
 const File = require('vinyl');
 const path = require('path');
-const MemoryFS = require('memory-fs');
 const defaults = {
     entry: {},
     output: {
@@ -15,11 +12,11 @@ const defaults = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
+                exclude: /(node_modules)/,
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['env']
+                        presets: ['@babel/preset-env']
                     }
                 }
             }
@@ -27,7 +24,7 @@ const defaults = {
     }
 };
 
-module.exports = function (options) {
+module.exports = function (options = {}) {
     const opt = Object.assign(
         {},
         defaults,
@@ -35,11 +32,9 @@ module.exports = function (options) {
     );
 
     if (!options.zume.dev) {
-        opt.plugins = opt.plugins || [];
-        opt.plugins.push(new webpack.optimize.DedupePlugin());
-        opt.plugins.push(new webpack.optimize.UglifyJsPlugin());
+        opt.mode = 'develop';
     } else {
-        opt.devtool = 'source-map';
+        opt.mode = 'production';
     }
 
     opt.context = options.zume.src(options.dir);
@@ -62,24 +57,19 @@ module.exports = function (options) {
         }
 
         const compiler = webpack(opt);
-        const fs = new MemoryFS();
-
-        compiler.outputFileSystem = fs;
 
         compiler.run((err, stats) => {
             if (err) {
                 console.error(err);
             }
 
-            Object.keys(stats.compilation.assets).forEach((f) => {
-                const dest = stats.compilation.assets[f].existsAt;
-
+            Object.keys(stats.compilation.assets).forEach(f =>
                 this.push(new File({
                     base: compiler.outputPath,
-                    contents: fs.readFileSync(dest),
-                    path: dest
-                }));
-            });
+                    contents: new Buffer(stats.compilation.assets[f]._value),
+                    path: path.join(compiler.outputPath, f)
+                }))
+            );
 
             done();
         });

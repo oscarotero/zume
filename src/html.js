@@ -1,11 +1,10 @@
-'use strict';
-
 const Task = require('./task');
 
 class Html extends Task {
     constructor(zume, options) {
         options = Object.assign({
-            pattern: 'data/**/*.md'
+            pattern: 'data/**/*.md',
+            incremental: true
         }, options);
 
         options.watchPattern = options.watchPattern || options.pattern;
@@ -29,8 +28,7 @@ class Html extends Task {
         return this.pipe(require('./plugins/permalink')(options));
     }
 
-    ejs(options) {
-        options = options || {};
+    ejs(options = {}) {
         options.root = this.zume.src('templates');
         options.locals = options.locals || {};
         options.locals.zume = this.zume;
@@ -40,8 +38,7 @@ class Html extends Task {
         return this.pipe(require('./plugins/ejs')(options));
     }
 
-    urls(options) {
-        options = options || {};
+    urls(options = {}) {
         options.zume = this.zume;
 
         return this.pipe(require('./plugins/urls')(options));

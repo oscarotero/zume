@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## UNRELEASED
+
+### Changed
+
+- Updated dependencies:
+  - Gulp 4
+  - Webpack 4
+  - Babel 7
+  - Cheerio 1
+- Support for node >= 6
+
+### Added
+
+- Some task (html, files, img) builds incrementally, for a better performance.
+
+
 ## [0.15.1] - 2018-02-27
 
 ### Fixed

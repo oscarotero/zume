@@ -1,5 +1,3 @@
-'use strict';
-
 const through = require('through2');
 const MarkdownIt = require('markdown-it');
 const hljs = require('highlight.js');

@@ -1,5 +1,3 @@
-'use strict';
-
 const Task = require('./task');
 
 class Css extends Task {

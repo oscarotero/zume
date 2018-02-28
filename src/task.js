@@ -1,5 +1,3 @@
-'use strict';
-
 const gulp = require('gulp');
 const through = require('through2');
 
@@ -25,7 +23,9 @@ class Task {
             src = this.zume.src(base, this.options.pattern);
         }
 
-        this.stream = gulp.src(src);
+        this.stream = gulp.src(src, {
+            since: this.options.incremental ? gulp.lastRun(this.options.task) : undefined
+        });
 
         return this;
     }
@@ -36,8 +36,7 @@ class Task {
         return this;
     }
 
-    each(fn, data) {
-        data = data || {};
+    each(fn, data = {}) {
         const files = [];
 
         return this.pipe(
@@ -67,20 +66,18 @@ class Task {
         );
     }
 
-    dest(done) {
-        this.pipe(gulp.dest(this.zume.dest(this.options.base)));
+    dest() {
+        return new Promise((resolve, reject) => {
+            this.pipe(gulp.dest(this.zume.dest(this.options.base)));
 
-        if (done) {
             this.stream.on('end', () => {
                 if (this.reload) {
                     this.zume.sync.reload(this.reload);
                 }
 
-                done();
+                resolve();
             });
-        }
-
-        return this;
+        });
     }
 
     watchSrc(pattern) {

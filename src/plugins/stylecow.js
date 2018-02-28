@@ -1,5 +1,3 @@
-'use strict';
-
 const through = require('through2');
 const stylecow = require('stylecow-core');
 const File = require('vinyl');
@@ -42,8 +40,8 @@ const defaults = {
     "map": "auto"
 }
 
-module.exports = function (options) {
-    options = Object.assign({}, defaults, options || {});
+module.exports = function (options = {}) {
+    options = Object.assign({}, defaults, options);
 
     const tasks = new stylecow.Tasks();
     const coder = new stylecow.Coder(options.code);

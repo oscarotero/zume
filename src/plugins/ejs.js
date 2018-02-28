@@ -1,5 +1,3 @@
-'use strict';
-
 const through = require('through2');
 const ejs = require('ejs');
 const ejsLint = require('ejs-lint');
@@ -8,8 +6,8 @@ const defaults = {
     delimiter: '?'
 };
 
-module.exports = function (options) {
-    options = Object.assign({}, defaults, options || {});
+module.exports = function (options = {}) {
+    options = Object.assign({}, defaults, options);
 
     function run (file, done) {
         const locals = Object.assign({}, options.locals || {}, file.data || {});

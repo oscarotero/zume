@@ -1,5 +1,3 @@
-'use strict';
-
 const through = require('through2');
 const cheerio = require('cheerio');
 const path = require('path');
@@ -8,8 +6,8 @@ const defaults = {
     relative: false
 };
 
-module.exports = function (options) {
-    options = Object.assign({}, defaults, options || {});
+module.exports = function (options = {}) {
+    options = Object.assign({}, defaults, options);
     options.url = options.zume.url();
 
     function run (file, done) {
