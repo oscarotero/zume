@@ -23,11 +23,9 @@ Example of the `gulpfile.js`:
 const gulp = require('gulp');
 const zume = require('zume').create();
 
-gulp.task('clear', function () {
-    zume.clear();
-});
+gulp.task('clear', () => zume.clear());
 
-gulp.task('html', function (done) {
+gulp.task('html', () => 
     zume.html()
         .frontMatter()
         .markdown()
@@ -35,31 +33,15 @@ gulp.task('html', function (done) {
         .navigation()
         .ejs()
         .urls()
-        .dest(done);
-});
+        .dest()
+);
 
-gulp.task('js', function (done) {
-    zume.js()
-        .webpack()
-        .dest(done);
-});
+gulp.task('js', () => zume.js().webpack().dest());
+gulp.task('css', () => zume.css().postcss().dest());
+gulp.task('img', () => zume.img().dest(done));
 
-gulp.task('css', function (done) {
-    zume.css()
-        .stylecow()
-        .dest(done);
-});
-
-gulp.task('img', function (done) {
-    zume.img()
-        .dest(done);
-});
-
-gulp.task('server', ['default'], function () {
-    zume.serve();
-});
-
-gulp.task('default', ['clear', 'html', 'js', 'css', 'img']);
+gulp.task('default', gulp.series('clear', 'html', 'js', 'css', 'img'));
+gulp.task('server', gulp.series('default', () => zume.serve()));
 ```
 
 ## API
@@ -114,7 +96,7 @@ There are some functions available in all tasks:
 * `.pipe(plugin)` Allow to pipe more gulp plugins to the stream 
 * `.each(callback)` To execute a callback for each file
 * `.filter(callback)` To filter some files
-* `.dest(callback)` To save the files in the build folder.
+* `.dest()` To save the files in the build folder and return a promise.
 
 ## HTML Generation
 
@@ -287,52 +269,18 @@ Task used to generate css content.
 
 ```js
 zume.css()
-    .stylecow(options)
+    .postcss()
     .dest();
 ```
 
-### stylecow
+### postcss
 
-Runs [stylecow](http://stylecow.github.io/) to generate the css files. Example with the default configuration:
+Runs [postcss](http://postcss.org/) to generate the css files, with the following plugins:
 
-```js
-css.stylecow({
-        "support": {
-        "explorer": 10,
-        "edge": false,
-        "firefox": 39,
-        "chrome": 43,
-        "safari": 8,
-        "opera": false,
-        "android": 4.1,
-        "ios": 8.1
-    },
-    "plugins": [
-        "base64",
-        "bower-loader",
-        "calc",
-        "color",
-        "custom-media",
-        "custom-selector",
-        "extend",
-        "fixes",
-        "flex",
-        "import",
-        "matches",
-        "msfilter-background-alpha",
-        "msfilter-linear-gradient",
-        "msfilter-transform",
-        "nested-rules",
-        "npm-loader",
-        "prefixes",
-        "rem",
-        "variables",
-        "webkit-gradient"
-    ],
-    "code": "normal",
-    "map": "auto"
-})
-```
+
+* [postcss-import](https://github.com/postcss/postcss-import)
+* [postcss-url](https://github.com/postcss/postcss-url)
+* [cssnext](http://cssnext.io/)
 
 ## Img
 
