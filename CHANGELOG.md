@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## UNRELEASED
+## [1.0.0-beta.1] - 2018-03-05
+
+### Added
+
+- Some task (html, files, img) builds incrementally, for a better performance.
+- New `postcss()` plugin
 
 ### Changed
 
@@ -16,10 +21,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Cheerio 1
 - Support for node >= 6
 
-### Added
+### Removed
 
-- Some task (html, files, img) builds incrementally, for a better performance.
-
+- Removed `stylecow()` (replaced with `postcss` with plugins to get the same result)
 
 ## [0.15.1] - 2018-02-27
 
@@ -244,6 +248,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[1.0.0-beta.1]: https://github.com/oscarotero/zume/compare/v0.15.1...v1.0.0-beta.1
 [0.15.1]: https://github.com/oscarotero/zume/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/oscarotero/zume/compare/v0.14.6...v0.15.0
 [0.14.6]: https://github.com/oscarotero/zume/compare/v0.14.5...v0.14.6
