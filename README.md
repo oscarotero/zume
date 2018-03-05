@@ -281,6 +281,7 @@ Runs [postcss](http://postcss.org/) to generate the css files, with the followin
 * [postcss-import](https://github.com/postcss/postcss-import)
 * [postcss-url](https://github.com/postcss/postcss-url)
 * [cssnext](http://cssnext.io/)
+* [cssnano](http://cssnano.co/) (enabled only in production mode)
 
 ## Img
 
