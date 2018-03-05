@@ -15,14 +15,11 @@ class Css extends Task {
         this.reload = '*.css';
     }
 
-    stylecow(options) {
+    postcss(options) {
         options = options || {};
+        options.zume = this.zume;
 
-        if (!this.zume.dev) {
-            options.code = 'minify';
-        }
-
-        return this.pipe(require('./plugins/stylecow')(options));
+        return this.pipe(require('./plugins/postcss')(options));
     }
 }
 
