@@ -22,7 +22,6 @@
     "markdown-it": "^8.3.1",
     "markdown-it-attrs": "^1.1.0",
     "markdown-it-container": "^2.0.0",
-    "npm": "^5.7.1",
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^11.1.0",
     "postcss-url": "^7.3.1",
