@@ -32,7 +32,7 @@ module.exports = function (options = {}) {
     );
 
     if (!options.zume.dev) {
-        opt.mode = 'develop';
+        opt.mode = 'development';
     } else {
         opt.mode = 'production';
     }
