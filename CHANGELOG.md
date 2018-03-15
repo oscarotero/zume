@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## UNRELEASED
+
+### Added
+
+- New `zume.gulp()` function that returns the current gulp instance
+
+### Changed
+
+- Allow absolute paths as `src` option in the tasks
+- Moved the zume options `cwd`, `url`, `src` and `dest` to the root of the options object.
+- Merged configuration recursively
+
 ## [1.0.0-beta.1] - 2018-03-05
 
 ### Added

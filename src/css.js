@@ -1,17 +1,14 @@
 const Task = require('./task');
+const merge = require('merge-options');
+const defaults = {
+    base: 'css',
+    watchPattern: '**/*.css',
+    pattern: '*.css'
+};
 
 class Css extends Task {
     constructor(zume, options) {
-        options = Object.assign(
-            {
-                base: 'css',
-                watchPattern: '**/*.css',
-                pattern: '*.css'
-            },
-            options
-        );
-
-        super(zume, options);
+        super(zume, merge(defaults, options));
         this.reload = '*.css';
     }
 

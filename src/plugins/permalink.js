@@ -1,11 +1,12 @@
 const through = require('through2');
 const path = require('path');
+const merge = require('merge-options');
 const defaults = {
     pretty: true
 };
 
 module.exports = function (options = {}) {
-    options = Object.assign({}, defaults, options);
+    options = merge(defaults, options);
 
     function run (file, done) {
         if (file.data && file.data.permalink) {

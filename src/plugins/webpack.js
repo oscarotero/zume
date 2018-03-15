@@ -2,6 +2,7 @@ const through = require('through2');
 const webpack = require('webpack');
 const File = require('vinyl');
 const path = require('path');
+const merge = require('merge-options');
 const defaults = {
     entry: {},
     output: {
@@ -25,11 +26,7 @@ const defaults = {
 };
 
 module.exports = function (options = {}) {
-    const opt = Object.assign(
-        {},
-        defaults,
-        (typeof options.options === 'object') ? options.options : {}
-    );
+    const opt = merge(defaults, options.options);
 
     if (!options.zume.dev) {
         opt.mode = 'development';

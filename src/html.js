@@ -1,18 +1,13 @@
 const Task = require('./task');
+const merge = require('merge-options');
+const defaults = {
+    pattern: 'data/**/*.md',
+    incremental: true
+};
 
 class Html extends Task {
     constructor(zume, options) {
-        options = Object.assign(
-            {
-                pattern: 'data/**/*.md',
-                incremental: true
-            },
-            options
-        );
-
-        options.watchPattern = options.watchPattern || options.pattern;
-
-        super(zume, options);
+        super(zume, merge(defaults, options));
     }
 
     yaml(options) {

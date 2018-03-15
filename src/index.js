@@ -3,18 +3,17 @@ const path = require('path');
 const url = require('url');
 const gulp = require('gulp');
 const del = require('del');
+const merge = require('merge-options');
 const Html = require('./html');
 const Css = require('./css');
 const Img = require('./img');
 const Js = require('./js');
 const Files = require('./files');
 const defaults = {
-    paths: {
-        cwd: process.cwd(),
-        url: 'http://localhost',
-        src: 'src',
-        dest: 'build'
-    },
+    cwd: process.cwd(),
+    url: 'http://localhost',
+    src: 'src',
+    dest: 'build',
     server: {
         open: false,
         reloadOnRestart: true,
@@ -32,38 +31,29 @@ class Zume {
         return new Zume(config);
     }
 
-    constructor(config) {
+    constructor(config = {}) {
         this.tasks = {};
         this.dev = true;
+        this.config = merge(defaults, config);
 
-        config = config || {};
-
-        this.config = Object.assign({}, defaults);
-        this.config.paths = Object.assign(
-            {},
-            defaults.paths,
-            config.paths || {}
-        );
-        this.config.server = Object.assign(
-            {},
-            defaults.server,
-            config.server || {}
-        );
-
-        const parsedUrl = url.parse(this.config.paths.url);
+        const parsedUrl = url.parse(this.config.url);
 
         this.paths = {
-            cwd: this.config.paths.cwd,
+            cwd: this.config.cwd,
             baseUrl: parsedUrl.protocol + '//' + parsedUrl.host,
             path: parsedUrl.pathname || '/',
-            src: path.join(this.config.paths.cwd, this.config.paths.src),
-            dest: path.join(this.config.paths.cwd, this.config.paths.dest)
+            src: path.join(this.config.cwd, this.config.src),
+            dest: path.join(this.config.cwd, this.config.dest)
         };
 
         this.config.server.watchOptions.cwd = this.paths.cwd;
         this.config.server.server = this.paths.dest;
         this.paths.dest = path.join(this.paths.dest, this.paths.path);
         this.sync = BrowserSync.create();
+    }
+
+    gulp() {
+        return gulp;
     }
 
     path() {
@@ -106,39 +96,37 @@ class Zume {
     }
 
     clear() {
-        return del(path.join(this.config.paths.cwd, this.config.paths.dest));
+        return del(path.join(this.config.cwd, this.config.dest));
     }
 
     /**
      * Tasks
      */
     html(options = {}) {
-        return initTask(this, 'html', Html, options);
+        return initTask(this, Html, {task: 'html'}, options);
     }
 
     js(options = {}) {
-        return initTask(this, 'js', Js, options);
+        return initTask(this, Js, {task: 'js'}, options);
     }
 
     css(options = {}) {
-        return initTask(this, 'css', Css, options);
+        return initTask(this, Css, {task: 'css'}, options);
     }
 
     img(options = {}) {
-        return initTask(this, 'img', Img, options);
+        return initTask(this, Img, {task: 'img'}, options);
     }
 
     files(options = {}) {
-        return initTask(this, 'files', Files, options);
+        return initTask(this, Files, {task: 'files'}, options);
     }
 }
 
 module.exports = Zume;
 
-function initTask(zume, name, Task, options = {}) {
-    options.task = options.task || name;
-
-    const task = new Task(zume, options);
+function initTask(zume, Task, defaults, options = {}) {
+    const task = new Task(zume, merge(defaults, options));
 
     zume.tasks[options.task] = task;
 

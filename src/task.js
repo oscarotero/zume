@@ -1,10 +1,14 @@
-const gulp = require('gulp');
+const path = require('path');
 const through = require('through2');
+const merge = require('merge-options');
+const defaults = {
+    base: ''
+};
 
 class Task {
-    constructor(zume, options) {
+    constructor(zume, options = {}) {
         this.zume = zume;
-        this.options = Object.assign({ base: '' }, options);
+        this.options = merge(defaults, { watchPattern: options.pattern }, options);
         this.watch = [];
         this.reload = '*';
     }
@@ -14,20 +18,26 @@ class Task {
             this.watchSrc(this.options.watchPattern);
         }
 
-        const base = this.options.src || this.options.base;
-        let src;
+        let base, src;
+
+        if (this.options.src && path.isAbsolute(this.options.src)) {
+            base = this.options.src;
+        } else {
+            base = this.zume.src(this.options.src || this.options.base);
+        }
 
         if (Array.isArray(this.options.pattern)) {
             src = this.options.pattern.map(pattern =>
-                this.zume.src(base, pattern)
+                path.join(base, pattern)
             );
         } else {
-            src = this.zume.src(base, this.options.pattern);
+            src = path.join(base, this.options.pattern);
         }
 
-        this.stream = gulp.src(src, {
+        this.stream = this.zume.gulp().src(src, {
+            base: base,
             since: this.options.incremental
-                ? gulp.lastRun(this.options.task)
+                ? this.zume.gulp().lastRun(this.options.task)
                 : undefined
         });
 
@@ -72,7 +82,7 @@ class Task {
 
     dest() {
         return new Promise((resolve, reject) => {
-            this.pipe(gulp.dest(this.zume.dest(this.options.base)));
+            this.pipe(this.zume.gulp().dest(this.zume.dest(this.options.base)));
 
             this.stream.on('end', () => {
                 if (this.reload) {

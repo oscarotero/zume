@@ -1,18 +1,13 @@
 const Task = require('./task');
+const merge = require('merge-options');
+const defaults = {
+    pattern: '**',
+    incremental: true
+};
 
 class Files extends Task {
     constructor(zume, options) {
-        options = Object.assign(
-            {
-                pattern: '**',
-                incremental: true
-            },
-            options
-        );
-
-        options.watchPattern = options.watchPattern || options.pattern;
-
-        super(zume, options);
+        super(zume, merge(defaults, options));
     }
 }
 

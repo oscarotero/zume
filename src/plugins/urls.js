@@ -1,14 +1,14 @@
 const through = require('through2');
 const cheerio = require('cheerio');
 const path = require('path');
+const merge = require('merge-options');
 const defaults = {
     pretty: true,
     relative: false
 };
 
 module.exports = function (options = {}) {
-    options = Object.assign({}, defaults, options);
-    options.url = options.zume.url();
+    options = merge(defaults, options, { url: options.zume.url() });
 
     function run (file, done) {
         if (path.extname(file.path) === '.html') {

@@ -20,8 +20,8 @@ root/
 Example of the `gulpfile.js`:
 
 ```js
-const gulp = require('gulp');
 const zume = require('zume').create();
+const gulp = zume.gulp();
 
 gulp.task('clear', () => zume.clear());
 
@@ -57,10 +57,11 @@ The full list of available settings:
 Name | Default | Description
 -----|---------|------------
 `dev` | `true` | If it's in dev environment or not
-`paths.url` | `"http://localhost"` | The full url of the site
-`paths.cwd` | `process.cwd()` | The working directory
-`paths.src` | `"src"` | The directory with the source files
-`paths.dest` | `"build"` | The directory in which generate the static site
+`url` | `"http://localhost"` | The full url of the site
+`cwd` | `process.cwd()` | The working directory
+`src` | `"src"` | The directory with the source files
+`dest` | `"build"` | The directory in which generate the static site
+`server` | `[object]` | The browser-sync server options
 
 The `zume` instance provide the following functions:
 
@@ -73,6 +74,7 @@ Name | Description
 `zume.fullUrl()` | Returns a public full url path. For example: `zume.fullUrl('foo')` returns `"http://example.com/foo"`.
 `zume.serve()` | Init a new http server using [browsersync](http://browsersync.io/).
 `zume.clear()` | Removes de dist folder and all its content.
+`zume.gulp()` | Returns the gulp instance used by zume.
 
 ## Task
 
