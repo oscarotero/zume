@@ -8,9 +8,25 @@ const defaults = {
 class Task {
     constructor(zume, options = {}) {
         this.zume = zume;
-        this.options = merge(defaults, { watchPattern: options.pattern }, options);
+        this.options = merge(
+            defaults,
+            { watchPattern: options.pattern },
+            options
+        );
         this.watch = [];
         this.reload = '*';
+
+        if (this.options.src) {
+            if (!path.isAbsolute(this.options.src)) {
+                throw new Error(
+                    `"src" must be an absolute path (${this.options.src})`
+                );
+            }
+
+            this.cwd = path.join(this.options.src, this.options.base);
+        } else {
+            this.cwd = this.zume.src(this.options.base);
+        }
     }
 
     src() {
@@ -18,24 +34,17 @@ class Task {
             this.watchSrc(this.options.watchPattern);
         }
 
-        let base, src;
-
-        if (this.options.src && path.isAbsolute(this.options.src)) {
-            base = this.options.src;
-        } else {
-            base = this.zume.src(this.options.src || this.options.base);
-        }
-
+        let src;
         if (Array.isArray(this.options.pattern)) {
             src = this.options.pattern.map(pattern =>
-                path.join(base, pattern)
+                path.join(this.cwd, pattern)
             );
         } else {
-            src = path.join(base, this.options.pattern);
+            src = path.join(this.cwd, this.options.pattern);
         }
 
         this.stream = this.zume.gulp().src(src, {
-            base: base,
+            base: this.cwd,
             since: this.options.incremental
                 ? this.zume.gulp().lastRun(this.options.task)
                 : undefined
@@ -80,9 +89,15 @@ class Task {
         );
     }
 
-    dest() {
+    dest(dir) {
+        if (!dir || !path.isAbsolute(dir)) {
+            dir = this.zume.dest(dir || this.options.base);
+        } else {
+            dir = path.join(dir, this.options.base);
+        }
+
         return new Promise((resolve, reject) => {
-            this.pipe(this.zume.gulp().dest(this.zume.dest(this.options.base)));
+            this.pipe(this.zume.gulp().dest(dir));
 
             this.stream.on('end', () => {
                 if (this.reload) {
@@ -95,16 +110,14 @@ class Task {
     }
 
     watchSrc(pattern) {
-        const base = this.options.src || this.options.base;
-
         if (Array.isArray(pattern)) {
             this.watch = this.watch.concat(
-                pattern.map(pattern => this.zume.src(base, pattern))
+                pattern.map(pattern => path.join(this.cwd, pattern))
             );
             return;
         }
 
-        return this.watch.push(this.zume.src(base, pattern));
+        return this.watch.push(path.join(this.cwd, pattern));
     }
 }
 

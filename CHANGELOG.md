@@ -5,17 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## UNRELEASED
+## [UNRELEASED]
 
 ### Added
 
 - New `zume.gulp()` function that returns the current gulp instance
+- `zume.dest()` allows an argument to define a different output directory
 
 ### Changed
 
 - Allow absolute paths as `src` option in the tasks
 - Moved the zume options `cwd`, `url`, `src` and `dest` to the root of the options object.
 - Merged configuration recursively
+
+### Fixed
+
+- Webpack plugin uses now `fs-memory`. This fixes some troubles.
 
 ## [1.0.0-beta.1] - 2018-03-05
 
@@ -260,6 +265,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[UNRELEASED]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.1...HEAD
 [1.0.0-beta.1]: https://github.com/oscarotero/zume/compare/v0.15.1...v1.0.0-beta.1
 [0.15.1]: https://github.com/oscarotero/zume/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/oscarotero/zume/compare/v0.14.6...v0.15.0

@@ -91,35 +91,41 @@ class Zume {
         gulp.watch(
             paths,
             this.config.server.watchOptions,
-            gulp.parallel(...task)
+            gulp.series(...task)
         );
     }
 
-    clear() {
-        return del(path.join(this.config.cwd, this.config.dest));
+    clear(dir = '') {
+        if (!Array.isArray(dir)) {
+            dir = [dir];
+        }
+
+        return del(
+            dir.map(file => path.join(this.config.cwd, this.config.dest, file))
+        );
     }
 
     /**
      * Tasks
      */
     html(options = {}) {
-        return initTask(this, Html, {task: 'html'}, options);
+        return initTask(this, Html, { task: 'html' }, options);
     }
 
     js(options = {}) {
-        return initTask(this, Js, {task: 'js'}, options);
+        return initTask(this, Js, { task: 'js' }, options);
     }
 
     css(options = {}) {
-        return initTask(this, Css, {task: 'css'}, options);
+        return initTask(this, Css, { task: 'css' }, options);
     }
 
     img(options = {}) {
-        return initTask(this, Img, {task: 'img'}, options);
+        return initTask(this, Img, { task: 'img' }, options);
     }
 
     files(options = {}) {
-        return initTask(this, Files, {task: 'files'}, options);
+        return initTask(this, Files, { task: 'files' }, options);
     }
 }
 
@@ -127,8 +133,7 @@ module.exports = Zume;
 
 function initTask(zume, Task, defaults, options = {}) {
     const task = new Task(zume, merge(defaults, options));
-
-    zume.tasks[options.task] = task;
+    zume.tasks[task.options.task] = task;
 
     return task.src();
 }

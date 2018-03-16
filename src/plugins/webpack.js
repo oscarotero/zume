@@ -1,6 +1,7 @@
 const through = require('through2');
 const webpack = require('webpack');
 const File = require('vinyl');
+const MemoryFS = require('memory-fs');
 const path = require('path');
 const merge = require('merge-options');
 const defaults = {
@@ -12,8 +13,7 @@ const defaults = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /(node_modules)/,
+                test: /\.jsm$/,
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -26,21 +26,24 @@ const defaults = {
 };
 
 module.exports = function (options = {}) {
-    const opt = merge(defaults, options.options);
-
-    if (!options.zume.dev) {
-        opt.mode = 'development';
-    } else {
-        opt.mode = 'production';
-    }
-
-    opt.context = options.zume.src(options.dir);
-    opt.output.publicPath = options.zume.url(options.dir) + '/';
-    opt.output.path = options.zume.dest(options.dir);
+    const opt = merge(
+        defaults,
+        {
+            mode: options.zume.dev ? 'development' : 'production',
+            context: options.zume.src(options.dir),
+            output: {
+                publicPath: options.zume.url(options.dir) + '/',
+                path: options.zume.dest(options.dir)
+            }
+        },
+        options.options
+    );
 
     if (typeof options.options === 'function') {
         options.options(opt);
     }
+
+    const fs = new MemoryFS();
 
     function run (file, done) {
         const name = path.basename(file.path, '.js');
@@ -54,19 +57,22 @@ module.exports = function (options = {}) {
         }
 
         const compiler = webpack(opt);
+        compiler.outputFileSystem = fs;
 
         compiler.run((err, stats) => {
             if (err) {
                 console.error(err);
             }
 
-            Object.keys(stats.compilation.assets).forEach(f =>
+            Object.keys(stats.compilation.assets).forEach(f => {
+                const filename = path.join(compiler.outputPath, f);
+
                 this.push(new File({
                     base: compiler.outputPath,
-                    contents: new Buffer(stats.compilation.assets[f]._value),
-                    path: path.join(compiler.outputPath, f)
-                }))
-            );
+                    contents: fs.readFileSync(filename),
+                    path: filename
+                }));
+            });
 
             done();
         });

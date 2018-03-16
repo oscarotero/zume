@@ -89,7 +89,8 @@ Available options:
 Name | Description
 -----|-------------
 `task` | The gulp task name used to relaunch by the watcher. The default value in html is `html`, css is `css`, and so on.
-`base` | The base directory used to search for files. 
+`src` | Absolute directory where are the src files (by default is `zume.src()`)
+`base` | Relative directory to `src` and `dest` used to search for files and output the result.
 `pattern` | The pattern used to search files. The default value in html is `data/**/*.md`, in css is `*.css`, etc.
 `watchPattern` | Additional patterns added to the watcher.
 
