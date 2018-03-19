@@ -18,29 +18,23 @@ const defaults = {
 };
 
 module.exports = function (options) {
-    let md;
+    const md = new MarkdownIt(defaults);
 
-    if (options && options.constructor.name === MarkdownIt.name) {
-        md = options;
-    } else {
-        md = new MarkdownIt(defaults);
-
-        ['section', 'figure', 'figcaption', 'header', 'footer'].forEach(name => {
-            md.use(container, name, {
-                validate: params => params.trim() === name || params.trim().startsWith(`${name} `),
-                render: (tokens, idx, _options, env, self) => {
-                    tokens[idx].tag = name;
-                    return self.renderToken(tokens, idx, _options, env, self);
-                }
-            });
+    ['section', 'figure', 'figcaption', 'header', 'footer'].forEach(name => {
+        md.use(container, name, {
+            validate: params => params.trim() === name || params.trim().startsWith(`${name} `),
+            render: (tokens, idx, _options, env, self) => {
+                tokens[idx].tag = name;
+                return self.renderToken(tokens, idx, _options, env, self);
+            }
         });
+    });
 
-        md.use(container, 'div');
-        md.use(attrs);
+    md.use(container, 'div');
+    md.use(attrs);
 
-        if (typeof options === 'function') {
-            options(md);
-        }
+    if (typeof options === 'function') {
+        options(md);
     }
 
     const markdown = (text) => text ? md.render(text) : '';

@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Moved the zume options `cwd`, `url`, `src` and `dest` to the root of the options object.
 - Merged configuration recursively
 
+### Removed
+
+- Dropped the ability to add a `MarkdownIt` instance to the markdown plugin.
+
 ### Fixed
 
 - Webpack plugin uses now `fs-memory`. This fixes some troubles.

@@ -46,7 +46,7 @@ gulp.task('server', gulp.series('default', () => zume.serve()));
 
 ## API
 
-First, you have to create a `zume` instance passing the config data. Use the method `create` for this purpose:
+First, you have to create a `zume` instance passing the config data. Use the static function `create()` for this purpose:
 
 ```js
 const zume = require('zume').create()
@@ -63,22 +63,22 @@ Name | Default | Description
 `dest` | `"build"` | The directory in which generate the static site
 `server` | `[object]` | The browser-sync server options
 
-The `zume` instance provide the following functions:
+The `zume` instance provides the following functions:
 
 Name | Description
 -----|------------
+`zume.gulp()` | Returns the gulp instance used by zume.
 `zume.path()` | Returns any path of the project. For example: `zume.path('foo')` returns `"/path/to/project/foo"`.
 `zume.src()` | Returns any path of the src folder. For example: `zume.src('foo')` returns `"/path/to/project/src/foo"`.
-`zume.dest()` | Returns any path of the dist folder. For example: `zume.src('img')` returns `"/path/to/project/build/img"`.
+`zume.dest()` | Returns any path of the build folder. For example: `zume.src('img')` returns `"/path/to/project/build/img"`.
 `zume.url()` | Returns a public url path. For example: `zume.url('foo')` returns `"/foo"`.
 `zume.fullUrl()` | Returns a public full url path. For example: `zume.fullUrl('foo')` returns `"http://example.com/foo"`.
 `zume.serve()` | Init a new http server using [browsersync](http://browsersync.io/).
-`zume.clear()` | Removes de dist folder and all its content.
-`zume.gulp()` | Returns the gulp instance used by zume.
+`zume.clear()` | Removes de build folder.
 
 ## Task
 
-Zume contains the tasks `html`, `css`, `js` and `files`. To create a task, just need to do the following:
+Zume contains the tasks `html`, `css`, `js`, `img` and `files`. To create a task, just need to do the following:
 
 ```js
 const html = zume.html(options);
@@ -136,21 +136,10 @@ html.yaml({
 
 ### markdown
 
-Parse the content of the files as markdown using [markdown-it](https://github.com/markdown-it/markdown-it). You can pass an object with options or a new instace of MarkdownIt:
+Parse the content of the files as markdown using [markdown-it](https://github.com/markdown-it/markdown-it). You can pass a function to configure the MarkdownIt instance:
 
 ```js
-//Using an object of options
-html.markdown({
-    html: true,
-    linkify: true,
-    typographer: true
-})
-
-//Or an instance of markdownit
-const MarkdownIt = require('markdown-it');
-const md = new MarkdownIt();
-
-html.markdown(md)
+html.markdown(md => md.set({ breaks: false }))
 ```
 
 In addition to that, it also creates two variables: `markdown` and `markdownInline` that can be used in the templates to render markdown.
@@ -229,9 +218,7 @@ html.urls({
 Run [cheerio](https://github.com/cheeriojs/cheerio) in all html pages. Useful to make changes in the html using the jQuery sintax.
 
 ```js
-html.cheerio(function ($) {
-    $('h1').addClass('text-title');
-});
+html.cheerio($ => $('h1').addClass('text-title'));
 
 //object with options
 html.cheerio({
