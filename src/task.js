@@ -54,7 +54,8 @@ class Task {
     }
 
     pipe(plugin) {
-        this.stream = this.stream.pipe(plugin);
+        this.stream = this.stream.pipe(plugin)
+            .on('error', this.logError.bind(this));
 
         return this;
     }
@@ -118,6 +119,11 @@ class Task {
         }
 
         return this.watch.push(path.join(this.cwd, pattern));
+    }
+
+    logError(err) {
+        console.error(`Error from "${this.options.task}" task:`);
+        console.error(err.toString());
     }
 }
 
