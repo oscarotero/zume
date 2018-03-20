@@ -38,15 +38,17 @@ class TaskFork {
     merge() {
         const files = this.restore;
 
-        return this.task.pipe(through.obj(
-            function(file, encoding, callback) {
-                callback(null, file);
-            },
-            function(done) {
-                files.forEach(file => this.push(file));
-                done();
-            }
-        ));
+        return this.task.pipe(
+            through.obj(
+                function(file, encoding, callback) {
+                    callback(null, file);
+                },
+                function(done) {
+                    files.forEach(file => this.push(file));
+                    done();
+                }
+            )
+        );
     }
 }
 

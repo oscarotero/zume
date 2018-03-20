@@ -55,7 +55,8 @@ class Task {
     }
 
     pipe(plugin) {
-        this.stream = this.stream.pipe(plugin)
+        this.stream = this.stream
+            .pipe(plugin)
             .on('error', this.logError.bind(this));
 
         return this;
