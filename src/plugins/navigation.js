@@ -1,4 +1,4 @@
-const through = require('through2');
+const { Transform } = require('stream');
 const path = require('path');
 
 class Section extends Array {
@@ -62,8 +62,9 @@ module.exports = function (options = {}) {
     const sections = new Section();
     const files = [];
 
-    return through.obj(
-        function(file, encoding, callback) {
+    return new Transform({
+        objectMode: true,
+        transform(file, encoding, done) {
             files.push(file);
             file.data.nav = sections;
 
@@ -103,11 +104,11 @@ module.exports = function (options = {}) {
                 sections.order();
             }
 
-            callback();
+            done();
         },
-        function(done) {
+        flush(done) {
             files.forEach(file => this.push(file));
             done();
         }
-    );
+    });
 }

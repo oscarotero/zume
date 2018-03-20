@@ -1,4 +1,4 @@
-const through = require('through2');
+const { Transform } = require('stream');
 const webpack = require('webpack');
 const File = require('vinyl');
 const MemoryFS = require('memory-fs');
@@ -45,40 +45,38 @@ module.exports = function (options = {}) {
 
     const fs = new MemoryFS();
 
-    function run (file, done) {
-        const name = path.basename(file.path, '.js');
-        opt.entry[name] = './' + file.relative;
-        done();
-    }
-
-    function execute (done) {
-        if (!Object.keys(opt.entry).length) {
-            return done();
-        }
-
-        const compiler = webpack(opt);
-        compiler.outputFileSystem = fs;
-
-        compiler.run((err, stats) => {
-            if (err) {
-                console.error(err);
+    return new Transform({
+        objectMode: true,
+        transform(file, encoding, done) {
+            const name = path.basename(file.path, '.js');
+            opt.entry[name] = './' + file.relative;
+            done();
+        },
+        flush(done) {
+            if (!Object.keys(opt.entry).length) {
+                return done();
             }
 
-            Object.keys(stats.compilation.assets).forEach(f => {
-                const filename = path.join(compiler.outputPath, f);
+            const compiler = webpack(opt);
+            compiler.outputFileSystem = fs;
 
-                this.push(new File({
-                    base: compiler.outputPath,
-                    contents: fs.readFileSync(filename),
-                    path: filename
-                }));
+            compiler.run((err, stats) => {
+                if (err) {
+                    console.error(err);
+                }
+
+                Object.keys(stats.compilation.assets).forEach(f => {
+                    const filename = path.join(compiler.outputPath, f);
+
+                    this.push(new File({
+                        base: compiler.outputPath,
+                        contents: fs.readFileSync(filename),
+                        path: filename
+                    }));
+                });
+
+                done();
             });
-
-            done();
-        });
-    }
-
-    return through.obj(function (file, encoding, callback) {
-        run(file, (file) => callback(null, file));
-    }, execute);
+        }
+    });
 }

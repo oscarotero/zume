@@ -1,4 +1,4 @@
-const through = require('through2');
+const { Transform } = require('stream');
 const MarkdownIt = require('markdown-it');
 const hljs = require('highlight.js');
 const attrs = require('markdown-it-attrs');
@@ -40,14 +40,13 @@ module.exports = function (options) {
     const markdown = (text) => text ? md.render(text) : '';
     const markdownInline = (text) => text ? md.renderInline(text) : '';
 
-    function run (file, done) {
-        file.contents = new Buffer(md.render(file.contents.toString()));
-        file.data.markdown = markdown;
-        file.data.markdownInline = markdownInline;
-        done(file);
-    }
-
-    return through.obj(function (file, encoding, callback) {
-        run(file, (file) => callback(null, file));
+    return new Transform({
+        objectMode: true,
+        transform(file, encoding, done) {
+            file.contents = new Buffer(md.render(file.contents.toString()));
+            file.data.markdown = markdown;
+            file.data.markdownInline = markdownInline;
+            done(null, file);
+        }
     });
 }

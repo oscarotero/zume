@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - New `task.fork()` function to fork the stream and merge again. This allows to execute plugins only to some files.
 
+### Changed
+
+- Removed through dependency and use the standard `Transform` class
+
 ### Fixed
 
 - The task functions `watchSrc()` and `logError()` returns `this`;

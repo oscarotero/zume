@@ -1,17 +1,20 @@
-const through = require('through2');
+const { Transform } = require('stream');
 
 class TaskFork {
     constructor(task, filter) {
         this.task = task;
         this.restore = [];
 
-        this.task.pipe(
-            through.obj((file, encoding, callback) => {
-                if (filter(file)) {
-                    callback(null, file);
-                } else {
-                    this.restore.push(file);
-                    callback();
+        return this.task.pipe(
+            new Transform({
+                objectMode: true,
+                transform(file, encoding, done) {
+                    if (filter(file)) {
+                        done(null, file);
+                    } else {
+                        this.restore.push(file);
+                        done();
+                    }
                 }
             })
         );
@@ -39,15 +42,13 @@ class TaskFork {
         const files = this.restore;
 
         return this.task.pipe(
-            through.obj(
-                function(file, encoding, callback) {
-                    callback(null, file);
-                },
-                function(done) {
+            new Transform({
+                objectMode: true,
+                flush(done) {
                     files.forEach(file => this.push(file));
                     done();
                 }
-            )
+            })
         );
     }
 }

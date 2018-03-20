@@ -1,23 +1,22 @@
-const through = require('through2');
+const { Transform } = require('stream');
 const matter = require('front-matter');
 
 module.exports = function (options = {}) {
-    function run (file, done) {
-        try {
-            const data = matter(file.contents.toString());
+    return new Transform({
+        objectMode: true,
+        transform(file, encoding, done) {
+            try {
+                const data = matter(file.contents.toString());
 
-            file.contents = new Buffer(data.body);
-            file.data = Object.assign({}, options, data.attributes);
-        } catch (error) {
-            console.error(error);
-            file.data = {};
-            file.error = error;
+                file.contents = new Buffer(data.body);
+                file.data = Object.assign({}, options, data.attributes);
+            } catch (error) {
+                console.error(error);
+                file.data = {};
+                file.error = error;
+            }
+
+            done(null, file);
         }
-
-        done(file);
-    }
-
-    return through.obj(function (file, encoding, callback) {
-        run(file, (file) => callback(null, file));
     });
 }

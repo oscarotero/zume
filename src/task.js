@@ -1,5 +1,5 @@
 const path = require('path');
-const through = require('through2');
+const { Transform } = require('stream');
 const merge = require('merge-options');
 const TaskFork = require('./task-fork');
 const defaults = {
@@ -66,27 +66,31 @@ class Task {
         const files = [];
 
         return this.pipe(
-            through.obj(
-                function(file, encoding, callback) {
+            new Transform({
+                objectMode: true,
+                transform(file, encoding, done) {
                     fn(file, data);
                     files.push(file);
-                    callback();
+                    done();
                 },
-                function(done) {
+                flush(done) {
                     files.forEach(file => this.push(file));
                     done();
                 }
-            )
+            })
         );
     }
 
     filter(fn) {
         return this.pipe(
-            through.obj(function(file, encoding, callback) {
-                if (fn(file)) {
-                    callback(null, file);
-                } else {
-                    callback();
+            new Transform({
+                objectMode: true,
+                transform(file, encoding, done) {
+                    if (fn(file)) {
+                        done(null, file);
+                    } else {
+                        done();
+                    }
                 }
             })
         );

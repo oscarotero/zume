@@ -1,4 +1,4 @@
-const through = require('through2');
+const { Transform } = require('stream');
 const cheerio = require('cheerio');
 const path = require('path');
 const merge = require('merge-options');
@@ -10,19 +10,18 @@ const defaults = {
 module.exports = function (options = {}) {
     options = merge(defaults, options, { url: options.zume.url() });
 
-    function run (file, done) {
-        if (path.extname(file.path) === '.html') {
-            const $ = cheerio.load(file.contents.toString(), options.parser);
-            resolve($, file, options);
+    return new Transform({
+        objectMode: true,
+        transform(file, encoding, done) {
+            if (path.extname(file.path) === '.html') {
+                const $ = cheerio.load(file.contents.toString(), options.parser);
+                resolve($, file, options);
 
-            file.contents = new Buffer($.html());
+                file.contents = new Buffer($.html());
+            }
+
+            done(null, file);
         }
-
-        done(file);
-    }
-
-    return through.obj(function (file, encoding, callback) {
-        run(file, (file) => callback(null, file));
     });
 }
 
