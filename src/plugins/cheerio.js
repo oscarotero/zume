@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = function (options) {
     if (typeof options === 'function') {
-        options = {fn: options};
+        options = { fn: options };
     }
 
     options.parser = options.parser || {};
