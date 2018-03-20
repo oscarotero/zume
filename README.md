@@ -33,6 +33,10 @@ gulp.task('html', () =>
         .navigation()
         .ejs()
         .urls()
+            .fork(f => f.path.contains('example'))
+            .pipe(action1)
+            .pipe(action2)
+            .merge()
         .dest()
 );
 
@@ -99,6 +103,7 @@ There are some functions available in all tasks:
 * `.pipe(plugin)` Allow to pipe more gulp plugins to the stream 
 * `.each(callback)` To execute a callback for each file
 * `.filter(callback)` To filter some files
+* `.fork(callback)` To filter some files and create a different fork with them
 * `.dest()` To save the files in the build folder and return a promise.
 
 ## HTML Generation

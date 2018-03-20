@@ -1,6 +1,7 @@
 const path = require('path');
 const through = require('through2');
 const merge = require('merge-options');
+const TaskFork = require('./task-fork');
 const defaults = {
     base: ''
 };
@@ -88,6 +89,10 @@ class Task {
                 }
             })
         );
+    }
+
+    fork(fn) {
+        return new TaskFork(this, fn);
     }
 
     dest(dir) {

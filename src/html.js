@@ -1,13 +1,52 @@
 const Task = require('./task');
+const TaskFork = require('./task-fork');
 const merge = require('merge-options');
 const defaults = {
     pattern: 'data/**/*.md',
     incremental: true
 };
 
+class HtmlFork extends TaskFork {
+    yaml(options) {
+        return this.exec('yaml', options);
+    }
+
+    frontMatter(options) {
+        return this.exec('frontMatter', options);
+    }
+
+    markdown(options) {
+        return this.exec('markdown', options);
+    }
+
+    permalink(options) {
+        return this.exec('permalink', options);
+    }
+
+    ejs(options = {}) {
+        return this.exec('ejs', options);
+    }
+
+    urls(options = {}) {
+        return this.exec('urls', options);
+    }
+
+    navigation(options) {
+        return this.exec('navigation', options);
+    }
+
+    cheerio(options) {
+        return this.exec('cheerio', options);
+    }
+}
+
 class Html extends Task {
     constructor(zume, options) {
         super(zume, merge(defaults, options));
+    }
+
+    fork(fn) {
+        return new HtmlFork(this, fn);
     }
 
     yaml(options) {

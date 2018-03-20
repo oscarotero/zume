@@ -27,6 +27,7 @@
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^11.1.0",
     "postcss-url": "^7.3.1",
+    "streamfilter": "^1.0.7",
     "through2": "^2.0.3",
     "webpack": "^4.1.1"
   },
