@@ -104,7 +104,29 @@ There are some functions available in all tasks:
 * `.each(callback)` To execute a callback for each file
 * `.filter(callback)` To filter some files
 * `.fork(callback)` To filter some files and create a different fork with them
+* `.add(options)` To create a new stream task ready to merge it in the main stream.
 * `.dest()` To save the files in the build folder and return a promise.
+
+Example:
+
+```js
+zume.html()         // Get the markdown files
+    .frontMatter()  // Extract the frontmatter
+    .markdown()     // Render the markdown
+        .add({      // Add new yaml files
+            pattern: 'data/*.yaml'
+        })
+        .yaml()     // Parse the yaml
+        .merge()    // Merge yaml and markdown files
+    .permalink()    // Change the file names
+        .fork(      // Fork the stream again filtering the files containing "about"
+            f => f.path.contains('about')
+        )
+        .each(fn)   // Execute a function with these files
+        .merge()    // Merge these files again with the main stream
+    .ejs()          // Apply the templates
+    .dest()         // Save to build folder
+```
 
 ## HTML Generation
 

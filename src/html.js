@@ -49,6 +49,11 @@ class Html extends Task {
         return new HtmlFork(this, fn);
     }
 
+    add(options = {}) {
+        options.incremental = false;
+        return new HtmlFork(this.zume.html(options), this);
+    }
+
     yaml(options) {
         return this.pipe(require('./plugins/yaml')(options));
     }

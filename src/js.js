@@ -23,6 +23,11 @@ class Js extends Task {
         return new JsFork(this, fn);
     }
 
+    add(options = {}) {
+        options.incremental = false;
+        return new JsFork(this.zume.js(options), this);
+    }
+
     webpack(options) {
         return this.pipe(
             require('./plugins/webpack')({

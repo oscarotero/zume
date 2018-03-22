@@ -100,6 +100,11 @@ class Task {
         return new TaskFork(this, fn);
     }
 
+    add(options = {}) {
+        options.incremental = false;
+        return new TaskFork(this.zume.html(options), this);
+    }
+
     dest(dir) {
         if (!dir || !path.isAbsolute(dir)) {
             dir = this.zume.dest(dir || this.options.base);

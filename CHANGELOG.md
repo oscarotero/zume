@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.0-beta.5] - 2018-03-22
+
+### Added
+
+- New `task.add()` to add a new stream to the pipeline.
+
+### Fixed
+
+- The constructor of `TaskFork` must return nothing
+
 ## [1.0.0-beta.4] - 2018-03-20
 
 ### Added
