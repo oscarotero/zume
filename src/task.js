@@ -19,9 +19,7 @@ class Task {
 
         if (this.options.src) {
             if (!path.isAbsolute(this.options.src)) {
-                throw new Error(
-                    `"src" must be an absolute path (${this.options.src})`
-                );
+                this.options.src = this.zume.src(this.options.src);
             }
 
             this.cwd = path.join(this.options.src, this.options.base);

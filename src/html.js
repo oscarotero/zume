@@ -2,7 +2,8 @@ const Task = require('./task');
 const TaskFork = require('./task-fork');
 const merge = require('merge-options');
 const defaults = {
-    pattern: 'data/**/*.md',
+    src: 'data',
+    pattern: '**/*.md',
     incremental: true
 };
 

@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.0-beta.6] - 2018-03-22
+
+### Added
+
+- Allows relative urls in the `src` option of a task.
+
+### Changed
+
+- The `html` task default pattern is `**/*.md`, instead `data/**/*.md`. The directory `data` is configured in the `src` option.
+
 ## [1.0.0-beta.5] - 2018-03-22
 
 ### Added
@@ -299,6 +309,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[1.0.0-beta.6]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.5...v1.0.0-beta.6
 [1.0.0-beta.5]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.4...v1.0.0-beta.5
 [1.0.0-beta.4]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.3...v1.0.0-beta.4
 [1.0.0-beta.3]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.2...v1.0.0-beta.3
