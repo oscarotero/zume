@@ -299,6 +299,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[1.0.0-beta.5]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.4...v1.0.0-beta.5
 [1.0.0-beta.4]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.3...v1.0.0-beta.4
 [1.0.0-beta.3]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.2...v1.0.0-beta.3
 [1.0.0-beta.2]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.1...v1.0.0-beta.2
