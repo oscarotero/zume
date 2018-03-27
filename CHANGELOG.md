@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.0-beta.7] - 2018-03-27
+
+### Added
+
+- Plugin `postcss-extend` by default
+
+### Fixed
+
+- Updated dependencies
+
 ## [1.0.0-beta.6] - 2018-03-22
 
 ### Added
@@ -309,6 +319,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[1.0.0-beta.7]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.6...v1.0.0-beta.7
 [1.0.0-beta.6]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.5...v1.0.0-beta.6
 [1.0.0-beta.5]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.4...v1.0.0-beta.5
 [1.0.0-beta.4]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.3...v1.0.0-beta.4

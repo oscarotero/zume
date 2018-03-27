@@ -4,6 +4,7 @@ const defaults = {
         require('postcss-import'),
         require('postcss-url'),
         require('postcss-cssnext'),
+        require('postcss-extend')
     ]
 };
 
