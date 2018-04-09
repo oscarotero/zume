@@ -205,6 +205,22 @@ html.navigation()
 
 Use the variable `position` to change the order of the elements.
 
+You can override the default values of the sections:
+
+```js
+html.navigation({
+    override: {
+        section1: {
+            title: 'First section',
+            position: 1
+        }
+        'section1/subsection3': {
+            title: 'Subsection 3',
+            position: 3
+        }
+    }
+});
+```
 
 ### ejs
 

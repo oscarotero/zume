@@ -93,15 +93,12 @@ module.exports = function (options = {}) {
                     }
                 }
 
+                if (options.override && options.override[id]) {
+                    section.setData(options.override[id]);
+                }
+
                 tree.order();
                 tree = section;
-            }
-
-            if (options.override) {
-                for (let id in options.override) {
-                    sections.getOrCreate(id).setData(options.override[id]);
-                }
-                sections.order();
             }
 
             done();
