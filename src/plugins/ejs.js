@@ -3,16 +3,21 @@ const ejs = require('ejs');
 const ejsLint = require('ejs-lint');
 const path = require('path');
 const defaults = {
-    delimiter: '?'
+    delimiter: '?',
+    outputFunctionName: 'echo'
 };
 
-module.exports = function (options = {}) {
+module.exports = function(options = {}) {
     options = Object.assign({}, defaults, options);
 
     return new Transform({
         objectMode: true,
         transform(file, encoding, done) {
-            const locals = Object.assign({}, options.locals || {}, file.data || {});
+            const locals = Object.assign(
+                {},
+                options.locals || {},
+                file.data || {}
+            );
 
             if (file.error) {
                 file.contents = renderError(file.error, file.errorExtra);
@@ -34,7 +39,7 @@ module.exports = function (options = {}) {
                 return done(null, file);
             }
 
-            ejs.renderFile(template, locals, options, function (err, result) {
+            ejs.renderFile(template, locals, options, function(err, result) {
                 if (err) {
                     console.error(err);
                 }
@@ -45,10 +50,11 @@ module.exports = function (options = {}) {
             });
         }
     });
-}
+};
 
 function renderError(error, extra) {
-    return new Buffer(ejs.render(`
+    return new Buffer(
+        ejs.render(`
 <html>
     <head>
         <title>Zume error</title>
@@ -64,5 +70,6 @@ function renderError(error, extra) {
         <pre>${error.toString()}</pre>
         <small>${extra || ''}</small>
     </body>
-</html>`));
+</html>`)
+    );
 }

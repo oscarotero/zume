@@ -3,8 +3,7 @@ const TaskFork = require('./task-fork');
 const merge = require('merge-options');
 const defaults = {
     src: 'data',
-    pattern: '**/*.md',
-    incremental: true
+    pattern: '**/*.md'
 };
 
 class HtmlFork extends TaskFork {
@@ -34,6 +33,10 @@ class HtmlFork extends TaskFork {
 
     navigation(options) {
         return this.exec('navigation', options);
+    }
+
+    inline(options) {
+        return this.exec('inline', options);
     }
 
     cheerio(options) {
@@ -89,6 +92,12 @@ class Html extends Task {
 
     navigation(options) {
         return this.pipe(require('./plugins/navigation')(options));
+    }
+
+    inline(options = {}) {
+        options.zume = this.zume;
+
+        return this.pipe(require('./plugins/inline')(options));
     }
 
     cheerio(options) {

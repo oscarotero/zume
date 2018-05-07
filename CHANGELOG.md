@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.0-beta.9] - 2018-05-07
+
+### Added
+
+- New `html.inline()` plugin
+
+### Changed
+
+- Enabled `echo()` in ejs.
+- Disabled `incremental` option in `html` task
+- Updated `markdown-it-attrs` to v2.x
+
+### Fixed
+
+- Run `prettier` in the plugins folder
+
 ## [1.0.0-beta.8] - 2018-04-09
 
 ### Changed
@@ -325,6 +341,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[1.0.0-beta.9]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.8...v1.0.0-beta.9
 [1.0.0-beta.8]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.7...v1.0.0-beta.8
 [1.0.0-beta.7]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.6...v1.0.0-beta.7
 [1.0.0-beta.6]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.5...v1.0.0-beta.6

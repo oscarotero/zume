@@ -8,21 +8,24 @@ const defaults = {
     linkify: true,
     typographer: true,
     breaks: true,
-    highlight: function (code, lang) {
+    highlight: function(code, lang) {
         if (lang && hljs.getLanguage(lang)) {
-            return `<pre><code class="hljs ${lang}">${hljs.highlight(lang, code).value}</code></pre>`;
+            return `<pre><code class="hljs ${lang}">${
+                hljs.highlight(lang, code).value
+            }</code></pre>`;
         }
 
         return '';
     }
 };
 
-module.exports = function (options) {
+module.exports = function(options) {
     const md = new MarkdownIt(defaults);
 
     ['section', 'figure', 'figcaption', 'header', 'footer'].forEach(name => {
         md.use(container, name, {
-            validate: params => params.trim() === name || params.trim().startsWith(`${name} `),
+            validate: params =>
+                params.trim() === name || params.trim().startsWith(`${name} `),
             render: (tokens, idx, _options, env, self) => {
                 tokens[idx].tag = name;
                 return self.renderToken(tokens, idx, _options, env, self);
@@ -37,8 +40,8 @@ module.exports = function (options) {
         options(md);
     }
 
-    const markdown = (text) => text ? md.render(text) : '';
-    const markdownInline = (text) => text ? md.renderInline(text) : '';
+    const markdown = text => (text ? md.render(text) : '');
+    const markdownInline = text => (text ? md.renderInline(text) : '');
 
     return new Transform({
         objectMode: true,
@@ -49,4 +52,4 @@ module.exports = function (options) {
             done(null, file);
         }
     });
-}
+};

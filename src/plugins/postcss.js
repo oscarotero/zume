@@ -8,13 +8,15 @@ const defaults = {
     ]
 };
 
-module.exports = function (options = {}) {
+module.exports = function(options = {}) {
     options = Object.assign({}, defaults, options);
 
     if (!options.zume.dev) {
-        options.plugins.push(require('cssnano')({
-            preset: 'default'
-        }));
+        options.plugins.push(
+            require('cssnano')({
+                preset: 'default'
+            })
+        );
     }
 
     return postcss(options.plugins);

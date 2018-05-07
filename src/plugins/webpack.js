@@ -25,7 +25,7 @@ const defaults = {
     }
 };
 
-module.exports = function (options = {}) {
+module.exports = function(options = {}) {
     const opt = merge(
         defaults,
         {
@@ -68,15 +68,17 @@ module.exports = function (options = {}) {
                 Object.keys(stats.compilation.assets).forEach(f => {
                     const filename = path.join(compiler.outputPath, f);
 
-                    this.push(new File({
-                        base: compiler.outputPath,
-                        contents: fs.readFileSync(filename),
-                        path: filename
-                    }));
+                    this.push(
+                        new File({
+                            base: compiler.outputPath,
+                            contents: fs.readFileSync(filename),
+                            path: filename
+                        })
+                    );
                 });
 
                 done();
             });
         }
     });
-}
+};

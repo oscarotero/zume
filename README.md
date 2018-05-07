@@ -138,6 +138,7 @@ zume.html()
     .markdown()
     .permalink()
     .ejs()
+    .inline()
     .dest()
 ```
 
@@ -253,6 +254,16 @@ Search and fix all relative urls in the html (`a`, `img`, `link`, `script`, `sou
 html.urls({
     pretty: false, //add "/index.html" to all links
     relative: true //makes the urls relatives to the current page
+})
+```
+
+### inline
+
+To inline the tags containing the `inline="true"` attribute. Supports `<script>`, `<link>` and `<img>`
+
+```js
+html.inline({
+    dest: true, //To get the sources from dest folder, instead src.
 })
 ```
 

@@ -9,7 +9,6 @@ class Section extends Array {
 
     setData(name, value) {
         if (typeof name === 'object') {
-
             for (let k in name) {
                 this[k] = name[k];
             }
@@ -55,9 +54,9 @@ class Section extends Array {
             return 0;
         });
     }
-};
+}
 
-module.exports = function (options = {}) {
+module.exports = function(options = {}) {
     const data = options.data || [];
     const sections = new Section();
     const files = [];
@@ -89,7 +88,9 @@ module.exports = function (options = {}) {
                     });
 
                     if (data.length) {
-                        data.forEach(field => section.setData(field, file.data[field]));
+                        data.forEach(field =>
+                            section.setData(field, file.data[field])
+                        );
                     }
                 }
 
@@ -108,4 +109,4 @@ module.exports = function (options = {}) {
             done();
         }
     });
-}
+};

@@ -5,14 +5,17 @@ const defaults = {
     pretty: true
 };
 
-module.exports = function (options = {}) {
+module.exports = function(options = {}) {
     options = merge(defaults, options);
 
     return new Transform({
         objectMode: true,
         transform(file, encoding, done) {
             if (file.data && file.data.permalink) {
-                file.path = path.join(path.dirname(file.path), file.data.permalink);
+                file.path = path.join(
+                    path.dirname(file.path),
+                    file.data.permalink
+                );
             } else {
                 let newPath = file.path.replace(/\.[\w]+$/, '');
 
@@ -26,4 +29,4 @@ module.exports = function (options = {}) {
             done(null, file);
         }
     });
-}
+};

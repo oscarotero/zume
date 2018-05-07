@@ -2,7 +2,7 @@ const { Transform } = require('stream');
 const cheerio = require('cheerio');
 const path = require('path');
 
-module.exports = function (options) {
+module.exports = function(options) {
     if (typeof options === 'function') {
         options = { fn: options };
     }
@@ -26,4 +26,4 @@ module.exports = function (options) {
             done(null, file);
         }
     });
-}
+};

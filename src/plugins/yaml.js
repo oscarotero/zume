@@ -1,7 +1,7 @@
 const { Transform } = require('stream');
 const yaml = require('js-yaml');
 
-module.exports = function (options = {}) {
+module.exports = function(options = {}) {
     return new Transform({
         objectMode: true,
         transform(file, encoding, done) {
@@ -19,4 +19,4 @@ module.exports = function (options = {}) {
             done(null, file);
         }
     });
-}
+};

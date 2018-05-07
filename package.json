@@ -1,39 +1,40 @@
 {
   "name": "zume",
-  "version": "1.0.0-beta.8",
+  "version": "1.0.0-beta.9",
   "description": "Static site generator with gulp",
   "main": "src/index.js",
   "author": "Oscar Otero <oom@oscarotero.com>",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.42",
-    "@babel/preset-env": "^7.0.0-beta.42",
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46",
     "babel-loader": "^8.0.0-beta.0",
-    "browser-sync": "^2.18.8",
+    "browser-sync": "^2.24.4",
     "cheerio": "^1.0.0-rc.2",
     "cssnano": "^3.10.0",
     "del": "^3.0.0",
-    "ejs": "^2.5.8",
+    "ejs": "^2.6.1",
     "ejs-lint": "^0.3.0",
     "front-matter": "^2.1.2",
     "gulp": "^4.0.0",
     "gulp-postcss": "^7.0.1",
     "highlight.js": "^9.12.0",
+    "inline-source": "^6.1.4",
     "markdown-it": "^8.3.1",
-    "markdown-it-attrs": "^1.1.0",
+    "markdown-it-attrs": "^2.0.0",
     "markdown-it-container": "^2.0.0",
     "memory-fs": "^0.4.1",
-    "merge-options": "^1.0.0",
+    "merge-options": "^1.0.1",
     "postcss-cssnext": "^3.1.0",
     "postcss-extend": "^1.0.5",
     "postcss-import": "^11.1.0",
-    "postcss-url": "^7.3.1",
-    "webpack": "^4.3.0"
+    "postcss-url": "^7.3.2",
+    "webpack": "^4.7.0"
   },
   "devDependencies": {
-    "prettier": "^1.11.1"
+    "prettier": "^1.12.1"
   },
   "scripts": {
-    "prettier": "prettier src/*.js --single-quote --tab-width 4 --write"
+    "prettier": "prettier src/*.js src/*/*.js --single-quote --tab-width 4 --write"
   }
 }

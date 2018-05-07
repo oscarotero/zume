@@ -7,14 +7,17 @@ const defaults = {
     relative: false
 };
 
-module.exports = function (options = {}) {
+module.exports = function(options = {}) {
     options = merge(defaults, options, { url: options.zume.url() });
 
     return new Transform({
         objectMode: true,
         transform(file, encoding, done) {
             if (path.extname(file.path) === '.html') {
-                const $ = cheerio.load(file.contents.toString(), options.parser);
+                const $ = cheerio.load(
+                    file.contents.toString(),
+                    options.parser
+                );
                 resolve($, file, options);
 
                 file.contents = new Buffer($.html());
@@ -23,32 +26,32 @@ module.exports = function (options = {}) {
             done(null, file);
         }
     });
-}
+};
 
 function resolve($, file, options) {
     const base = path.dirname(path.join(options.url, file.relative)) + '/';
 
-    $('audio,embed,iframe,img,input,script,source,track,video')
-        .each(function () {
+    $('audio,embed,iframe,img,input,script,source,track,video').each(
+        function() {
             const element = $(this);
             const src = element.attr('src');
 
             if (src) {
                 element.attr('src', url(src));
             }
-        });
+        }
+    );
 
-    $('a,area,link')
-        .each(function () {
-            const element = $(this);
-            const href = element.attr('href');
+    $('a,area,link').each(function() {
+        const element = $(this);
+        const href = element.attr('href');
 
-            if (href) {
-                element.attr('href', url(href));
-            }
-        });
+        if (href) {
+            element.attr('href', url(href));
+        }
+    });
 
-    function url (url) {
+    function url(url) {
         if (notHandle(url)) {
             return url;
         }
@@ -80,8 +83,10 @@ function resolve($, file, options) {
 }
 
 function notHandle(url) {
-    return url.startsWith('#')
-        || url.startsWith('.')
-        || url.indexOf('//') !== -1
-        || url.match(/[a-z]\:/);
+    return (
+        url.startsWith('#') ||
+        url.startsWith('.') ||
+        url.indexOf('//') !== -1 ||
+        url.match(/[a-z]\:/)
+    );
 }
