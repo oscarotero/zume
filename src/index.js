@@ -33,7 +33,7 @@ class Zume {
 
     constructor(config = {}) {
         this.tasks = {};
-        this.dev = true;
+        this.dev = process.env.NODE_ENV !== 'production';
         this.config = merge(defaults, config);
 
         const parsedUrl = url.parse(this.config.url);

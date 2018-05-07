@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## UNRELEASED
+
+### Added
+
+- Detect production mode automatically using `NODE_ENV` environment variable
+
 ## [1.0.0-beta.10] - 2018-05-07
 
 ### Fixed
