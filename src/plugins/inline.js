@@ -15,7 +15,7 @@ module.exports = function(options = {}) {
                     file.contents = new Buffer(html || '');
                     done(null, file);
                 })
-                .catch(err => {
+                .catch(error => {
                     console.error(error);
                     file.data = {};
                     file.error = error;
