@@ -20,7 +20,7 @@ module.exports = function(options = {}) {
                 );
                 resolve($, file, options);
 
-                file.contents = new Buffer($.html());
+                file.contents = Buffer.from($.html());
             }
 
             done(null, file);

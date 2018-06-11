@@ -44,7 +44,7 @@ module.exports = function(options = {}) {
                     console.error(err);
                 }
 
-                file.contents = new Buffer(result);
+                file.contents = Buffer.from(result);
 
                 done(null, file);
             });
@@ -53,7 +53,7 @@ module.exports = function(options = {}) {
 };
 
 function renderError(error, extra) {
-    return new Buffer(
+    return Buffer.from(
         ejs.render(`
 <html>
     <head>

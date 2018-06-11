@@ -8,7 +8,7 @@ module.exports = function(options = {}) {
             try {
                 const data = matter(file.contents.toString());
 
-                file.contents = new Buffer(data.body);
+                file.contents = Buffer.from(data.body);
                 file.data = Object.assign({}, options, data.attributes);
             } catch (error) {
                 console.error(error);

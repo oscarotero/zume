@@ -15,7 +15,7 @@ module.exports = function(options = {}) {
                 file.error = error;
             }
 
-            file.contents = new Buffer('');
+            file.contents = Buffer.from('');
             done(null, file);
         }
     });

@@ -12,7 +12,7 @@ module.exports = function(options = {}) {
                 htmlpath: file.path
             })
                 .then(html => {
-                    file.contents = new Buffer(html || '');
+                    file.contents = Buffer.from(html || '');
                     done(null, file);
                 })
                 .catch(error => {

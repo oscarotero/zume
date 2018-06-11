@@ -46,7 +46,7 @@ module.exports = function(options) {
     return new Transform({
         objectMode: true,
         transform(file, encoding, done) {
-            file.contents = new Buffer(md.render(file.contents.toString()));
+            file.contents = Buffer.from(md.render(file.contents.toString()));
             file.data.markdown = markdown;
             file.data.markdownInline = markdownInline;
             done(null, file);

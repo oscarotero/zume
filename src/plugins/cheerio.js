@@ -18,9 +18,9 @@ module.exports = function(options) {
             options.fn($, file);
 
             if (options.parser.xmlMode) {
-                file.contents = new Buffer($.xml());
+                file.contents = Buffer.from($.xml());
             } else {
-                file.contents = new Buffer($.html());
+                file.contents = Buffer.from($.html());
             }
 
             done(null, file);
