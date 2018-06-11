@@ -5,11 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## UNRELEASED
+## [1.0.0-beta.11] - 2018-06-11
 
 ### Added
 
 - Detect production mode automatically using `NODE_ENV` environment variable
+
+### Changed
+
+- `task.watchSrc` returns `this
+- The task `html.inline()` now can watch the changes and reload the html pages
+- The task `html.inline()` has `compress` and `saveRemote` disabled by default
 
 ## [1.0.0-beta.10] - 2018-05-07
 
@@ -353,6 +359,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+
+[1.0.0-beta.11]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.10...v1.0.0-beta.11
+[1.0.0-beta.10]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.9...v1.0.0-beta.10
 [1.0.0-beta.9]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.8...v1.0.0-beta.9
 [1.0.0-beta.8]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.7...v1.0.0-beta.8
 [1.0.0-beta.7]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.6...v1.0.0-beta.7

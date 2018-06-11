@@ -131,7 +131,9 @@ class Task {
             return;
         }
 
-        return this.watch.push(path.join(this.cwd, pattern));
+        this.watch.push(path.join(this.cwd, pattern));
+
+        return this;
     }
 
     logError(err) {

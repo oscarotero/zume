@@ -1,14 +1,14 @@
 {
   "name": "zume",
-  "version": "1.0.0-beta.10",
+  "version": "1.0.0-beta.11",
   "description": "Static site generator with gulp",
   "main": "src/index.js",
   "author": "Oscar Otero <oom@oscarotero.com>",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.46",
-    "@babel/preset-env": "^7.0.0-beta.46",
-    "babel-loader": "^8.0.0-beta.0",
+    "@babel/core": "^7.0.0-beta.49",
+    "@babel/preset-env": "^7.0.0-beta.49",
+    "babel-loader": "^8.0.0-beta.3",
     "browser-sync": "^2.24.4",
     "cheerio": "^1.0.0-rc.2",
     "cssnano": "^3.10.0",
@@ -19,9 +19,9 @@
     "gulp": "^4.0.0",
     "gulp-postcss": "^7.0.1",
     "highlight.js": "^9.12.0",
-    "inline-source": "^6.1.4",
+    "inline-source": "^6.1.5",
     "markdown-it": "^8.3.1",
-    "markdown-it-attrs": "^2.0.0",
+    "markdown-it-attrs": "^2.2.0",
     "markdown-it-container": "^2.0.0",
     "memory-fs": "^0.4.1",
     "merge-options": "^1.0.1",
@@ -29,10 +29,10 @@
     "postcss-extend": "^1.0.5",
     "postcss-import": "^11.1.0",
     "postcss-url": "^7.3.2",
-    "webpack": "^4.7.0"
+    "webpack": "^4.12.0"
   },
   "devDependencies": {
-    "prettier": "^1.12.1"
+    "prettier": "^1.13.5"
   },
   "scripts": {
     "prettier": "prettier src/*.js src/*/*.js --single-quote --tab-width 4 --write"

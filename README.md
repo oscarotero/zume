@@ -340,5 +340,5 @@ zume.img().dest();
 Simple task used just to copy files:
 
 ```js
-zume.files({base: 'dir/to/files'}).dest();
+zume.files({src: 'dir/to/files'}).dest();
 ```

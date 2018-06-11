@@ -1,16 +1,19 @@
 const { Transform } = require('stream');
 const { inlineSource } = require('inline-source');
 
-module.exports = function(options = {}) {
-    const rootpath = options.dest ? options.zume.dest() : options.zume.src();
+const defaults = {
+    compress: false,
+    saveRemote: false
+};
 
+module.exports = function(options = {}) {
     return new Transform({
         objectMode: true,
         transform(file, encoding, done) {
-            inlineSource(file.contents.toString(), {
-                rootpath: rootpath,
-                htmlpath: file.path
-            })
+            inlineSource(
+                file.contents.toString(),
+                Object.assign({}, defaults, options, { htmlpath: file.path })
+            )
                 .then(html => {
                     file.contents = Buffer.from(html || '');
                     done(null, file);

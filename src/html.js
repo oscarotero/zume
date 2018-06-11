@@ -95,7 +95,17 @@ class Html extends Task {
     }
 
     inline(options = {}) {
-        options.zume = this.zume;
+        if (options.dest) {
+            options.rootpath = this.zume.dest();
+            this.watch.push(
+                this.zume.dest('**/*.{css,js,mjs,svg,jpg,jpeg,png,gif}')
+            );
+        } else {
+            options.rootpath = this.zume.src();
+            this.watch.push(
+                this.zume.src('**/*.{css,js,mjs,svg,jpg,jpeg,png,gif}')
+            );
+        }
 
         return this.pipe(require('./plugins/inline')(options));
     }
