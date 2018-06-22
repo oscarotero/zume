@@ -1,14 +1,14 @@
 {
   "name": "zume",
-  "version": "1.0.0-beta.11",
+  "version": "1.0.0",
   "description": "Static site generator with gulp",
   "main": "src/index.js",
   "author": "Oscar Otero <oom@oscarotero.com>",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.49",
-    "@babel/preset-env": "^7.0.0-beta.49",
-    "babel-loader": "^8.0.0-beta.3",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "babel-loader": "^8.0.0-beta.4",
     "browser-sync": "^2.24.4",
     "cheerio": "^1.0.0-rc.2",
     "cssnano": "^3.10.0",

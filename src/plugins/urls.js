@@ -65,6 +65,10 @@ function resolve($, file, options) {
         }
 
         if (!options.relative) {
+            if (!path.extname(url) && !url.endsWith('/')) {
+                return url + '/';
+            }
+
             return url;
         }
 
