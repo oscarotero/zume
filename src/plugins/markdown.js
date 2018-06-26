@@ -3,6 +3,7 @@ const MarkdownIt = require('markdown-it');
 const hljs = require('highlight.js');
 const attrs = require('markdown-it-attrs');
 const container = require('markdown-it-container');
+const { html5Media } = require('markdown-it-html5-media');
 const defaults = {
     html: true,
     linkify: true,
@@ -35,6 +36,10 @@ module.exports = function(options) {
 
     md.use(container, 'div');
     md.use(attrs);
+    md.use(html5Media, {
+        videoAttrs: 'controls',
+        audioAttrs: 'controls'
+    });
 
     if (typeof options === 'function') {
         options(md);
