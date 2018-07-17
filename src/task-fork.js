@@ -66,6 +66,9 @@ class TaskFork {
         //Mode merge with other stream
         const task = this.task;
 
+        this.dest.watch = task.watch.concat(this.dest.watch);
+        task.watch = this.dest.watch;
+
         return this.dest.pipe(
             new Transform({
                 objectMode: true,

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.1] - 2018-07-17
+
+### Fixed
+
+- Watched files in forked streams should be merged to the main stream.
+
 ## [1.1.0] - 2018-06-26
 
 ### Added
@@ -372,6 +378,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 First version
 
 
+[1.1.1]: https://github.com/oscarotero/zume/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/oscarotero/zume/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.11...v1.0.0
 [1.0.0-beta.11]: https://github.com/oscarotero/zume/compare/v1.0.0-beta.10...v1.0.0-beta.11
