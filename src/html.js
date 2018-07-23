@@ -1,6 +1,7 @@
 const Task = require('./task');
 const TaskFork = require('./task-fork');
 const merge = require('merge-options');
+const path = require('path');
 const defaults = {
     src: 'data',
     pattern: '**/*.md'
@@ -95,17 +96,15 @@ class Html extends Task {
     }
 
     inline(options = {}) {
-        if (options.dest) {
-            options.rootpath = this.zume.dest();
-            this.watch.push(
-                this.zume.dest('**/*.{css,js,mjs,svg,jpg,jpeg,png,gif}')
-            );
-        } else {
-            options.rootpath = this.zume.src();
-            this.watch.push(
-                this.zume.src('**/*.{css,js,mjs,svg,jpg,jpeg,png,gif}')
-            );
+        if (!options.rootpath) {
+            if (options.dest) {
+                options.rootpath = this.zume.dest();
+            } else {
+                options.rootpath = this.zume.src();
+            }
         }
+
+        this.watch.push(path.join(options.rootpath, '**/*.{css,js,mjs,svg,jpg,jpeg,png,gif}'));
 
         return this.pipe(require('./plugins/inline')(options));
     }

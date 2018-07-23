@@ -263,7 +263,8 @@ To inline the tags containing the `inline="true"` attribute. Supports `<script>`
 
 ```js
 html.inline({
-    dest: true, //To get the sources from dest folder, instead src.
+    rootpath: '/path/to/resources' //To define a custom sources path
+    dest: true, //To get the sources from dest folder, instead src
 })
 ```
 
