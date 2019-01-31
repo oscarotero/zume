@@ -1,6 +1,6 @@
 {
   "name": "zume",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Static site generator with gulp",
   "main": "src/index.js",
   "author": "Oscar Otero <oom@oscarotero.com>",
@@ -11,13 +11,13 @@
     "babel-loader": "^8.0.0-beta.4",
     "browser-sync": "^2.24.6",
     "cheerio": "^1.0.0-rc.2",
-    "cssnano": "^3.10.0",
+    "cssnano": "^4.1.8",
     "del": "^3.0.0",
     "ejs": "^2.6.1",
     "ejs-lint": "^0.3.0",
-    "front-matter": "^2.1.2",
+    "front-matter": "^3.0.1",
     "gulp": "^4.0.0",
-    "gulp-postcss": "^7.0.1",
+    "gulp-postcss": "^8.0.0",
     "highlight.js": "^9.12.0",
     "inline-source": "^6.1.5",
     "markdown-it": "^8.4.2",
@@ -26,16 +26,20 @@
     "markdown-it-html5-media": "^0.6.0",
     "memory-fs": "^0.4.1",
     "merge-options": "^1.0.1",
-    "postcss-cssnext": "^3.1.0",
     "postcss-extend": "^1.0.5",
-    "postcss-import": "^11.1.0",
-    "postcss-url": "^7.3.2",
-    "webpack": "^4.16.1"
+    "postcss-import": "^12.0.1",
+    "postcss-preset-env": "^6.5.0",
+    "postcss-url": "^8.0.0",
+    "webpack": "^4.16.1",
+    "yargs-parser": "^12.0.0"
   },
   "devDependencies": {
     "prettier": "^1.13.7"
   },
   "scripts": {
     "prettier": "prettier src/*.js src/*/*.js --single-quote --tab-width 4 --write"
+  },
+  "bin": {
+    "zume": "bin.js"
   }
 }

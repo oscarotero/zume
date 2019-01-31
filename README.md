@@ -17,6 +17,20 @@ root/
     |_ build/
 ```
 
+## Quick start:
+
+Only for simple cases without configuration you can use the CLI to start and run a new project:
+
+```sh
+npm i zume -g
+mkdir my-project
+cd my-project
+zume init
+zume server
+```
+
+## Using with gulp
+
 Example of the `gulpfile.js`:
 
 ```js
