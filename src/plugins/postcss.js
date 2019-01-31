@@ -4,7 +4,9 @@ const plugin_url = require('postcss-url');
 const plugin_preset_env = require('postcss-preset-env');
 const plugin_extend = require('postcss-extend');
 const defaults = {
-    env: {}
+    env: {
+        stage: 0,
+    }
 };
 
 module.exports = function(options = {}) {
