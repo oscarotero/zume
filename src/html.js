@@ -104,7 +104,12 @@ class Html extends Task {
             }
         }
 
-        this.watch.push(path.join(options.rootpath, '**/*.{css,js,mjs,svg,jpg,jpeg,png,gif}'));
+        this.watch.push(
+            path.join(
+                options.rootpath,
+                '**/*.{css,js,mjs,svg,jpg,jpeg,png,gif}'
+            )
+        );
 
         return this.pipe(require('./plugins/inline')(options));
     }

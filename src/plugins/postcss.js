@@ -5,7 +5,7 @@ const plugin_preset_env = require('postcss-preset-env');
 const plugin_extend = require('postcss-extend');
 const defaults = {
     env: {
-        stage: 0,
+        stage: 0
     }
 };
 
