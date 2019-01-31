@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2019-01-31
+### Added
+- Task `files` in CLI mode
+
+### Fixed
+- Error in the js module loading in the default template of `zume init`
+
 ## [2.0.0] - 2019-01-31
 ### Added
 - CLI command `zume` and `zume server`
@@ -285,6 +292,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.1.0 - 2017-05-10
 First version
 
+[2.1.0]: https://github.com/oscarotero/zume/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/oscarotero/zume/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/oscarotero/zume/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/oscarotero/zume/compare/v1.1.0...v1.1.1

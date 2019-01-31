@@ -1,3 +1,3 @@
-import hello from 'modules/hello.js';
+import hello from './modules/hello.js';
 
 hello();
