@@ -1,6 +1,6 @@
 {
   "name": "zume",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Static site generator with gulp",
   "main": "src/index.js",
   "author": "Oscar Otero <oom@oscarotero.com>",
@@ -18,7 +18,7 @@
     "front-matter": "^3.0.1",
     "gulp": "^4.0.0",
     "gulp-postcss": "^8.0.0",
-    "highlight.js": "^9.12.0",
+    "highlight.js": "^9.14.2",
     "inline-source": "^6.1.5",
     "markdown-it": "^8.4.2",
     "markdown-it-attrs": "^2.3.1",
