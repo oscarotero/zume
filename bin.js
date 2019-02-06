@@ -12,6 +12,7 @@ gulp.task('html', () =>
         .permalink()
         .ejs()
         .urls()
+        .inline({dest: true})
         .dest()
 );
 
@@ -20,7 +21,7 @@ gulp.task('css', () => zume.css().postcss().dest());
 gulp.task('img', () => zume.img().dest());
 gulp.task('files', () => zume.files({src: 'files'}).dest());
 
-gulp.task('default', gulp.series('clear', 'html', 'js', 'css', 'img', 'files'));
+gulp.task('default', gulp.series('clear', 'js', 'css', 'img', 'files', 'html'));
 gulp.task('server', gulp.series('default', () => zume.serve()));
 gulp.task('init', () => 
     gulp.src('**/*', {
