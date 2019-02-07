@@ -1,6 +1,6 @@
 {
   "name": "zume",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Static site generator with gulp",
   "main": "src/index.js",
   "author": "Oscar Otero <oom@oscarotero.com>",

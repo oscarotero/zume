@@ -10,6 +10,7 @@ gulp.task('html', () =>
         .frontMatter()
         .markdown()
         .permalink()
+        .navigation()
         .ejs()
         .urls()
         .inline({dest: true})
