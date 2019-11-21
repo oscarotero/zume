@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.0] - 2019-11-21
+### Added
+- The command `zume init-all` to add `gulpfile.js` and `package.json` file
+
+### Fixed
+- Updated dependencies
+
 ## [2.1.2] - 2019-02-07
 ### Added
 - The `navigation()` pipe in html is enabled by default in CLI mode
@@ -300,6 +307,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.1.0 - 2017-05-10
 First version
 
+[2.2.0]: https://github.com/oscarotero/zume/compare/v2.1.2...v2.2.0
 [2.1.2]: https://github.com/oscarotero/zume/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/oscarotero/zume/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/oscarotero/zume/compare/v2.0.0...v2.1.0

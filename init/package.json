@@ -1,0 +1,12 @@
+{
+  "name": "my-project",
+  "version": "0.1.0",
+  "description": "Static site generated with zume",
+  "devDependencies": {
+    "zume": "^2.1.2"
+  },
+  "scripts": {
+    "start": "gulp server",
+    "build": "NODE_ENV=production gulp"
+  }
+}

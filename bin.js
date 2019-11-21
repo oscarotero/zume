@@ -26,9 +26,15 @@ gulp.task('default', gulp.series('clear', 'js', 'css', 'img', 'files', 'html'));
 gulp.task('server', gulp.series('default', () => zume.serve()));
 gulp.task('init', () => 
     gulp.src('**/*', {
+        cwd: __dirname + '/init/src'
+    })
+    .pipe(gulp.dest('./src'))
+);
+gulp.task('init-all', () => 
+    gulp.src('**/*', {
         cwd: __dirname + '/init'
     })
-    .pipe(gulp.dest('src'))
+    .pipe(gulp.dest('./'))
 );
 
 const argv = require('yargs-parser')(process.argv.slice(2));
@@ -36,6 +42,7 @@ const task = argv._[0] || 'default';
 
 switch (task) {
     case 'init':
+    case 'init-all':
     case 'clear':
     case 'default':
     case 'server':
