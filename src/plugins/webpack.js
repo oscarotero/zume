@@ -26,6 +26,10 @@ const defaults = {
 };
 
 module.exports = function(options = {}) {
+    if (typeof options.options === 'function') {
+        options.options = options.options(webpack);
+    }
+
     const opt = merge(
         defaults,
         {
@@ -38,10 +42,6 @@ module.exports = function(options = {}) {
         },
         options.options
     );
-
-    if (typeof options.options === 'function') {
-        options.options(opt);
-    }
 
     const fs = new MemoryFS();
 
